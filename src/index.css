@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'MyBoldFont';
+    src: url('./assets/fonts/DSEG7Classic-Bold.woff2') format('woff2'), url('./assets/fonts/DSEG7Classic-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: bold;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Inria Serif", serif;
+}
+
+html,
+body,
+#root {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100dvh;
+    overflow: hidden;
+}
+
+span {
+    font-size: 12px;
+    color: white;
+}
+
+button {
+    cursor: pointer;
+}
