@@ -18,7 +18,7 @@ export default function MenuCoin({ onOpenModal }: MenuCoinProps) {
                         background={"#2D1F76"}
                         borderColor="none"
                         borderWidth="0px"
-                        onClick={() => onOpenModal("history")}
+                        onClick={() => onOpenModal("recharge")}
                     />
                 </div>
             </div>

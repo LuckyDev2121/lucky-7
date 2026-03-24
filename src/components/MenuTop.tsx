@@ -40,7 +40,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ onOpenModal }) => {
                 borderWidth="0px"
                 icon={quiz}
                 background={"#2D1F76"}
-                onClick={() => onOpenModal("quiz")}
+                onClick={() => onOpenModal("help")}
             />
             <ButtonMenu
                 borderColor="none"
