@@ -6,6 +6,7 @@ import TopBoard from "./TopBoard";
 import BodyBoard from "./BodyBoard";
 import RechargeMenu from "./RechargeMenu";
 import HelpMenu from "./HelpMenu";
+import HistoryMenu from "./HistoryMenu";
 
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
@@ -58,6 +59,18 @@ export default function Lucky777Game() {
                                     className="absolute z-50 h-[146px] w-[393px]"
                                 >
                                     <RechargeMenu onCloseRechargeModal={() => setActiveModal(null)} />
+                                </motion.div>
+                            )}
+                            {activeModal === "history" && (
+                                <motion.div
+                                    key={activeModal}
+                                    initial={{ y: GAME_HEIGHT, opacity: 0 }}
+                                    animate={{ y: 161, opacity: 1 }}
+                                    exit={{ y: GAME_HEIGHT, opacity: 0 }}
+                                    transition={{ duration: 0.4 }}
+                                    className="absolute z-50 left-[25px] h-[428px] w-[343px]"
+                                >
+                                    <HistoryMenu onCloseHistory={() => setActiveModal(null)} />
                                 </motion.div>
                             )}
 
