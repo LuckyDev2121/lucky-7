@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .scrollbar-hidden {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hidden::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 @font-face {
     font-family: 'MyBoldFont';
     src: url('./assets/fonts/DSEG7Classic-Bold.woff2') format('woff2'), url('./assets/fonts/DSEG7Classic-Bold.woff') format('woff');

@@ -7,6 +7,8 @@ import BodyBoard from "./BodyBoard";
 import RechargeMenu from "./RechargeMenu";
 import HelpMenu from "./HelpMenu";
 import HistoryMenu from "./HistoryMenu";
+import Ranking from "./RankingMenu";
+import PrizeDistribution from "./PrizeDistribution";
 
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
@@ -14,10 +16,11 @@ const GAME_HEIGHT = 589;
 export default function Lucky777Game() {
 
     const [activeModal, setActiveModal] = useState<string | null>(null);
-    // const [scale, setScale] = useState(1);
+    const [prizeModal, setPrizeModal] = useState<string | null>(null);
+    const isOverlayOpen = (activeModal !== null || prizeModal !== null);
 
     return (
-        <div className="relative flex min-h-[100dvh] w-full items-end justify-center overflow-hidden">
+        <div className="relative flex min-h-[100dvh] w-full border-[#130E2C] border-[4px,4px,0px,4px] items-end justify-center overflow-hidden">
             <div className="fixed inset-0 flex items-end justify-center overflow-hidden ">
                 <div
                     className="relative"
@@ -31,7 +34,6 @@ export default function Lucky777Game() {
                         style={{
                             width: `${GAME_WIDTH}px`,
                             height: `${GAME_HEIGHT}px`,
-                            // transform: `scale(${scale})`,
                         }}
                     >
                         <TopBoard />
@@ -73,8 +75,42 @@ export default function Lucky777Game() {
                                     <HistoryMenu onCloseHistory={() => setActiveModal(null)} />
                                 </motion.div>
                             )}
-
-
+                            {activeModal === "ranking" && (
+                                <motion.div
+                                    key={activeModal}
+                                    initial={{ y: GAME_HEIGHT, opacity: 0 }}
+                                    animate={{ y: 61, opacity: 1 }}
+                                    exit={{ y: GAME_HEIGHT, opacity: 0 }}
+                                    transition={{ duration: 0.4 }}
+                                    className="absolute z-30 left-[25px] h-[428px] w-[343px]"
+                                >
+                                    <Ranking onCloseRanking={() => setActiveModal(null)}
+                                        onOpenPrizeDistribution={() => setPrizeModal("prize")} />
+                                </motion.div>
+                            )
+                            }
+                            {prizeModal === "prize" && (
+                                <motion.div
+                                    key={activeModal}
+                                    initial={{ y: GAME_HEIGHT, opacity: 0 }}
+                                    animate={{ y: 80, opacity: 1 }}
+                                    exit={{ y: GAME_HEIGHT, opacity: 0 }}
+                                    transition={{ duration: 0.4 }}
+                                    className="absolute z-50 left-[25px] h-[428px] w-[343px]"
+                                >
+                                    <PrizeDistribution onClosePrize={() => setPrizeModal(null)} />
+                                </motion.div>
+                            )}
+                            {isOverlayOpen && (
+                                <motion.div
+                                    key="modal-backdrop"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.25 }}
+                                    className="absolute inset-0 z-20 rounded-t-[20px] bg-black/60"
+                                />
+                            )}
                         </AnimatePresence>
                     </div>
                 </div>

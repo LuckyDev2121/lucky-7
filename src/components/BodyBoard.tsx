@@ -23,7 +23,7 @@ export default function BodyBoard({ onOpenModal }: BodyBoardProps) {
         <div className="absolute top-[135px] left-0  h-[454px] w-[393px]">
             <img src={BackBoard} alt="BackBoard" className="absolute inset-0 -z-10" />
             <div
-                className="absolute bottom-0 left-0 h-[70px] w-full bg-gradient-to-br from-[#D5831F] from-1% via-[#EEB33F] via-30% via-[#FFF987] via-[#FBBA07] to-[#D5831F] to-90%"
+                className="absolute bottom-0 left-0 h-[70px] w-full bg-gradient-to-br from-[#D5831F] from-1% via-30% via-[#FFF987]  to-[#D5831F] to-90%"
                 style={{
                     clipPath: "polygon(0 28%, 4.5% 0, 95.5% 0, 100% 22%, 100% 100%, 0 100%)",
                 }}
@@ -33,7 +33,8 @@ export default function BodyBoard({ onOpenModal }: BodyBoardProps) {
                 <MenuCoin onOpenModal={onOpenModal} />
                 <MenuTop onOpenModal={onOpenModal} />
             </div>
-            <button className="absolute top-[25px] left-[28px] h-[72px] w-[72px] rounded-full flex items-center justify-center">
+            <button className="absolute z-20 top-[25px] left-[28px] h-[72px] w-[72px] rounded-full flex items-center justify-center"
+                onClick={() => onOpenModal("ranking")}>
                 <img src={shine} alt="shine" className="absolute h-[60px] w-[60px] top-[4px]" />
                 <img src={cup} alt="cup" className="absolute h-[50px] w-[50px] left-[11px] top-[11px]" />
             </button>
@@ -103,6 +104,6 @@ export default function BodyBoard({ onOpenModal }: BodyBoardProps) {
                     <img src={spin} alt="spin" />
                 </button>
             </div>
-        </div>
+        </div >
     );
 }

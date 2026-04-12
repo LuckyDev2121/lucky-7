@@ -15,7 +15,7 @@ export default function PlayBoard() {
 
     return (
         <div className="absolute h-[230px] w-[316px] top-[96px] left-[39px]  bg-gradient-to-t from-[#1D27BA] to-[#B11ECB] p-[2px] rounded-[9px]">
-            <div className="relative h-[226px] w-[310px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#000000] inset-[2px] rounded-[7px] top-1/2 -translate-y-1/2">
+            <div className="relative h-[226px] w-[310px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#000000] inset-[2px] rounded-[7px] ">
                 <img src={vectLL} alt="vectLL" className="absolute left-[2px] top-[3px]" />
                 <img src={vectorL} alt="vectorL" className="absolute left-[17px] top-[3px]" />
                 <img src={vectML} alt="vectML" className="absolute left-[99px] top-[3px]" />
