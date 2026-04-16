@@ -39,7 +39,7 @@ export default function BodyBoard({ onOpenModal }: BodyBoardProps) {
                 <img src={cup} alt="cup" className="absolute h-[50px] w-[50px] left-[11px] top-[11px]" />
             </button>
             <div className="absolute h-[66px] w-[266px] top-[30px] left-[91px] bg-gradient-to-t from-[#0E0038] to-[#140433] rounded-[4px]">
-                <div className="relative grid grid-cols-4 justify-center h-[60px] w-[260px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-[#1A0D38] to-[#160A38] border-2 border-[#A75991] rounded-[4px]">
+                <div className="relative grid grid-cols-4 justify-center h-[60px] w-[260px] pt-[2px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-[#1A0D38] to-[#160A38] border-2 border-[#A75991] rounded-[4px]">
                     <div className="relative ">
                         <img src={player} alt="player" className="absolute left-1/2 -translate-x-1/2" />
                         <span className="absolute inset-x-0 text-center top-[42px]  text-[8px]">Sumiya BD</span>
