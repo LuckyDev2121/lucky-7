@@ -1,6 +1,5 @@
-import ButtonMenu from "./ButtonMenu";
+import { ButtonMenu, PlusIcon } from "./ButtonMenu";
 import coin from "../assets/Body/TopMenu/Coin.svg"
-import plus from "../assets/Body/TopMenu/Plus.svg"
 
 type MenuCoinProps = {
     onOpenModal: (modal: string) => void;
@@ -14,7 +13,7 @@ export default function MenuCoin({ onOpenModal }: MenuCoinProps) {
                 <span className="ml-1.5  font-bold pr-[4px]">4000000</span>
                 <div>
                     <ButtonMenu
-                        icon={plus}
+                        icon={<PlusIcon />}
                         background={"#2D1F76"}
                         borderColor="none"
                         borderWidth="0px"

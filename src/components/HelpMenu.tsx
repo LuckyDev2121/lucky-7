@@ -1,5 +1,4 @@
-import ButtonMenu from "./ButtonMenu";
-import close from "../assets/Body/TopMenu/Close.svg"
+import { ButtonMenu, CloseIcon } from "./ButtonMenu";
 import lineL from "../assets/Modal/lineL.svg"
 import lineM from "../assets/Modal/lineM.svg"
 import lineR from "../assets/Modal/lineR.svg"
@@ -27,7 +26,7 @@ export default function HelpMenu({ onCloseHelpModal }: HelpMenuProps) {
                 <ButtonMenu
                     borderColor="none"
                     borderWidth="0px"
-                    icon={close}
+                    icon={<CloseIcon />}
                     background={"#2D1F76"}
                     onClick={() => onCloseHelpModal()}
                 />

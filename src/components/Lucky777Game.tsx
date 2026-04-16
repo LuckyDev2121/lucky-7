@@ -108,10 +108,10 @@ export default function Lucky777Game() {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.25 }}
-                                    className="absolute inset-0 z-20 rounded-t-[20px] bg-black/60"
+                                    className="absolute inset-0 z-20 rounded-t-[110px] bg-black/60"
                                 />
                             )}
-                            <motion.div
+                            {/* <motion.div
                                 className="absolute left-[50px] top-[50px] z-30 pointer-events-none"
                                 initial={{ y: "50%" }}
                                 animate={{ y: "100%" }}
@@ -131,7 +131,7 @@ export default function Lucky777Game() {
       )`,
                                     filter: "blur(1px)",
                                 }}
-                            />
+                            /> */}
                         </AnimatePresence>
                     </div>
                 </div>

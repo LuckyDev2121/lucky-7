@@ -1,5 +1,4 @@
-import ButtonMenu from "./ButtonMenu";
-import close from "../assets/Body/TopMenu/Close.svg"
+import { ButtonMenu, CloseIcon } from "./ButtonMenu";
 
 type RankingProps = {
     onClosePrize: () => void;
@@ -12,7 +11,7 @@ export default function PrizeDistribution({ onClosePrize }: RankingProps) {
                 <ButtonMenu
                     borderColor="none"
                     borderWidth="0px"
-                    icon={close}
+                    icon={<CloseIcon />}
                     background={"#2D1F76"}
                     onClick={() => onClosePrize()}
                 />

@@ -1,6 +1,4 @@
-import ButtonMenu from "./ButtonMenu";
-import close from "../assets/Body/TopMenu/Close.svg"
-import quiz from "../assets/Body/TopMenu/Quiz.svg"
+import { ButtonMenu, CloseIcon, QuestionMarkIcon } from "./ButtonMenu";
 import rank from "../assets/Modal/RankingJackpot.svg"
 type RankingProps = {
     onCloseRanking: () => void;
@@ -14,7 +12,7 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                 <ButtonMenu
                     borderColor="none"
                     borderWidth="0px"
-                    icon={close}
+                    icon={<CloseIcon />}
                     background={"#2D1F76"}
                     onClick={() => onCloseRanking()}
                 />
@@ -23,7 +21,7 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                 <ButtonMenu
                     borderColor="none"
                     borderWidth="0px"
-                    icon={quiz}
+                    icon={<QuestionMarkIcon />}
                     background={"#2D1F76"}
                     onClick={() => onOpenPrizeDistribution()}
                 />
@@ -40,12 +38,12 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                     <span className=" relative font-sans">Name</span>
                     <span className=" relative font-sans">Diamonds Play</span>
                 </div>
-                <div className="absolute top-[35px] w-[292px] h-[231px]  scrollbar-hidden overflow-x-hidden overflow-y-auto">
-                    <div className="relative w-[292px] h-[47px] mt-[5px] flex">
+                <div className="absolute top-[35px] w-[292px] h-[231px] left-1/2 -translate-x-1/2 scrollbar-hidden overflow-x-hidden overflow-y-auto">
+                    <div className="relative w-[292px] h-[47px] mt-[5px] flex ">
                         <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#cf9800] from-1%  via-50% via-[#FFF987] to-[#fdc21f] to-90% rounded-l-[10px]">
                             {/* <img src="" alt="" /> */}
                         </div>
-                        <div className="relative flex h-[47px] w-[255px] bg-gradient-to-t from-[#FBBA07]   to-[#FFF987] items-center">
+                        <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#FBBA07]   to-[#FFF987] items-center rounded-r-[10px]">
                             <div></div>
                             <span className="text-[#A45721] font-bold">Sumiya BD</span>
                             {/* <img src="" alt="" /> */}
@@ -56,7 +54,7 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                         <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#44aedf] from-1%  via-50% via-[#b8d6f8] to-[#72ccf7] to-90% rounded-l-[10px]">
                             {/* <img src="" alt="" /> */}
                         </div>
-                        <div className="relative flex h-[47px] w-[255px] bg-gradient-to-t from-[#7fd5fd]   to-[#b8d6f8] items-center">
+                        <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#7fd5fd]   to-[#b8d6f8] items-center rounded-r-[10px]">
                             <div></div>
                             <span className="text-[#A45721] font-bold">Sumiya BD</span>
                             {/* <img src="" alt="" /> */}
@@ -67,7 +65,7 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                         <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#d47e37] from-1%  via-50% via-[#fec79a] to-[#eea162] to-90% rounded-l-[10px]">
                             {/* <img src="" alt="" /> */}
                         </div>
-                        <div className="relative flex h-[47px] w-[255px] bg-gradient-to-t from-[#f1a362]   to-[#fec79a] items-center">
+                        <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#f1a362]   to-[#fec79a] items-center rounded-r-[10px]">
                             <div></div>
                             <span className="text-[#A45721] font-bold">Sumiya BD</span>
                             {/* <img src="" alt="" /> */}
@@ -78,7 +76,7 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                         <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#c29542] from-1%  via-50% via-[#fffae6] to-[#dfba77] to-90% rounded-l-[10px]">
                             {/* <img src="" alt="" /> */}
                         </div>
-                        <div className="relative flex h-[47px] w-[255px] bg-gradient-to-t from-[#d6b579]   to-[#fffae6] items-center">
+                        <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#d6b579]   to-[#fffae6] items-center rounded-r-[10px]">
                             <div></div>
                             <span className="text-[#A45721] font-bold">Sumiya BD</span>
                             {/* <img src="" alt="" /> */}

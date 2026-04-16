@@ -1,10 +1,5 @@
 import { useState } from "react";
-import ButtonMenu from "./ButtonMenu";
-import close from "../assets/Body/TopMenu/Close.svg"
-import quiz from "../assets/Body/TopMenu/Quiz.svg"
-import music from "../assets/Body/TopMenu/Music.svg"
-import unmute from "../assets/Body/TopMenu/Unmute.svg"
-import history from "../assets/Body/TopMenu/History.svg"
+import { ButtonMenu, HistoryIcon, SpeakerHighIcon, QuestionMarkIcon, CloseIcon } from "./ButtonMenu";
 
 type TopMenuProps = {
     onOpenModal: (modal: string) => void;
@@ -17,7 +12,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ onOpenModal }) => {
     return (
         <div className="relative flex gap-[5px]">
             <ButtonMenu
-                icon={history}
+                icon={<HistoryIcon />}
                 background={"#2D1F76"}
                 borderColor="none"
                 borderWidth="0px"
@@ -27,7 +22,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ onOpenModal }) => {
             <ButtonMenu
                 borderColor="none"
                 borderWidth="0px"
-                icon={`${mute ? music : unmute}`}
+                icon={<SpeakerHighIcon />}
                 background={"#2D1F76"}
                 onClick={() => {
                     onOpenModal("music")
@@ -38,14 +33,14 @@ const TopMenu: React.FC<TopMenuProps> = ({ onOpenModal }) => {
             <ButtonMenu
                 borderColor="none"
                 borderWidth="0px"
-                icon={quiz}
+                icon={<QuestionMarkIcon />}
                 background={"#2D1F76"}
                 onClick={() => onOpenModal("help")}
             />
             <ButtonMenu
                 borderColor="none"
                 borderWidth="0px"
-                icon={close}
+                icon={<CloseIcon />}
                 background={"#2D1F76"}
                 onClick={() => onOpenModal("close")}
             />
