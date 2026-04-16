@@ -111,6 +111,27 @@ export default function Lucky777Game() {
                                     className="absolute inset-0 z-20 rounded-t-[20px] bg-black/60"
                                 />
                             )}
+                            <motion.div
+                                className="absolute left-[50px] top-[50px] z-30 pointer-events-none"
+                                initial={{ y: "50%" }}
+                                animate={{ y: "100%" }}
+                                transition={{
+                                    duration: 2,
+                                    ease: "linear",
+                                    repeat: Infinity,
+                                }}
+                                style={{
+                                    width: "5px",
+                                    height: "40%",
+                                    background: `linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(255, 255, 255, 0.7) 50%,
+        transparent 60%
+      )`,
+                                    filter: "blur(1px)",
+                                }}
+                            />
                         </AnimatePresence>
                     </div>
                 </div>
