@@ -18,7 +18,7 @@ export default function Lucky777Game() {
     const [activeModal, setActiveModal] = useState<string | null>(null);
     const [prizeModal, setPrizeModal] = useState<string | null>(null);
     const isOverlayOpen = (activeModal !== null || prizeModal !== null);
-
+    const lights = [59, 139, 154, 236, 255, 331];
     return (
         <div className="relative flex min-h-[100dvh] w-full border-[#130E2C] border-[4px,4px,0px,4px] items-end justify-center overflow-hidden">
             <div className="fixed inset-0 flex items-end justify-center overflow-hidden ">
@@ -111,27 +111,41 @@ export default function Lucky777Game() {
                                     className="absolute inset-0 z-20 rounded-t-[110px] bg-black/60"
                                 />
                             )}
-                            {/* <motion.div
-                                className="absolute left-[50px] top-[50px] z-30 pointer-events-none"
-                                initial={{ y: "50%" }}
-                                animate={{ y: "100%" }}
-                                transition={{
-                                    duration: 2,
-                                    ease: "linear",
-                                    repeat: Infinity,
-                                }}
-                                style={{
-                                    width: "5px",
-                                    height: "40%",
-                                    background: `linear-gradient(
-        to bottom,
-        transparent 40%,
-        rgba(255, 255, 255, 0.7) 50%,
-        transparent 60%
-      )`,
-                                    filter: "blur(1px)",
-                                }}
-                            /> */}
+
+                            {lights.map((left,) => (
+                                <AnimatePresence>
+                                    <motion.div
+                                        className="absolute w-[5px] h-[60px] rounded-full"
+                                        initial={{ y: 140, opacity: 0 }}
+                                        animate={{ y: 460, opacity: 1 }}
+                                        transition={{
+                                            duration: 1.6,
+                                            ease: "linear",
+                                            repeat: Infinity,
+                                        }}
+                                        style={{
+                                            background: "linear-gradient(to bottom, transparent, white, transparent)",
+                                            filter: "blur(1px)",
+                                            left: `${left}px`
+                                        }}
+                                    />
+                                    <motion.div
+                                        className="absolute w-[5px] h-[10px] my-[25px] rounded-full"
+                                        initial={{ y: 140, opacity: 0 }}
+                                        animate={{ y: 460, opacity: 1 }}
+                                        transition={{
+                                            duration: 1.6,
+                                            ease: "linear",
+                                            repeat: Infinity,
+                                        }}
+                                        style={{
+                                            background: "white",
+                                            filter: "blur(2px)",
+                                            left: `${left}px`
+                                        }}
+                                    />
+                                </AnimatePresence>
+                            ))}
                         </AnimatePresence>
                     </div>
                 </div>
