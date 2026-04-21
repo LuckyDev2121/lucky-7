@@ -10,7 +10,7 @@ import lineR from "../assets/Body/BodyPlayboard/Line 3.svg"
 import lineM from "../assets/Body/BodyPlayboard/Line 4.svg"
 import { PendingAni, ResultAni } from "./Assets"
 import { useState, useEffect } from "react"
-import { AnimatePresence, motion } from "framer-motion";
+// import { AnimatePresence, motion } from "framer-motion";
 
 export function PendingStar() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -198,186 +198,17 @@ export default function PlayBoard() {
                 <img src={vectMR} alt="vectMR" className="absolute left-[198px] top-[3px] z-10" />
                 <img src={vectorR} alt="vectorR" className="absolute left-[213px] top-[3px] z-10" />
                 <img src={vectRR} alt="vectRR" className="absolute left-[290px] top-[3px] z-10" />
-                {/* <PendingStar /> */}
-                {/* <RollingStar /> */}
-                {/* < ResultStar /> */}
+                <div className="absolute inset-0 z-30 pointer-events-none">
+                    <PendingStar />
+                    <RollingStar />
+                    {/* <ResultStar /> */}
+                </div>
                 <img src={lineL} alt="lineL" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20" />
                 <img src={lineR} alt="lineR" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20" />
                 <img src={lineM} alt="lineM" className="absolute top-[41px] z-20" />
                 <img src={lineM} alt="lineM" className="absolute top-[185px] z-20" />
                 <img src={lineM} alt="lineM" className="absolute top-[113px] z-20" />
-                <AnimatePresence>
-                    <div className="absolute inset-0 z-30 pointer-events-none">
-                        <svg className="" width="600" height="400">
-                            {/* background path */}
-                            <path
-                                d="M30 35 L60 35 L255 185 L280 185"
-                                stroke="none"
-                                strokeWidth="10"
-                                fill="transparent"
-                            />
 
-                            {/* animated progress */}
-                            <motion.path
-                                d="M30 35 L60 35 L255 185 L280 185"
-                                stroke="rgba(255, 220, 0, 0.8)"
-                                strokeWidth="10"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                            />
-                            <motion.path
-                                d="M30 35 L60 35 L255 185 L280 185"
-                                stroke="rgba(255,255,255,1)"
-                                strokeWidth="3"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                                style={{ filter: "blur(2px)", }}
-                            />
-                        </svg>
-                    </div>
-                    <div className="absolute inset-0 z-30 pointer-events-none">
-                        <svg className="" width="600" height="400">
-                            {/* background path */}
-                            <path
-                                d="M30 185 L60 185 L250 35 L280 35"
-                                stroke="none"
-                                strokeWidth="10"
-                                fill="transparent"
-                            />
-
-                            {/* animated progress */}
-                            <motion.path
-                                d="M30 185 L60 185 L250 35 L280 35"
-                                stroke="rgba(180, 80, 255, 0.8)"
-                                strokeWidth="10"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                            />
-                            <motion.path
-                                d="M30 185 L60 185 L250 35 L280 35"
-                                stroke="rgba(255,255,255,1)"
-                                strokeWidth="4"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                                style={{ filter: "blur(2px)", }}
-                            />
-                        </svg>
-                    </div>
-                    <div className="absolute inset-0 z-30 pointer-events-none">
-                        <svg className="" width="600" height="400">
-                            {/* background path */}
-                            <path
-                                d="M30 40 L280 40"
-                                stroke="none"
-                                strokeWidth="10"
-                                fill="transparent"
-                            />
-
-                            {/* animated progress */}
-                            <motion.path
-                                d="M30 40 L280 40"
-                                stroke="rgba(0, 150, 255, 0.8)"
-                                strokeWidth="10"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                            />
-                            <motion.path
-                                d="M30 40 L280 40"
-                                stroke="rgba(255,255,255,1)"
-                                strokeWidth="4"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                                style={{ filter: "blur(2px)", }}
-                            />
-                        </svg>
-                    </div>
-                    <div className="absolute inset-0 z-30 pointer-events-none">
-                        <svg className="" width="600" height="400">
-                            {/* background path */}
-                            <path
-                                d="M30 140 L280 140"
-                                stroke="none"
-                                strokeWidth="10"
-                                fill="transparent"
-                            />
-
-                            {/* animated progress */}
-                            <motion.path
-                                d="M30 110 L280 110"
-                                stroke="rgba(255, 60, 60, 0.8)"
-                                strokeWidth="10"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                            />
-                            <motion.path
-                                d="M30 110 L280 110"
-                                stroke="rgba(255,255,255,1)"
-                                strokeWidth="4"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                                style={{ filter: "blur(2px)", }}
-                            />
-                        </svg>
-                    </div>
-                    <div className="absolute inset-0 z-30 pointer-events-none">
-                        <svg className="" width="600" height="400">
-                            {/* background path */}
-                            <path
-                                d="M30 180 L280 180"
-                                stroke="none"
-                                strokeWidth="10"
-                                fill="transparent"
-                            />
-
-                            {/* animated progress */}
-                            <motion.path
-                                d="M30 180 L280 180"
-                                stroke="rgba(0,255,0,0.8)"
-                                strokeWidth="10"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                            />
-                            <motion.path
-                                d="M30 180 L280 180"
-                                stroke="rgba(255,255,255,1)"
-                                strokeWidth="4"
-                                fill="transparent"
-                                strokeDasharray="500"
-                                initial={{ strokeDashoffset: 500 }}
-                                animate={{ strokeDashoffset: 0 }}
-                                transition={{ duration: 3, ease: "linear" }}
-                                style={{ filter: "blur(2px)", }}
-                            />
-                        </svg>
-                    </div>
-                </AnimatePresence>
             </div>
 
         </div >

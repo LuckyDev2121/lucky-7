@@ -1,5 +1,5 @@
 // import { useState } from "react";
-
+import coin1 from "../assets/coin1.svg"
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import TopBoard from "./TopBoard";
@@ -12,13 +12,43 @@ import PrizeDistribution from "./PrizeDistribution";
 
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
+const duration = [0.9, 0.9, 0.9, 0.9, 0.9,
+    0.9, 0.9, 0.9, 0.9, 0.9,
+];
+const rotateX = [360, 326, 360, 326, 297,
+    110, 38, 10, 320, 194,
+];
+const rotateY = [310, 310, 0, 1, 110,
+    17, 24, 10, 31, 90,
+];
+const rotateZ = [211, 100, 3, 0, 0,
+    0, 1, 4, 35, 20,
+];
+const positionYStart = [0, 1, 6, 2, 4,
+    5, 2, 3, 5, 8,
+];
+const positionYMiddle = [12, 53, 32, 6, 79,
+    7, 49, 16, 54, 33,
+];
+const positionYEnd = [-300, -300, -300, -300, -300,
+-300, -300, -300, -300, -300,
+];
+const positionXStart = [0, 4, 5, 3, 5,
+    2, 3, 5, 6, 6,
+];
+const positionXMiddle = [22, 60, 35, 46, 11,
+    31, 52, 39, 50, 38,
+];
+const positionXEnd = [-300, -300, -300, -300, -300,
+-300, -300, -300, -300, -300,
+];
+
 
 export default function Lucky777Game() {
 
     const [activeModal, setActiveModal] = useState<string | null>(null);
     const [prizeModal, setPrizeModal] = useState<string | null>(null);
     const isOverlayOpen = (activeModal !== null || prizeModal !== null);
-    const lights = [59, 139, 154, 236, 255, 331];
     return (
         <div className="relative flex min-h-[100dvh] w-full border-[#130E2C] border-[4px,4px,0px,4px] items-end justify-center overflow-hidden">
             <div className="fixed inset-0 flex items-end justify-center overflow-hidden ">
@@ -111,41 +141,25 @@ export default function Lucky777Game() {
                                     className="absolute inset-0 z-20 rounded-t-[110px] bg-black/60"
                                 />
                             )}
-
-                            {lights.map((left,) => (
-                                <AnimatePresence>
-                                    <motion.div
-                                        className="absolute w-[5px] h-[60px] rounded-full"
-                                        initial={{ y: 140, opacity: 0 }}
-                                        animate={{ y: 460, opacity: 1 }}
-                                        transition={{
-                                            duration: 1.6,
-                                            ease: "linear",
-                                            repeat: Infinity,
-                                        }}
-                                        style={{
-                                            background: "linear-gradient(to bottom, transparent, white, transparent)",
-                                            filter: "blur(1px)",
-                                            left: `${left}px`
-                                        }}
-                                    />
-                                    <motion.div
-                                        className="absolute w-[5px] h-[10px] my-[25px] rounded-full"
-                                        initial={{ y: 140, opacity: 0 }}
-                                        animate={{ y: 460, opacity: 1 }}
-                                        transition={{
-                                            duration: 1.6,
-                                            ease: "linear",
-                                            repeat: Infinity,
-                                        }}
-                                        style={{
-                                            background: "white",
-                                            filter: "blur(2px)",
-                                            left: `${left}px`
-                                        }}
-                                    />
-                                </AnimatePresence>
-                            ))}
+                            {/* {
+                                duration.map((index, i) => (<motion.img
+                                    key={i}
+                                    src={coin1}
+                                    className="absolute w-10 h-10 left-1/2 -translate-x-1/2"
+                                    animate={{
+                                        x: [positionXStart[i], positionXMiddle[i], positionXEnd[i]],
+                                        y: [positionYStart[i], positionYMiddle[i], positionYEnd[i]],   // rise then drop
+                                        rotateX: [0, rotateX[i]],
+                                        rotateY: [0, rotateY[i]],
+                                        rotateZ: [0, rotateZ[i]],    // spin
+                                    }}
+                                    transition={{
+                                        duration: index,
+                                        ease: "easeInOut",
+                                        repeat: Infinity,
+                                    }}
+                                />))
+                            } */}
                         </AnimatePresence>
                     </div>
                 </div>
