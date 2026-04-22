@@ -98,5 +98,22 @@ export const GAME_MUSIC ={
 }
 
 export const GAME_ASSETS = {
+ autoBtn: "super777/auto-button.svg",
+ minusBtn: "super777/bet-minus-button.svg",
+plusBtn: "super777/bet-plus-button.svg",
+spinBtn:"super777/spin-button.svg",
+
+bigWin: "super777/Big-win.svg",
+bigWinDis: "super777/big-win-display.svg",
+megaWin:"super777/mega-win.svg",
+megaWinDis:"super777/mega-win-dispaly.svg",
+superWin:"super777/super-win.svg",
+superWinDis:"super777/super-win-display.svg",
+
+bg: "super777/bg.svg",
+diamond:"super777/diamond.svg",
+gameBoard:"super777/game-board.svg",
+jackpot:"super777/jackpot.svg",
+loadingLogo:"super777/loading-logo.svg",
 
     } as const;

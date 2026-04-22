@@ -18,10 +18,13 @@ export default function PrizeDistribution({ onClosePrize }: RankingProps) {
             </div>
             <span className="absolute top-[30px] left-1/2 -translate-x-1/2 text-[20px] font-sans text-white">PRIZE distribution</span>
             <div className="absolute w-[316px] h-[266px] top-[73px] left-1/2 -translate-x-1/2 bg-[#000000]/25 rounded-[5px]">
-                <div className="flex items-center justify-between w-[280px]">
-                    <span className="relative font-sans">Ranking</span>
-                    <span className=" relative font-sans">Name</span>
-                    <span className=" relative font-sans">Diamonds Play</span>
+                <div className="flex items-center justify-between w-[280px] pt-[10px]">
+                    <span className="relative font-sans ml-[50px] text-[#C499F4]">Ranking</span>
+                    <span className=" relative font-sans mr-[30px] text-[#C499F4]">Diamonds</span>
+                    <div className="absolute h-[1px] w-[300px] bg-[#C499F4] left-1/2 -translate-x-1/2 top-[30px]"></div>
+                </div>
+                <div>
+                    <span></span>
                 </div>
             </div>
             <div className="absolute grid top-[357px] h-[105px] w-[294px] left-1/2 -translate-x-1/2">
