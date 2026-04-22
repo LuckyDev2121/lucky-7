@@ -16,7 +16,7 @@ import digital from "../assets/Body/BodyPlayboard/Digital7.svg"
 import player from "../assets/Body/player.svg"
 import dotthree from "../assets/Body/BodyPlayboard/DotsThree.svg"
 import PlayBoard from "../components/PlayBoard"
-import { LightsAni, WinAni, RiseAni, RainMoney } from "./Assets";
+import { LightsAni, WinAni, RiseAni, RainMoney, PendingStar, RollingStar, ResultStar } from "./Assets";
 
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
@@ -271,8 +271,9 @@ export default function Lucky777Game() {
                                 />
                             )}
                         </AnimatePresence>
-                        {/* <LightsAni /> */}
+                        <LightsAni top={230} />
                         <WinAni />
+
                         {/* <RainMoney /> */}
                     </div>
                 </div>

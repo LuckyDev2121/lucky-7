@@ -274,15 +274,15 @@ export function ResultStar() {
         </>
     );
 }
-export function LightsAni() {
-    const lights = [59, 139, 154, 236, 255, 331];
+export function LightsAni({ top }: { top: number }) {
+    const lights = [59, 134, 154, 232, 251, 326];
     return (
         lights.map((left,) => (
             <AnimatePresence>
                 <motion.div
-                    className="absolute w-[5px] h-[60px] rounded-full"
-                    initial={{ y: 140, opacity: 1 }}
-                    animate={{ y: 460, opacity: 1 }}
+                    className="absolute  w-[5px] h-[60px] rounded-full"
+                    initial={{ y: 0, opacity: 1 }}
+                    animate={{ y: 170, opacity: 1 }}
                     transition={{
                         duration: 1.6,
                         ease: "linear",
@@ -291,13 +291,14 @@ export function LightsAni() {
                     style={{
                         background: "linear-gradient(to bottom, transparent, white, transparent)",
                         filter: "blur(1px)",
-                        left: `${left}px`
+                        left: `${left}px`,
+                        top: `${top}px`
                     }}
                 />
                 <motion.div
                     className="absolute w-[5px] h-[10px] my-[25px] rounded-full"
-                    initial={{ y: 140, opacity: 1 }}
-                    animate={{ y: 460, opacity: 1 }}
+                    initial={{ y: 0, opacity: 1 }}
+                    animate={{ y: 170, opacity: 1 }}
                     transition={{
                         duration: 1.6,
                         ease: "linear",
@@ -306,7 +307,8 @@ export function LightsAni() {
                     style={{
                         background: "white",
                         filter: "blur(2px)",
-                        left: `${left}px`
+                        left: `${left}px`,
+                        top: `${top}px`
                     }}
                 />
             </AnimatePresence>
