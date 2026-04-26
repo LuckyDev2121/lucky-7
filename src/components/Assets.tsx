@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Fragment, useState, useEffect } from "react";
 import coin1 from "../assets/coin1.svg"
 import coin2 from "../assets/coin2.svg"
 export function DarkStarIcon() {
@@ -121,7 +121,7 @@ export function PendingStar() {
         <>
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`left-edge-${i}`}
                     className="absolute"
                     style={{ left: `${leftPosition1[i]}px`, top: `${top}px` }}
                 >
@@ -130,7 +130,7 @@ export function PendingStar() {
             ))}
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`left-inner-${i}`}
                     className="absolute"
                     style={{ left: "102px", top: `${top}px` }}
                 >
@@ -139,7 +139,7 @@ export function PendingStar() {
             ))}
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`right-inner-${i}`}
                     className="absolute"
                     style={{ left: "201px", top: `${top}px` }}
                 >
@@ -148,7 +148,7 @@ export function PendingStar() {
             ))}
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`right-edge-${i}`}
                     className="absolute"
                     style={{ left: `${leftPosition2[i]}px`, top: `${top}px` }}
                 >
@@ -182,7 +182,7 @@ export function RollingStar() {
         <>
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`left-edge-${i}`}
                     className="absolute"
                     style={{ left: `${leftPosition1[i]}px`, top: `${top}px` }}
                 >
@@ -191,7 +191,7 @@ export function RollingStar() {
             ))}
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`left-inner-${i}`}
                     className="absolute"
                     style={{ left: "102px", top: `${top}px` }}
                 >
@@ -200,7 +200,7 @@ export function RollingStar() {
             ))}
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`right-inner-${i}`}
                     className="absolute"
                     style={{ left: "201px", top: `${top}px` }}
                 >
@@ -209,7 +209,7 @@ export function RollingStar() {
             ))}
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`right-edge-${i}`}
                     className="absolute"
                     style={{ left: `${leftPosition2[i]}px`, top: `${top}px` }}
                 >
@@ -237,7 +237,7 @@ export function ResultStar() {
         <>
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`left-edge-${i}`}
                     className="absolute"
                     style={{ left: `${leftPosition1[i]}px`, top: `${top}px` }}
                 >
@@ -246,7 +246,7 @@ export function ResultStar() {
             ))}
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`left-inner-${i}`}
                     className="absolute"
                     style={{ left: "102px", top: `${top}px` }}
                 >
@@ -255,7 +255,7 @@ export function ResultStar() {
             ))}
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`right-inner-${i}`}
                     className="absolute"
                     style={{ left: "201px", top: `${top}px` }}
                 >
@@ -264,7 +264,7 @@ export function ResultStar() {
             ))}
             {topPosition.map((top, i) => (
                 <div
-                    key={i}
+                    key={`right-edge-${i}`}
                     className="absolute"
                     style={{ left: `${leftPosition2[i]}px`, top: `${top}px` }}
                 >
@@ -277,8 +277,8 @@ export function ResultStar() {
 export function LightsAni({ top }: { top: number }) {
     const lights = [59, 134, 154, 232, 251, 326];
     return (
-        lights.map((left,) => (
-            <AnimatePresence>
+        lights.map((left, i) => (
+            <Fragment key={`light-${left}-${i}`}>
                 <motion.div
                     className="absolute  w-[5px] h-[60px] rounded-full"
                     initial={{ y: 0, opacity: 1 }}
@@ -311,7 +311,7 @@ export function LightsAni({ top }: { top: number }) {
                         top: `${top}px`
                     }}
                 />
-            </AnimatePresence>
+            </Fragment>
         ))
     )
 }

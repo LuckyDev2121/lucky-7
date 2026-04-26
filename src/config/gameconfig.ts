@@ -95,7 +95,6 @@ export function getMusicUrl(path: string): string {
 
 export const GAME_MUSIC ={
   music: "fruit-music.mp3",
-  sound: "fruit-sound.mp3",
 }
 
 export const GAME_ASSETS = {

@@ -73,7 +73,7 @@ export default function Lucky777Game({
                             </div>
                             <button className="absolute z-20 top-[25px] left-[28px] h-[72px] w-[72px] rounded-full flex items-center justify-center"
                                 onClick={() => setActiveModal("ranking")}>
-                                <AnimatePresence>
+                                <>
                                     <motion.img src={shine} alt="shine" className="absolute h-[60px] w-[60px] top-[4px]"
                                         animate={{ rotate: 360 }}
                                         transition={{
@@ -94,7 +94,7 @@ export default function Lucky777Game({
                                             repeatType: "reverse"
                                         }}
                                     >+{formatNumber(100000000)}</motion.span>
-                                </AnimatePresence>
+                                </>
                             </button>
                             <div className="absolute h-[66px] w-[266px] top-[30px] left-[91px] bg-gradient-to-t from-[#0E0038] to-[#140433] rounded-[4px]">
                                 <div className="relative grid grid-cols-4 justify-center h-[60px] w-[260px] pt-[2px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-[#1A0D38] to-[#160A38] border-2 border-[#A75991] rounded-[4px]">
@@ -258,7 +258,7 @@ export default function Lucky777Game({
                             }
                             {prizeModal === "prize" && (
                                 <motion.div
-                                    key={activeModal}
+                                    key={prizeModal}
                                     initial={{ y: GAME_HEIGHT, opacity: 0 }}
                                     animate={{ y: 80, opacity: 1 }}
                                     exit={{ y: GAME_HEIGHT, opacity: 0 }}

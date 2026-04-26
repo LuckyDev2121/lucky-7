@@ -1,5 +1,5 @@
 // import { useState, useEffect } from "react"
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { PendingStar, RollingStar, ResultStar } from "./Assets";
 
@@ -14,7 +14,7 @@ export default function PlayBoard() {
                 <RollingStar />
                 {/* <ResultStar /> */}
             </div>
-            <AnimatePresence>
+            <>
                 <div className="absolute inset-0 z-30 pointer-events-none">
                     <svg className="" width="600" height="400">
                         {/* background path */}
@@ -185,7 +185,7 @@ export default function PlayBoard() {
                         />
                     </svg>
                 </div>
-            </AnimatePresence>
+            </>
         </div>
 
     );
