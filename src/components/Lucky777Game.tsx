@@ -35,7 +35,13 @@ function formatNumber(num: number): string {
 }
 
 
-export default function Lucky777Game() {
+export default function Lucky777Game({
+    onToggleMusic,
+    isMusicPlaying,
+}: {
+    onToggleMusic: () => void;
+    isMusicPlaying: boolean;
+}) {
 
     const [activeModal, setActiveModal] = useState<string | null>(null);
     const [prizeModal, setPrizeModal] = useState<string | null>(null);
@@ -61,7 +67,9 @@ export default function Lucky777Game() {
                         <div className="absolute top-[135px] left-0  h-[454px] w-[393px]">
                             <div className="absolute -top-[17px] left-0 flex w-full items-center justify-between pl-[7px] pr-[20px] z-20">
                                 <MenuCoin onOpenModal={() => setActiveModal("recharge")} />
-                                <MenuTop onOpenModal={(modal) => { setActiveModal(modal) }} />
+                                <MenuTop onOpenModal={(modal) => { setActiveModal(modal) }}
+                                    onToggleMusic={onToggleMusic}
+                                    isMusicPlaying={isMusicPlaying} />
                             </div>
                             <button className="absolute z-20 top-[25px] left-[28px] h-[72px] w-[72px] rounded-full flex items-center justify-center"
                                 onClick={() => setActiveModal("ranking")}>
@@ -205,7 +213,7 @@ export default function Lucky777Game() {
                                     animate={{ y: 315, opacity: 1 }}
                                     exit={{ y: GAME_HEIGHT, opacity: 0 }}
                                     transition={{ duration: 0.4 }}
-                                    className="absolute z-150 h-[342px] w-[393px]"
+                                    className="absolute z-[30] h-[342px] w-[393px]"
                                 >
                                     <HelpMenu onCloseHelpModal={() => setActiveModal(null)} />
                                 </motion.div>
@@ -217,7 +225,7 @@ export default function Lucky777Game() {
                                     animate={{ y: 443, opacity: 1 }}
                                     exit={{ y: GAME_HEIGHT, opacity: 0 }}
                                     transition={{ duration: 0.4 }}
-                                    className="absolute z-50 h-[146px] w-[393px]"
+                                    className="absolute z-[50] h-[146px] w-[393px]"
                                 >
                                     <RechargeMenu onCloseRechargeModal={() => setActiveModal(null)} />
                                 </motion.div>
@@ -241,7 +249,7 @@ export default function Lucky777Game() {
                                     animate={{ y: 61, opacity: 1 }}
                                     exit={{ y: GAME_HEIGHT, opacity: 0 }}
                                     transition={{ duration: 0.4 }}
-                                    className="absolute z-30 left-[25px] h-[428px] w-[343px]"
+                                    className="absolute z-[30] left-[25px] h-[428px] w-[343px]"
                                 >
                                     <Ranking onCloseRanking={() => setActiveModal(null)}
                                         onOpenPrizeDistribution={() => setPrizeModal("prize")} />
@@ -255,7 +263,7 @@ export default function Lucky777Game() {
                                     animate={{ y: 80, opacity: 1 }}
                                     exit={{ y: GAME_HEIGHT, opacity: 0 }}
                                     transition={{ duration: 0.4 }}
-                                    className="absolute z-50 left-[25px] h-[428px] w-[343px]"
+                                    className="absolute z-[50] left-[25px] h-[428px] w-[343px]"
                                 >
                                     <PrizeDistribution onClosePrize={() => setPrizeModal(null)} />
                                 </motion.div>
@@ -267,7 +275,7 @@ export default function Lucky777Game() {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.25 }}
-                                    className="absolute inset-0 z-20 rounded-t-[110px] bg-black/60"
+                                    className="absolute inset-0 z-[20] rounded-t-[110px] bg-black/60"
                                 />
                             )}
                         </AnimatePresence>

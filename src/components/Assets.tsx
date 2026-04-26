@@ -647,15 +647,6 @@ export function RainMoney() {
 }
 
 
-
-
-
-
-
-
-
-
-
 {/* <div
                                 className="absolute bottom-0 left-0 h-[70px] w-full bg-gradient-to-br from-[#D5831F] from-1% via-30% via-[#FFF987]  to-[#D5831F] to-90%"
                                 style={{

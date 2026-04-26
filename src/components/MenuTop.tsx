@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { ButtonMenu, HistoryIcon, SpeakerHighIcon, QuestionMarkIcon, CloseIcon } from "./ButtonMenu";
+import { ButtonMenu, HistoryIcon, SpeakerHighIcon, SpeakerMuteIcon, QuestionMarkIcon, CloseIcon } from "./ButtonMenu";
+import { closeCurrentView } from "../utils/closeCurrentView";
 
 type TopMenuProps = {
     onOpenModal: (modal: string) => void;
+    onToggleMusic: () => void;
+    isMusicPlaying: boolean;
 };
 
-const TopMenu: React.FC<TopMenuProps> = ({ onOpenModal }) => {
+const TopMenu: React.FC<TopMenuProps> = ({ onOpenModal, onToggleMusic, isMusicPlaying }) => {
 
-    const [mute, setMute] = useState(false);
 
     return (
         <div className="relative flex gap-[5px]">
@@ -22,12 +23,9 @@ const TopMenu: React.FC<TopMenuProps> = ({ onOpenModal }) => {
             <ButtonMenu
                 borderColor="none"
                 borderWidth="0px"
-                icon={<SpeakerHighIcon />}
+                icon={isMusicPlaying ? <SpeakerHighIcon /> : <SpeakerMuteIcon />}
                 background={"#2D1F76"}
-                onClick={() => {
-                    onOpenModal("music")
-                    setMute(!mute)
-                }}
+                onClick={onToggleMusic}
             />
 
             <ButtonMenu
@@ -42,7 +40,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ onOpenModal }) => {
                 borderWidth="0px"
                 icon={<CloseIcon />}
                 background={"#2D1F76"}
-                onClick={() => onOpenModal("close")}
+                onClick={closeCurrentView}
             />
         </div >
     );

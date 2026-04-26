@@ -17,20 +17,21 @@ const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.DEV ? "/api" : `${BACKEND_ORIGIN}/api`);
 
+  export const INTRO_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/intro`;
 export const GAME_DETAILS_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/game-details/${GAME_ID}`;
-export const PLAYER_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/player`;
-export const GAME_RESULTS_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/game/${GAME_ID}/results`;
-export const ROUND_RESULT_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/round-result`;
-export const PLACE_BET_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/place-bet`;
 export const CURRENT_ROUND_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/game-round/${GAME_ID}`;
-export const SOUND_SETTING_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/sound-setting`;
-export const MUSIC_SETTING_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/music-setting`;
+export const ROUND_RESULT_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/round-result`;
+export const GAME_RESULTS_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/game/${GAME_ID}/results`;
+export const REMAINING_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/remaining_today`
+export const RANKING_YESTERDAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/ranking-yesterday/${GAME_ID}`;
 export const RANKING_TODAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/ranking-today/${GAME_ID}`;
-export const WIN_TODAY_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/win-today`;
-export const PLAYER_LOG_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/player-log`;
 export const RECHARGE_URL_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/company/wallet/1`;
-export const INTRO_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/intro`;
+export const PRIZE_DISTRIBUTIONS_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/prize-distributions/${GAME_ID}`;
 
+
+export const PLAYER_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/player`;
+export const PLACE_BET_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/place-bet`;
+export const MUSIC_SETTING_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/music-setting`;
 
 
 export const REVERB_KEY =
