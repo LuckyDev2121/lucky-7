@@ -8,8 +8,8 @@ import { PendingStar, RollingStar, ResultStar } from "./Assets";
 export default function PlayBoard() {
     return (
         <div className="relative h-[226px] w-[310px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  inset-[2px] rounded-[7px] ">
-            <div className="absolute inset-0 z-30 pointer-events-none">
 
+            <div className="absolute inset-0 z-30 pointer-events-none">
                 {/* <PendingStar /> */}
                 <RollingStar />
                 {/* <ResultStar /> */}
