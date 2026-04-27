@@ -84,8 +84,8 @@ export default function Lucky777Game({
                                         transition={{
                                             rotate: { repeat: Infinity, duration: 1, ease: "linear" },
                                         }} />
-                                    <RiseAni left={30} top={-35} />
-                                    <motion.span className="absolute z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                    {/* <RiseAni left={30} top={-35} /> */}
+                                    {/* <motion.span className="absolute z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                         initial={{ y: -5, }}
                                         animate={{ y: 5, }}
                                         transition={{
@@ -93,7 +93,7 @@ export default function Lucky777Game({
                                             repeat: Infinity, // 👈 add this
                                             repeatType: "reverse"
                                         }}
-                                    >+{formatNumber(100000000)}</motion.span>
+                                    >+{formatNumber(100000000)}</motion.span> */}
                                 </>
                             </button>
                             <div className="absolute h-[66px] w-[266px] top-[30px] left-[91px] bg-gradient-to-t from-[#0E0038] to-[#140433] rounded-[4px]">
@@ -101,8 +101,8 @@ export default function Lucky777Game({
                                     <div className="relative items-center justify-center">
                                         <img src={player} alt="player" className="absolute left-1/2 -translate-x-1/2" />
                                         <span className="absolute inset-x-0 text-center top-[42px]  text-[8px]">Sumiya BD</span>
-                                        <RiseAni left={25} top={-50} />
-                                        <motion.span className="absolute left-[10px] top-[10px]  z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                        {/* <RiseAni left={25} top={-50} /> */}
+                                        {/* <motion.span className="absolute left-[10px] top-[10px]  z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                             initial={{ y: -5, }}
                                             animate={{ y: 5, }}
                                             transition={{
@@ -110,13 +110,13 @@ export default function Lucky777Game({
                                                 repeat: Infinity, // 👈 add this
                                                 repeatType: "reverse"
                                             }}
-                                        >+{formatNumber(100000000)}</motion.span>
+                                        >+{formatNumber(100000000)}</motion.span> */}
                                     </div>
                                     <div className="relative">
                                         <img src={player} alt="player" className="absolute left-1/2 -translate-x-1/2" />
                                         <span className="absolute inset-x-0 text-center top-[42px] align-middle text-[8px]">Sumiya BD</span>
-                                        <RiseAni left={25} top={-50} />
-                                        <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                        {/* <RiseAni left={25} top={-50} /> */}
+                                        {/* <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                             initial={{ y: -5, }}
                                             animate={{ y: 5, }}
                                             transition={{
@@ -124,13 +124,13 @@ export default function Lucky777Game({
                                                 repeat: Infinity, // 👈 add this
                                                 repeatType: "reverse"
                                             }}
-                                        >+{formatNumber(1000000)}</motion.span>
+                                        >+{formatNumber(1000000)}</motion.span> */}
                                     </div>
                                     <div className="relative">
                                         <img src={player} alt="player" className="absolute left-1/2 -translate-x-1/2" />
                                         <span className="absolute inset-x-0 text-center top-[42px] algin-middle text-[8px]">Sumiya BD</span>
-                                        <RiseAni left={25} top={-50} />
-                                        <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                        {/* <RiseAni left={25} top={-50} /> */}
+                                        {/* <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                             initial={{ y: -5, }}
                                             animate={{ y: 5, }}
                                             transition={{
@@ -138,7 +138,7 @@ export default function Lucky777Game({
                                                 repeat: Infinity, // 👈 add this
                                                 repeatType: "reverse"
                                             }}
-                                        >+{formatNumber(1000000)}</motion.span>
+                                        >+{formatNumber(1000000)}</motion.span> */}
                                     </div>
                                     <div className="relative ">
                                         <img src={player} alt="player" className="absolute top-[10px] left-[10px] h-[20px] z-30" />
@@ -150,7 +150,7 @@ export default function Lucky777Game({
                                             <span className="text-[8px]">Online : </span>
                                             <span className="text-[10px]">248</span>
                                         </div>
-                                        <motion.span className="absolute left-[10px] top-[10px] z-[30] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                        {/* <motion.span className="absolute left-[10px] top-[10px] z-[30] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                             initial={{ y: -5, }}
                                             animate={{ y: 5, }}
                                             transition={{
@@ -158,7 +158,7 @@ export default function Lucky777Game({
                                                 repeat: Infinity, // 👈 add this
                                                 repeatType: "reverse"
                                             }}
-                                        >+{formatNumber(1000000)}</motion.span>
+                                        >+{formatNumber(1000000)}</motion.span> */}
                                     </div>
                                 </div>
                             </div>
@@ -279,8 +279,8 @@ export default function Lucky777Game({
                                 />
                             )}
                         </AnimatePresence>
-                        <LightsAni />
-                        <WinAni />
+                        {/* <LightsAni /> */}
+                        {/* <WinAni /> */}
 
                         {/* <RainMoney /> */}
                     </div>
