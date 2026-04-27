@@ -1,6 +1,5 @@
 // import { useState, useEffect } from "react"
 import { motion } from "framer-motion";
-
 import { PendingStar, RollingStar, ResultStar, StartAni, StopAni, RepeatAni } from "./Assets";
 
 
@@ -8,9 +7,15 @@ import { PendingStar, RollingStar, ResultStar, StartAni, StopAni, RepeatAni } fr
 export default function PlayBoard() {
     return (
         <div className="relative h-[226px] w-[310px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  inset-[2px] rounded-[7px] ">
-            <RepeatAni left={26} />
-            <RepeatAni left={123} />
-            <RepeatAni left={218} />
+            <RepeatAni left={26} delay={0} />
+            <RepeatAni left={123} delay={0.1} />
+            <RepeatAni left={218} delay={0.2} />
+            <StartAni left={26} delay={0} />
+            <StartAni left={123} delay={0.1} />
+            <StartAni left={218} delay={0.2} />
+            <StopAni left={26} delay={6.6} />
+            <StopAni left={123} delay={6.7} />
+            <StopAni left={218} delay={6.8} />
             <div className="absolute inset-0 z-30 pointer-events-none">
                 {/* <PendingStar /> */}
                 <RollingStar />

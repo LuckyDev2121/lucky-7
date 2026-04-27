@@ -690,33 +690,95 @@ export function RainMoney() {
         </>
     )
 }
-export function StartAni() {
-
-}
-export function StopAni() {
-
-}
-export function RepeatAni({ left }: { left: number }) {
+export function StartAni({ left, delay }: { left: number; delay: number }) {
+    const rows = [0, 1, 2]
     return (
         <Fragment key={`light-${left}-${1}`}>
             <div
-                className="absolute bg-black overflow-hidden pointer-events-none"
+                className="absolute overflow-hidden pointer-events-none"
                 style={{ left: `${left}px`, top: `${5}px`, width: "65px", height: "215px" }}
             >
-                <motion.div
-                    className="absolute left-0 top-0 w-[65px] h-[65px] rounded-full"
-                    initial={{ y: -65, opacity: 1 }}
-                    animate={{ y: 225, opacity: 1 }}
-                    transition={{
-                        duration: 1.6,
-                        ease: "linear",
-                        repeat: Infinity,
-                    }}
-                    style={{
-                        background: "linear-gradient(to bottom, transparent, white, transparent)",
-                        filter: "blur(1px)",
-                    }}
-                />
+                {rows.map((_, index) => (
+                    <motion.div
+                        className="absolute left-0 top-0 w-[65px] h-[65px]"
+                        initial={{ y: 5 + index * 70, opacity: 1 }}
+                        animate={{ y: 215, opacity: 1 }}
+                        transition={{
+                            duration: 0.45 - index * 0.15,
+                            ease: "linear",
+                            delay: delay,
+                            // repeat: Infinity,
+                        }}
+                        style={{
+                            background: "linear-gradient( green )",
+                            filter: "blur(1px)",
+                        }}
+                    />
+                )
+                )
+                }
+            </div>
+        </Fragment>
+    )
+}
+export function StopAni({ left, delay }: { left: number; delay: number }) {
+    const rows = [0, 1, 2]
+    return (
+        <Fragment key={`light-${left}-${1}`}>
+            <div
+                className="absolute  overflow-hidden pointer-events-none"
+                style={{ left: `${left}px`, top: `${5}px`, width: "65px", height: "215px" }}
+            >
+                {rows.map((_, index) => (
+                    <motion.div
+                        className="absolute left-0 top-0 w-[65px] h-[65px]"
+                        initial={{ y: -65, opacity: 1 }}
+                        animate={{ y: 145 - 70 * index, opacity: 1 }}
+                        transition={{
+                            duration: 0.45 - 0.15 * index,
+                            ease: "linear",
+                            delay: delay + 0.15 * index,
+                        }}
+                        style={{
+                            background: "linear-gradient( red )",
+                            filter: "blur(1px)",
+                        }}
+                    >
+                    </motion.div>
+                )
+                )
+                }
+            </div>
+        </Fragment>
+    )
+}
+export function RepeatAni({ left, delay }: { left: number; delay: number }) {
+    const rows = [0, 1, 2, 3]
+    return (
+        <Fragment key={`light-${left}-${1}`}>
+            <div
+                className="absolute  overflow-hidden pointer-events-none"
+                style={{ left: `${left}px`, top: `${5}px`, width: "65px", height: "215px" }}
+            >
+                {rows.map((_, index) => (
+                    <motion.div
+                        className="absolute left-0 top-0 w-[65px] h-[65px]"
+                        initial={{ y: -65, opacity: 1 }}
+                        animate={{ y: 215, opacity: 1 }}
+                        transition={{
+                            duration: 0.6,
+                            ease: "linear",
+                            delay: delay + index * 0.15,
+                            repeat: 10,
+                        }}
+                        style={{
+                            background: "linear-gradient( white )",
+                            filter: "blur(1px)",
+                        }}
+                    />
+                )
+                )
+                }
             </div>
         </Fragment>
     )
