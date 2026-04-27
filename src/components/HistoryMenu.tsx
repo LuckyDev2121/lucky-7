@@ -1,7 +1,6 @@
-import rectangle from "../assets/Modal/Rectangle.svg"
 import { ButtonMenu, CloseIcon } from "./ButtonMenu";
 import RecordBoard from "./RecordBoard";
-
+import { RectangleIcon } from "./Assets";
 type HistoryMenuProps = {
     onCloseHistory: () => void;
 };
@@ -9,7 +8,9 @@ type HistoryMenuProps = {
 export default function HistoryMenu({ onCloseHistory }: HistoryMenuProps) {
     return (
         <div className="h-[428px] bg-gradient-to-t from-[#120D25] to-[#43308B] w-[343px] rounded-t-[20px]">
-            <img src={rectangle} alt="Rectangle" className="absolute left-1/2 transform -translate-x-1/2" />
+            <div className="absolute left-1/2 transform -translate-x-1/2" >
+                <RectangleIcon />
+            </div>
             <span className="absolute top-[4px] left-1/2 transform -translate-x-1/2 text-[16px] font-bold mt-1">Game Records</span>
             <div className="absolute top-[12px] right-[12px]">
                 <ButtonMenu

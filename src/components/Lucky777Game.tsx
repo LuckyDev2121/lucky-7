@@ -279,7 +279,7 @@ export default function Lucky777Game({
                                 />
                             )}
                         </AnimatePresence>
-                        <LightsAni top={230} />
+                        <LightsAni />
                         <WinAni />
 
                         {/* <RainMoney /> */}

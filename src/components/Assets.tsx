@@ -2,6 +2,50 @@ import { motion } from "framer-motion";
 import { Fragment, useState, useEffect } from "react";
 import coin1 from "../assets/coin1.svg"
 import coin2 from "../assets/coin2.svg"
+
+export function RectangleIcon() {
+    return (
+        <svg
+            width="298"
+            height="35"
+            viewBox="0 0 298 35"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M295.43 0H3.07L54.26 17.13C56.09 17.75 57.66 18.97 58.7 20.59L70.89 39.48C71.9 41.05 73.64 42 75.51 42H238.61C240.79 42 242.77 40.71 243.64 38.71L251.73 20.28C252.62 18.25 254.27 16.65 256.33 15.82L295.43 0Z"
+                transform="translate(0 -7.5)"
+                fill="url(#rectangle-fill)"
+                stroke="url(#rectangle-stroke)"
+            />
+            <defs>
+                <linearGradient
+                    id="rectangle-fill"
+                    x1="149"
+                    y1="-8"
+                    x2="149"
+                    y2="35"
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <stop stop-color="#4C34AC" />
+                    <stop offset="1" stop-color="#7456D0" />
+                </linearGradient>
+                <linearGradient
+                    id="rectangle-stroke"
+                    x1="156.5"
+                    y1="35"
+                    x2="156.5"
+                    y2="-1.5"
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <stop stop-opacity="0" />
+                    <stop offset="0.5" stop-color="#9E85EB" />
+                    <stop offset="1" stop-color="#333333" stop-opacity="0" />
+                </linearGradient>
+            </defs>
+        </svg>
+    )
+}
 export function DarkStarIcon() {
     return (
         <svg width="11" height="10" viewBox="0 0 11 10" fill="none" aria-hidden="true">
@@ -115,7 +159,7 @@ export function PendingStar() {
 
     const topPosition = [20, 56, 90, 124, 158, 192];
     const leftPosition1 = [8, 7, 6, 6, 7, 8];
-    const leftPosition2 = [294, 295, 296, 296, 295, 294];
+    const leftPosition2 = [292, 293, 294, 294, 293, 292];
 
     return (
         <>
@@ -132,7 +176,7 @@ export function PendingStar() {
                 <div
                     key={`left-inner-${i}`}
                     className="absolute"
-                    style={{ left: "102px", top: `${top}px` }}
+                    style={{ left: "101px", top: `${top}px` }}
                 >
                     <PendingAni active={i === activeIndex} />
                 </div>
@@ -141,7 +185,7 @@ export function PendingStar() {
                 <div
                     key={`right-inner-${i}`}
                     className="absolute"
-                    style={{ left: "201px", top: `${top}px` }}
+                    style={{ left: "199px", top: `${top}px` }}
                 >
                     <PendingAni active={i === activeIndex} />
                 </div>
@@ -175,8 +219,8 @@ export function RollingStar() {
     }, []);
 
     const topPosition = [24, 58, 92, 126, 160, 194];
-    const leftPosition1 = [7, 6, 5, 5, 6, 7];
-    const leftPosition2 = [294, 295, 296, 296, 295, 294];
+    const leftPosition1 = [8, 7, 6, 6, 7, 8];
+    const leftPosition2 = [292, 293, 294, 294, 293, 292];
 
     return (
         <>
@@ -193,7 +237,7 @@ export function RollingStar() {
                 <div
                     key={`left-inner-${i}`}
                     className="absolute"
-                    style={{ left: "102px", top: `${top}px` }}
+                    style={{ left: "101px", top: `${top}px` }}
                 >
                     <PendingAni active={activeIndex - 2 <= i && i <= activeIndex} />
                 </div>
@@ -202,7 +246,7 @@ export function RollingStar() {
                 <div
                     key={`right-inner-${i}`}
                     className="absolute"
-                    style={{ left: "201px", top: `${top}px` }}
+                    style={{ left: "199px", top: `${top}px` }}
                 >
                     <PendingAni active={activeIndex - 2 <= i && i <= activeIndex} />
                 </div>
@@ -230,8 +274,8 @@ export function ResultStar() {
     }, []);
 
     const topPosition = [24, 58, 92, 126, 160, 194];
-    const leftPosition1 = [7, 6, 5, 5, 6, 7];
-    const leftPosition2 = [294, 295, 296, 296, 295, 294];
+    const leftPosition1 = [8, 7, 6, 6, 7, 8];
+    const leftPosition2 = [292, 293, 294, 294, 293, 292];
 
     return (
         <>
@@ -248,7 +292,7 @@ export function ResultStar() {
                 <div
                     key={`left-inner-${i}`}
                     className="absolute"
-                    style={{ left: "102px", top: `${top}px` }}
+                    style={{ left: "101px", top: `${top}px` }}
                 >
                     <ResultAni active={i % 2 === activeIndex} color={activeIndex + 1} />
                 </div>
@@ -257,7 +301,7 @@ export function ResultStar() {
                 <div
                     key={`right-inner-${i}`}
                     className="absolute"
-                    style={{ left: "201px", top: `${top}px` }}
+                    style={{ left: "199px", top: `${top}px` }}
                 >
                     <ResultAni active={i % 2 === activeIndex} color={activeIndex + 1} />
                 </div>
@@ -274,43 +318,44 @@ export function ResultStar() {
         </>
     );
 }
-export function LightsAni({ top }: { top: number }) {
+export function LightsAni() {
     const lights = [59, 134, 154, 232, 251, 326];
     return (
         lights.map((left, i) => (
             <Fragment key={`light-${left}-${i}`}>
-                <motion.div
-                    className="absolute  w-[5px] h-[60px] rounded-full"
-                    initial={{ y: 0, opacity: 1 }}
-                    animate={{ y: 170, opacity: 1 }}
-                    transition={{
-                        duration: 1.6,
-                        ease: "linear",
-                        repeat: Infinity,
-                    }}
-                    style={{
-                        background: "linear-gradient(to bottom, transparent, white, transparent)",
-                        filter: "blur(1px)",
-                        left: `${left}px`,
-                        top: `${top}px`
-                    }}
-                />
-                <motion.div
-                    className="absolute w-[5px] h-[10px] my-[25px] rounded-full"
-                    initial={{ y: 0, opacity: 1 }}
-                    animate={{ y: 170, opacity: 1 }}
-                    transition={{
-                        duration: 1.6,
-                        ease: "linear",
-                        repeat: Infinity,
-                    }}
-                    style={{
-                        background: "white",
-                        filter: "blur(2px)",
-                        left: `${left}px`,
-                        top: `${top}px`
-                    }}
-                />
+                <div
+                    className="absolute overflow-hidden pointer-events-none"
+                    style={{ left: `${left}px`, top: `${238}px`, width: "5px", height: "214px" }}
+                >
+                    <motion.div
+                        className="absolute left-0 top-0 w-[5px] h-[60px] rounded-full"
+                        initial={{ y: -60, opacity: 1 }}
+                        animate={{ y: 220, opacity: 1 }}
+                        transition={{
+                            duration: 1.6,
+                            ease: "linear",
+                            repeat: Infinity,
+                        }}
+                        style={{
+                            background: "linear-gradient(to bottom, transparent, white, transparent)",
+                            filter: "blur(1px)",
+                        }}
+                    />
+                    <motion.div
+                        className="absolute left-0 top-0 my-[25px] w-[5px] h-[10px] rounded-full"
+                        initial={{ y: -60, opacity: 1 }}
+                        animate={{ y: 220, opacity: 1 }}
+                        transition={{
+                            duration: 1.6,
+                            ease: "linear",
+                            repeat: Infinity,
+                        }}
+                        style={{
+                            background: "white",
+                            filter: "blur(2px)",
+                        }}
+                    />
+                </div>
             </Fragment>
         ))
     )
@@ -645,7 +690,37 @@ export function RainMoney() {
         </>
     )
 }
+export function StartAni() {
 
+}
+export function StopAni() {
+
+}
+export function RepeatAni({ left }: { left: number }) {
+    return (
+        <Fragment key={`light-${left}-${1}`}>
+            <div
+                className="absolute bg-black overflow-hidden pointer-events-none"
+                style={{ left: `${left}px`, top: `${5}px`, width: "65px", height: "215px" }}
+            >
+                <motion.div
+                    className="absolute left-0 top-0 w-[65px] h-[65px] rounded-full"
+                    initial={{ y: -65, opacity: 1 }}
+                    animate={{ y: 225, opacity: 1 }}
+                    transition={{
+                        duration: 1.6,
+                        ease: "linear",
+                        repeat: Infinity,
+                    }}
+                    style={{
+                        background: "linear-gradient(to bottom, transparent, white, transparent)",
+                        filter: "blur(1px)",
+                    }}
+                />
+            </div>
+        </Fragment>
+    )
+}
 
 {/* <div
                                 className="absolute bottom-0 left-0 h-[70px] w-full bg-gradient-to-br from-[#D5831F] from-1% via-30% via-[#FFF987]  to-[#D5831F] to-90%"

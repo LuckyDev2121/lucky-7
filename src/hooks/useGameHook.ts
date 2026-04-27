@@ -2,26 +2,19 @@ import { useCallback, useEffect, useState } from "react";
 import { echo,  } from "./echo";
 import {
   fetchGameDetail,
-  createRound,
-  makeGameResult,
-  fetchGameResults,
   fetchRemainingToday,
   fetchRankingToday,
   fetchRankingYesterday,
   fetchRechargeUrl,
   fetchPrizeDistribution,
   fetchPlayerInfo,
-  placeBet as placeBetRequest,
   fetchMusicSetting,
   saveMusicSetting,
+  betPlace,
   type GameDetailsData,
-  type CreateRoundResponse,
-  type ResultData,
-  type GameResults,
   type RankingItem,
   type RechargeUrlResponse,
   type PrizeDistributionProps,
-  type PlaceBet,
   type PlayerDetailsData,
 } from "../api/api";
 import {
@@ -34,9 +27,6 @@ export function resolveAssetUrl(path: string): string {
 }
 type GameStore = {
   gameDetails: GameDetailsData | null;
-  roundData: CreateRoundResponse | null;
-  makeResult: ResultData | null;
-  results: GameResults | null;
   rankingTodays: RankingItem[];
   rankingYesterdays:RankingItem[];
   url?:RechargeUrlResponse | null;
@@ -51,9 +41,6 @@ remaining:number;
 const listeners = new Set<(state: GameStore) => void>();
 let store: GameStore = {
   gameDetails: null,
-  roundData: null,
-  makeResult: null,
-  results: null,
   rankingTodays: [],
   rankingYesterdays: [],
   url:null,
@@ -83,9 +70,8 @@ function updateStore(
 async function runRefreshGameData() {
   updateStore({ isLoading: true, isMusicSettingLoading: true });
   try {
-    const [gameDetail,gameResults,rankingToday,rankingYesterday,player,url,prizeDistribution,isMusicEnabled] = await Promise.all([
+    const [gameDetail,rankingToday,rankingYesterday,player,url,prizeDistribution,isMusicEnabled] = await Promise.all([
       fetchGameDetail(),
-      fetchGameResults(),
       fetchRankingToday(),
       fetchRankingYesterday(),
       fetchPlayerInfo(),
@@ -95,7 +81,6 @@ async function runRefreshGameData() {
     ]);
   updateStore({
     gameDetails: gameDetail,
-    results: gameResults,
     rankingTodays: rankingToday,
     rankingYesterdays: rankingYesterday,
   playerInfo: player,
@@ -137,12 +122,6 @@ export function useGame() {
     };
   }, []);
 
-  const handleCreateRound = useCallback(async () => {
-    const data = await createRound();
-    updateStore({ roundData: data });
-    return data;
-  }, []);
-
 const handlePrizeDistribution= useCallback(async () => {
     const data = await fetchPrizeDistribution();
     updateStore({ prizeDistribution: data });
@@ -162,50 +141,13 @@ const handlePrizeDistribution= useCallback(async () => {
   }
 }, []);
 
-  const handleGameRound = useCallback(async (roundId: number) => {
-    const data = await makeGameResult(roundId);
-    updateStore({
-      makeResult: data.data,
-    });
-    return data.data;
-  }, []);
-
-  const handleMakeResult = useCallback(async (roundId: number) => {
-    const data = await makeGameResult(roundId);
-    const [player,gameResults,rankingToday,rankingYesterday,] = await Promise.all([
-      fetchPlayerInfo(),
-      fetchGameResults(),
-      fetchRankingToday(),
-      fetchRankingYesterday(),
-    ]);
-    updateStore({
-      makeResult: data.data,
-      playerInfo: player,
-      results: gameResults,
-      rankingTodays: rankingToday,
-      rankingYesterdays: rankingYesterday,
-    });
-    return data;
-  }, []);
-
   const handlePlaceBet = useCallback(async (optionId: number, amount: number,) => {
     const currentBalance = Number.parseFloat(store.playerInfo?.balance ?? "0");
     if (currentBalance < amount) {
       throw new Error("Insufficient balance");
     }
-    const response: PlaceBet = await placeBetRequest(optionId, amount,);
+    const response: betPlace = await betPlace(optionId, amount,);
     return response;
-  }, []);
-  const reserveBetBalance = useCallback((amount: number) => {
-    if (amount <= 0) {
-      return;
-    }
-  }, []);
-
-  const releaseBetBalance = useCallback((amount: number) => {
-    if (amount <= 0) {
-      return;
-    }
   }, []);
 
 const handleSetMusicEnabled = useCallback(async (nextValue: boolean) => {
@@ -225,9 +167,6 @@ const clearCurrentRoundBets = useCallback(() => {
     options: snapshot.gameDetails?.options ?? [],
     gameDetails: snapshot.gameDetails,
     playerInfo: snapshot.playerInfo,
-    results: snapshot.results,
-    roundData: snapshot.roundData,
-    makeResult: snapshot.makeResult,
     isLoading: snapshot.isLoading,
     isMusicEnabled: snapshot.isMusicEnabled,
     isMusicSettingLoading: snapshot.isMusicSettingLoading,
@@ -235,12 +174,7 @@ const clearCurrentRoundBets = useCallback(() => {
     rankingYesterday: snapshot.rankingYesterdays,
     rechargeUrl: snapshot.url?.url || null,
     prizeDistribution:snapshot.prizeDistribution,
-    createRound: handleCreateRound,
-    makeGameRound:handleGameRound,
-    makeGameResult: handleMakeResult,
     placeBet: handlePlaceBet,
-    reserveBetBalance,
-    releaseBetBalance,
     setMusicEnabled: handleSetMusicEnabled,
     clearCurrentRoundBets,
     handleRechargeRedirect,

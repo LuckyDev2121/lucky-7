@@ -3,16 +3,14 @@ import {
   GAME_ID,
   GAME_DETAILS_API_URL,
   PLAYER_API_URL,
-  GAME_RESULTS_API_URL,
-  PLACE_BET_API_URL,
-  CURRENT_ROUND_API_URL,
-  ROUND_RESULT_API_URL,
+  BET_PLACE_API_URL,
   MUSIC_SETTING_API_URL,
   RANKING_TODAY_API_URL,
   RECHARGE_URL_API_URL,
   PRIZE_DISTRIBUTIONS_API_URL,
   RANKING_YESTERDAY_API_URL,
   REMAINING_API_URL,
+  
 } from "../config/gameconfig";
 import { getUserId } from "../utils/user";
 
@@ -25,7 +23,6 @@ type GameOption = {
 type BetAmount = {
   id: number;
   amount: string;
-  mode:string;
   icon: string;
 };
 type HowToPlay = {
@@ -52,72 +49,72 @@ export const fetchGameDetail = async (): Promise<GameDetailsData> => {
   return response.data.data as GameDetailsData;
 };
 /////////////////////////////////////////////////////////////
-export type CreateRoundResponse = {
-  game_id: number;
-  round_no: number;
-  remaining_seconds: number;
-  stage: string;
-};
-export const createRound = async (): Promise<CreateRoundResponse> => {
-  const response = await axios.get<CreateRoundResponse>(CURRENT_ROUND_API_URL);
-  if (!response.data) {
-    // throw new Error(response.data || "Failed to load sound setting");
-    console.log("game-round error")
-  }
-  return response.data;
-}
+// export type CreateRoundResponse = {
+//   game_id: number;
+//   round_no: number;
+//   remaining_seconds: number;
+//   stage: string;
+// };
+// export const createRound = async (): Promise<CreateRoundResponse> => {
+//   const response = await axios.get<CreateRoundResponse>(CURRENT_ROUND_API_URL);
+//   if (!response.data) {
+//     // throw new Error(response.data || "Failed to load sound setting");
+//     console.log("game-round error")
+//   }
+//   return response.data;
+// }
 ///////////////////////////////////////////////////////////
-type Winners = {
-  id: number;
-  username: string;
-  avater: string;
-  win_amount: number;
-}
-export type ResultData = {
-  round_id: number;
-  round_no: number;
-  winning_option_id: number;
-  winners: Winners[];
-};
-export type MakeResultResponse = {
-  status: boolean;
-  message: string;
-  data?: ResultData;
-};
-export const makeGameResult = async (roundId: number): Promise<MakeResultResponse> => {
-    const response = await axios.post<MakeResultResponse>(ROUND_RESULT_API_URL, {
-      game_id: GAME_ID,
-      round_no: roundId,
-    });
-  if (!response.data.status) {
-console.log("round-result status error")
-    // throw new Error(response.data.message || "Failed to make game result");
-  }
-  if (!response.data.data) {
-console.log("round-result data error")
-    // throw new Error(response.data.message || "Failed to make game result");
-  }
-  return response.data;
-};
+// type Winners = {
+//   id: number;
+//   username: string;
+//   avater: string;
+//   win_amount: number;
+// }
+// export type ResultData = {
+//   round_id: number;
+//   round_no: number;
+//   winning_option_id: number;
+//   winners: Winners[];
+// };
+// export type MakeResultResponse = {
+//   status: boolean;
+//   message: string;
+//   data?: ResultData;
+// };
+// export const makeGameResult = async (roundId: number): Promise<MakeResultResponse> => {
+//     const response = await axios.post<MakeResultResponse>(ROUND_RESULT_API_URL, {
+//       game_id: GAME_ID,
+//       round_no: roundId,
+//     });
+//   if (!response.data.status) {
+// console.log("round-result status error")
+//     // throw new Error(response.data.message || "Failed to make game result");
+//   }
+//   if (!response.data.data) {
+// console.log("round-result data error")
+//     // throw new Error(response.data.message || "Failed to make game result");
+//   }
+//   return response.data;
+// };
 ///////////////////////////////////////////////////////////////
-type GameResultItem = {
-  option_id: number;
-  option_name: string;
-  is_jackpot:number;
-};
-export type GameResults = {
-  status?: boolean;
-  data?: GameResultItem[];
-  message?: string;
-};
-export const fetchGameResults = async (): Promise<GameResults> => {
-  const response = await axios.get<GameResults>(GAME_RESULTS_API_URL);
-  if (!response.data.status) {
-    // throw new Error(response.data.message || "API returned false status");
-    console.log("results error")
-  }
-  return response.data;
-};
+// type GameResultItem = {
+//   option_id: number;
+//   option_name: string;
+//   is_jackpot:number;
+// };
+// export type GameResults = {
+//   status?: boolean;
+//   data?: GameResultItem[];
+//   message?: string;
+// };
+// export const fetchGameResults = async (): Promise<GameResults> => {
+//   const response = await axios.get<GameResults>(GAME_RESULTS_API_URL);
+//   if (!response.data.status) {
+//     // throw new Error(response.data.message || "API returned false status");
+//     console.log("results error")
+//   }
+//   return response.data;
+// };
 ///////////////////////////////////////////////////////////////
 type RemainingTodayData={
   server_time:string;
@@ -228,14 +225,22 @@ export const fetchPlayerInfo = async (): Promise<PlayerDetailsData> => {
   return response.data.data as PlayerDetailsData;
 };
 /////////////////////////////////////////////////////////////////////////////
-export type PlaceBet = {
-  status?: boolean;
-  message?: string;
+type Element={
+id:number;
+option_id:number;
+}
+
+export type betPlace = {
+  status?: string;
+  win_amount:string;
+  result:[
+    set_A:Element[],
+    set_B:Element[],
+    set_C:Element[],
+  ]
 };
-export const placeBet = async (betId: number, amount: number,): Promise<PlaceBet> => {
-  const response = await axios.post<PlaceBet>(PLACE_BET_API_URL, {
-    game_id: GAME_ID,
-    option_id: betId,
+export const betPlace = async (betId: number, amount: number,): Promise<betPlace> => {
+  const response = await axios.post<betPlace>(BET_PLACE_API_URL, {
     amount: amount,
     user_id: getUserId(),
   });

@@ -96,7 +96,7 @@ export const SoundPlayer: React.FC<SoundPlayerProps> = ({
     return (
         <audio
             ref={audioRef}
-            src={getMusicUrl(GAME_MUSIC.sound)}
+            src={getMusicUrl(GAME_MUSIC.music)}
             preload="auto"
             playsInline
         />
