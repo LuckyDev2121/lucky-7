@@ -702,7 +702,7 @@ export function StartAni({ left, delay, num0, num1, num2 }: { left: number; dela
             >
                 {rows.map((element, index) => (
                     <motion.img
-                        src={resolveAssetUrl(options[(element - 13)].logo)}
+                        src={resolveAssetUrl(options[element - 13].logo)}
                         className="absolute left-0 top-0 w-[65px] h-[65px]"
                         initial={{ y: 5 + index * 70, opacity: 1 }}
                         animate={{ y: 215, opacity: 1 }}

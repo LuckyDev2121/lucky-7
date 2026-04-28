@@ -52,8 +52,8 @@ export default function Lucky777Game({
     const { betAmounts, options, placeBet, playerInfo, handleWinToday } = useGame()
     const [currentBet, setCurrentBet] = useState(0)
     const [second, setSecond] = useState(0);
-    const [startValue, setStartValue] = useState([0, 0, 0, 1, 1, 1, 2, 2, 2,])
-    const [endValue, setEndValue] = useState([0, 0, 0, 1, 1, 1, 2, 2, 2,])
+    const [startValue, setStartValue] = useState([13, 13, 13, 14, 14, 14, 15, 15, 15,])
+    const [endValue, setEndValue] = useState([13, 13, 13, 14, 14, 14, 15, 15, 15,])
     const [winAmount, setWinAmount] = useState(0)
     const [showWinAmount, setShowWinAmount] = useState(0)
     const [winToday, setWinToday] = useState(0)
@@ -70,12 +70,12 @@ export default function Lucky777Game({
                 }
                 void placeBet(Number.parseFloat(betAmounts[currentBet]?.amount))
                     .then((response) => {
-                        setEndValue([response.result[0][0].option_id, response.result[0][1].option_id, response.result[0][1].option_id,
-                        response.result[1][0].option_id, response.result[1][1].option_id, response.result[1][2].option_id,
-                        response.result[2][0].option_id, response.result[2][1].option_id, response.result[2][2].option_id,])
-                        setStartValue([response.result[0][0].option_id, response.result[0][1].option_id, response.result[0][1].option_id,
-                        response.result[1][0].option_id, response.result[1][1].option_id, response.result[1][2].option_id,
-                        response.result[2][0].option_id, response.result[2][1].option_id, response.result[2][2].option_id,])
+                        setEndValue([response.result.set_A[0].option_id, response.result.set_A[1].option_id, response.result.set_A[2].option_id,
+                        response.result.set_B[0].option_id, response.result.set_B[1].option_id, response.result.set_B[2].option_id,
+                        response.result.set_C[0].option_id, response.result.set_C[1].option_id, response.result.set_C[2].option_id,])
+                        setStartValue([response.result.set_A[0].option_id, response.result.set_A[1].option_id, response.result.set_A[2].option_id,
+                        response.result.set_B[0].option_id, response.result.set_B[1].option_id, response.result.set_B[2].option_id,
+                        response.result.set_C[0].option_id, response.result.set_C[1].option_id, response.result.set_C[2].option_id,])
                         setWinAmount(Number.parseFloat(response.win_amount))
                     })
                 setIsFirst(false)
@@ -92,6 +92,7 @@ export default function Lucky777Game({
                     })
             }
             if (second === 4900) {
+                console.log(startValue, endValue)
                 setShowWinAmount(0)
                 if (isAutoMode) {
                     setSecond(-100)
@@ -251,11 +252,11 @@ export default function Lucky777Game({
                                                     {endValue.map((element, index) => (
                                                         <>
                                                             {index % 3 === 0 && (
-                                                                <img src={resolveAssetUrl(options[element]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
+                                                                <img src={resolveAssetUrl(options[element - 13]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
                                                                     style={{ left: `${26}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
-                                                            {index % 3 === 1 && (<img src={resolveAssetUrl(options[element]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
+                                                            {index % 3 === 1 && (<img src={resolveAssetUrl(options[element - 13]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
                                                                 style={{ left: `${123}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
-                                                            {index % 3 === 2 && (<img src={resolveAssetUrl(options[element]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
+                                                            {index % 3 === 2 && (<img src={resolveAssetUrl(options[element - 13]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
                                                                 style={{ left: `${218}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
                                                         </>
                                                     ))}
@@ -287,11 +288,11 @@ export default function Lucky777Game({
                                         {endValue.map((element, index) => (
                                             <>
                                                 {index % 3 === 0 && (
-                                                    <img src={resolveAssetUrl(options[element]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
+                                                    <img src={resolveAssetUrl(options[element - 13]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
                                                         style={{ left: `${26}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
-                                                {index % 3 === 1 && (<img src={resolveAssetUrl(options[element]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
+                                                {index % 3 === 1 && (<img src={resolveAssetUrl(options[element - 13]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
                                                     style={{ left: `${123}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
-                                                {index % 3 === 2 && (<img src={resolveAssetUrl(options[element]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
+                                                {index % 3 === 2 && (<img src={resolveAssetUrl(options[element - 13]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
                                                     style={{ left: `${218}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
                                             </>
                                         ))}</>)}

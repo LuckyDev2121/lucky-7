@@ -233,11 +233,11 @@ option_id:number;
 export type betPlace = {
   status?: string;
   win_amount:string;
-  result:[
+  result:{
     set_A:Element[],
     set_B:Element[],
     set_C:Element[],
-  ]
+}
 };
 export const betPlace = async ( amount: number,): Promise<betPlace> => {
   const response = await axios.post<betPlace>(BET_PLACE_API_URL, {
