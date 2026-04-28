@@ -403,11 +403,12 @@ export function WinAni() {
                 rotateX: [0, win_rotateX[i]],
                 rotateY: [0, win_rotateY[i]],
                 rotateZ: [0, win_rotateZ[i]],
+                opacity: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
             }}
             transition={{
                 duration: index,
                 ease: "easeInOut",
-                repeat: Infinity,
+                // repeat: Infinity,
             }}
         />))
     );

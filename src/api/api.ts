@@ -244,7 +244,7 @@ export const betPlace = async ( amount: number,): Promise<betPlace> => {
     amount: amount,
     user_id: getUserId(),
   });
-  console.log('sen tmt', response)
+  console.log('sen tmt', response.data.status)
   if (!response.data.status) {
     // throw new Error(response.data.message || "Failed to place bet");
     console.log("place-bet error")

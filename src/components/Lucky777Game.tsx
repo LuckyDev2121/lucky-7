@@ -57,6 +57,7 @@ export default function Lucky777Game({
     const [winAmount, setWinAmount] = useState(0)
     const [showWinAmount, setShowWinAmount] = useState(0)
     const [winToday, setWinToday] = useState(0)
+    const [isWinAniShowed, setIsWinAniShowed] = useState(false)
     const rows = [0, 1, 2];
     useEffect(() => {
         if (!isPlaying)
@@ -78,6 +79,7 @@ export default function Lucky777Game({
                         response.result.set_C[0].option_id, response.result.set_C[1].option_id, response.result.set_C[2].option_id,])
                         setWinAmount(Number.parseFloat(response.win_amount))
                     })
+                setIsWinAniShowed(false)
                 setIsFirst(false)
                 setIsPending(false);
                 setIsRolling(true);
@@ -92,7 +94,7 @@ export default function Lucky777Game({
                     })
             }
             if (second === 4900) {
-                console.log(startValue, endValue)
+                console.log(startValue)
                 setShowWinAmount(0)
                 if (isAutoMode) {
                     setSecond(-100)
@@ -145,12 +147,18 @@ export default function Lucky777Game({
                                         transition={{
                                             rotate: { repeat: Infinity, duration: 5, ease: "linear" },
                                         }} />
-                                    <motion.img src={getAssetUrl(GAME_ASSETS.cup)} alt="cup" className="absolute  h-[50px] w-[50px] left-[11px] top-[11px]"
+                                    {isResulting && winAmount ? <motion.img src={getAssetUrl(GAME_ASSETS.cup)} alt="cup" className="absolute  h-[50px] w-[50px] left-[11px] top-[11px]"
                                         animate={{ rotate: [5, -5, 5] }}
                                         transition={{
                                             rotate: { repeat: Infinity, duration: 1, ease: "linear" },
-                                        }} />
-                                    {/* <RiseAni left={30} top={-35} /> */}
+                                        }} /> :
+                                        <motion.img src={getAssetUrl(GAME_ASSETS.cup)} alt="cup" className="absolute  h-[50px] w-[50px] left-[11px] top-[11px]"
+                                            animate={{}}
+                                            transition={{
+                                                rotate: { repeat: Infinity, duration: 1, ease: "linear" },
+                                            }} />}
+                                    <span className="absolute top-[55px] left-1/2 -translate-x-1/2 z-[20] font-bold font-sans text-[#ffffff] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]">+99</span>
+                                    {isResulting && winAmount && <RiseAni left={30} top={-35} />}
                                     {/* <motion.span className="absolute z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                         initial={{ y: -5, }}
                                         animate={{ y: 5, }}
@@ -230,7 +238,6 @@ export default function Lucky777Game({
                             </div>
                             <div className="absolute h-[226px] w-[316px] top-[97px] left-[37px]  bg-gradient-to-t from-[#1D27BA] to-[#B11ECB] rounded-[9px]">
                                 <img src={getAssetUrl(GAME_ASSETS.gameBoard)} alt="gameboard" className="absolute h-[236px] w-[320px] left-[0px] -top-[5px] rounded-[9px]" />
-                                {/* <PlayBoard isFirstStart={true} Pending={true} Rolling={false} Result={false} /> */}
                                 <div className="relative  h-[226px] w-[310px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  inset-[2px] rounded-[7px] ">
                                     {isPending && (
                                         <>
@@ -304,7 +311,9 @@ export default function Lucky777Game({
                                             <RollingStar />
                                         )}
                                         {isResulting && (
-                                            <ResultStar />
+                                            <>
+                                                {winAmount ? <ResultStar /> : <PendingStar />}
+                                            </>
                                         )}
                                     </div>
 
@@ -428,7 +437,9 @@ export default function Lucky777Game({
                             )}
                         </AnimatePresence>
                         {isRolling && (<LightsAni />)}
-                        {/* <WinAni /> */}
+                        {isResulting && winAmount && !isWinAniShowed && (
+                            <WinAni />
+                        )}
 
                         {/* <RainMoney /> */}
                     </div>
