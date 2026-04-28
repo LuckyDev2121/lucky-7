@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Fragment, useState, useEffect } from "react";
+import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 import coin1 from "../assets/coin1.svg"
 import coin2 from "../assets/coin2.svg"
 
@@ -690,16 +691,18 @@ export function RainMoney() {
         </>
     )
 }
-export function StartAni({ left, delay }: { left: number; delay: number }) {
-    const rows = [0, 1, 2]
+export function StartAni({ left, delay, num0, num1, num2 }: { left: number; delay: number; num0: number; num1: number; num2: number }) {
+    const rows = [num0, num1, num2]
+    const { options } = useGame()
     return (
         <Fragment key={`light-${left}-${1}`}>
             <div
                 className="absolute overflow-hidden pointer-events-none"
                 style={{ left: `${left}px`, top: `${5}px`, width: "65px", height: "215px" }}
             >
-                {rows.map((_, index) => (
-                    <motion.div
+                {rows.map((element, index) => (
+                    <motion.img
+                        src={resolveAssetUrl(options[(element)].logo)}
                         className="absolute left-0 top-0 w-[65px] h-[65px]"
                         initial={{ y: 5 + index * 70, opacity: 1 }}
                         animate={{ y: 215, opacity: 1 }}
@@ -710,8 +713,8 @@ export function StartAni({ left, delay }: { left: number; delay: number }) {
                             // repeat: Infinity,
                         }}
                         style={{
-                            background: "linear-gradient( green )",
-                            filter: "blur(1px)",
+                            // background: "linear-gradient( green )",
+                            // filter: "blur(1px)",
                         }}
                     />
                 )
@@ -721,16 +724,18 @@ export function StartAni({ left, delay }: { left: number; delay: number }) {
         </Fragment>
     )
 }
-export function StopAni({ left, delay }: { left: number; delay: number }) {
-    const rows = [0, 1, 2]
+export function StopAni({ left, delay, num0, num1, num2 }: { left: number; delay: number; num0: number; num1: number; num2: number }) {
+    const { options } = useGame()
+    const rows = [num0, num1, num2]
     return (
         <Fragment key={`light-${left}-${1}`}>
             <div
                 className="absolute  overflow-hidden pointer-events-none"
                 style={{ left: `${left}px`, top: `${5}px`, width: "65px", height: "215px" }}
             >
-                {rows.map((_, index) => (
-                    <motion.div
+                {rows.map((element, index) => (
+                    <motion.img
+                        src={resolveAssetUrl(options[(element)].logo)}
                         className="absolute left-0 top-0 w-[65px] h-[65px]"
                         initial={{ y: -65, opacity: 1 }}
                         animate={{ y: 145 - 70 * index, opacity: 1 }}
@@ -740,11 +745,10 @@ export function StopAni({ left, delay }: { left: number; delay: number }) {
                             delay: delay + 0.15 * index,
                         }}
                         style={{
-                            background: "linear-gradient( red )",
-                            filter: "blur(1px)",
+                            // background: "linear-gradient( red )",
+                            // filter: "blur(1px)",
                         }}
-                    >
-                    </motion.div>
+                    />
                 )
                 )
                 }
@@ -752,16 +756,19 @@ export function StopAni({ left, delay }: { left: number; delay: number }) {
         </Fragment>
     )
 }
-export function RepeatAni({ left, delay }: { left: number; delay: number }) {
-    const rows = [0, 1, 2, 3]
+export function RepeatAni({ left, delay, num }: { left: number; delay: number; num: number }) {
+    const rows = [0, 3, 6, 1]
+    const { options } = useGame()
+    // const num = Math.floor(Math.random() * 7);
     return (
         <Fragment key={`light-${left}-${1}`}>
             <div
                 className="absolute  overflow-hidden pointer-events-none"
                 style={{ left: `${left}px`, top: `${5}px`, width: "65px", height: "215px" }}
             >
-                {rows.map((_, index) => (
-                    <motion.div
+                {rows.map((element, index) => (
+                    <motion.img
+                        src={resolveAssetUrl(options[(num + element) % 7].logo)}
                         className="absolute left-0 top-0 w-[65px] h-[65px]"
                         initial={{ y: -65, opacity: 1 }}
                         animate={{ y: 215, opacity: 1 }}
@@ -769,11 +776,11 @@ export function RepeatAni({ left, delay }: { left: number; delay: number }) {
                             duration: 0.6,
                             ease: "linear",
                             delay: delay + index * 0.15,
-                            repeat: 3,
+                            // repeat: 3,
                         }}
                         style={{
-                            background: "linear-gradient( white )",
-                            filter: "blur(1px)",
+                            // background: "linear-gradient( white )",
+                            // filter: "blur(1px)",
                         }}
                     />
                 )

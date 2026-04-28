@@ -52,8 +52,9 @@ export default function Lucky777Game({
     const { betAmounts, options, placeBet, playerInfo } = useGame()
     const [currentBet, setCurrentBet] = useState(0)
     const [second, setSecond] = useState(0);
+    const [startValue, setStartValue] = useState([0, 0, 0, 1, 1, 1, 2, 2, 2,])
+    const [endValue, setEndValue] = useState([0, 0, 0, 1, 1, 1, 2, 2, 2,])
     const rows = [0, 1, 2];
-
     useEffect(() => {
         if (!isPlaying)
             return
@@ -64,7 +65,15 @@ export default function Lucky777Game({
                     setSecond(0)
                     return
                 }
-                placeBet(Number.parseFloat(betAmounts[currentBet]?.amount))
+                void placeBet(Number.parseFloat(betAmounts[currentBet]?.amount))
+                    .then((response) => {
+                        setEndValue([response.result[0][0].option_id, response.result[0][1].option_id, response.result[0][1].option_id,
+                        response.result[1][0].option_id, response.result[1][1].option_id, response.result[1][2].option_id,
+                        response.result[2][0].option_id, response.result[2][1].option_id, response.result[2][2].option_id,])
+                        setStartValue([response.result[0][0].option_id, response.result[0][1].option_id, response.result[0][1].option_id,
+                        response.result[1][0].option_id, response.result[1][1].option_id, response.result[1][2].option_id,
+                        response.result[2][0].option_id, response.result[2][1].option_id, response.result[2][2].option_id,])
+                    })
                 setIsFirst(false)
                 setIsPending(false);
                 setIsRolling(true);
@@ -82,6 +91,7 @@ export default function Lucky777Game({
                     setIsResulting(false)
                     setIsPending(true)
                     setIsPlaying(false)
+                    setSecond(0)
                     return
                 }
             }
@@ -228,14 +238,15 @@ export default function Lucky777Game({
                                                 </>
                                             ) : (
                                                 <>
-                                                    {rows.map((element) => (
+                                                    {endValue.map((element, index) => (
                                                         <>
-                                                            <img src={resolveAssetUrl(options[element + 3]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
-                                                                style={{ left: `${26}px`, top: `${10 + element * 70}px` }} />
-                                                            <img src={resolveAssetUrl(options[element + 3]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
-                                                                style={{ left: `${123}px`, top: `${10 + element * 70}px` }} />
-                                                            <img src={resolveAssetUrl(options[element + 3]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
-                                                                style={{ left: `${218}px`, top: `${10 + element * 70}px` }} />
+                                                            {index % 3 === 0 && (
+                                                                <img src={resolveAssetUrl(options[element]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
+                                                                    style={{ left: `${26}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
+                                                            {index % 3 === 1 && (<img src={resolveAssetUrl(options[element]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
+                                                                style={{ left: `${123}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
+                                                            {index % 3 === 2 && (<img src={resolveAssetUrl(options[element]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
+                                                                style={{ left: `${218}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
                                                         </>
                                                     ))}
                                                 </>
@@ -243,17 +254,37 @@ export default function Lucky777Game({
                                         </>
                                     )}
                                     {isRolling && (<>
-                                        <StartAni left={26} delay={0} />
-                                        <StartAni left={123} delay={0.1} />
-                                        <StartAni left={218} delay={0.2} />
-                                        <RepeatAni left={26} delay={0} />
-                                        <RepeatAni left={123} delay={0.1} />
-                                        <RepeatAni left={218} delay={0.2} />
-                                        <StopAni left={26} delay={2.4} />
-                                        <StopAni left={123} delay={2.5} />
-                                        <StopAni left={218} delay={2.6} />
+                                        <StartAni left={26} delay={0} num0={startValue[0]} num1={startValue[3]} num2={startValue[6]} />
+                                        <StartAni left={123} delay={0.1} num0={startValue[1]} num1={startValue[4]} num2={startValue[7]} />
+                                        <StartAni left={218} delay={0.2} num0={startValue[2]} num1={startValue[5]} num2={startValue[8]} />
+                                        <RepeatAni left={26} delay={0} num={4} />
+                                        <RepeatAni left={123} delay={0.1} num={1} />
+                                        <RepeatAni left={218} delay={0.2} num={3} />
+                                        <RepeatAni left={26} delay={0.6} num={4} />
+                                        <RepeatAni left={123} delay={0.7} num={5} />
+                                        <RepeatAni left={218} delay={0.8} num={4} />
+                                        <RepeatAni left={26} delay={1.2} num={2} />
+                                        <RepeatAni left={123} delay={1.3} num={4} />
+                                        <RepeatAni left={218} delay={1.4} num={5} />
+                                        <RepeatAni left={26} delay={1.8} num={6} />
+                                        <RepeatAni left={123} delay={1.9} num={7} />
+                                        <RepeatAni left={218} delay={2.0} num={3} />
+                                        <StopAni left={26} delay={2.4} num0={endValue[6]} num1={endValue[3]} num2={endValue[0]} />
+                                        <StopAni left={123} delay={2.5} num0={endValue[7]} num1={endValue[4]} num2={endValue[1]} />
+                                        <StopAni left={218} delay={2.6} num0={endValue[8]} num1={endValue[5]} num2={endValue[2]} />
                                     </>)}
-                                    {isResulting && (<></>)}
+                                    {isResulting && (<>
+                                        {endValue.map((element, index) => (
+                                            <>
+                                                {index % 3 === 0 && (
+                                                    <img src={resolveAssetUrl(options[element]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
+                                                        style={{ left: `${26}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
+                                                {index % 3 === 1 && (<img src={resolveAssetUrl(options[element]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
+                                                    style={{ left: `${123}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
+                                                {index % 3 === 2 && (<img src={resolveAssetUrl(options[element]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
+                                                    style={{ left: `${218}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
+                                            </>
+                                        ))}</>)}
                                     <div className="absolute inset-0 z-30 pointer-events-none">
                                         {isPending && (
                                             <PendingStar />
