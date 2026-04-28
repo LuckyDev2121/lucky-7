@@ -75,7 +75,7 @@ function updateStore(
 async function runRefreshGameData() {
   updateStore({ isLoading: true, isMusicSettingLoading: true });
   try {
-    const [gameDetail,rankingToday,rankingYesterday,player,url,prizeDistribution,isMusicEnabled] = await Promise.all([
+    const [gameDetail,rankingToday,rankingYesterday,player,url,prizeDistribution,isMusicEnabled, winToday] = await Promise.all([
       fetchGameDetail(),
       fetchRankingToday(),
       fetchRankingYesterday(),
@@ -83,6 +83,7 @@ async function runRefreshGameData() {
       fetchRechargeUrl(),
       fetchPrizeDistribution(),
       fetchMusicSetting(),
+      fetchWinToday(),
     ]);
   updateStore({
     gameDetails: gameDetail,
@@ -94,6 +95,7 @@ async function runRefreshGameData() {
   prizeDistribution:prizeDistribution,
   isMusicEnabled,
   isLoading: false,
+  winToday:winToday,
 });
   } catch (error) {
     updateStore({ isLoading: false, isMusicSettingLoading: false,});
@@ -138,6 +140,12 @@ export function useGame() {
 const handlePrizeDistribution= useCallback(async () => {
     const data = await fetchPrizeDistribution();
     updateStore({ prizeDistribution: data });
+    return data;
+  }, []);
+
+const handleWinToday= useCallback(async () => {
+    const data = await fetchWinToday();
+    updateStore({ winToday: data });
     return data;
   }, []);
 
@@ -193,5 +201,6 @@ const clearCurrentRoundBets = useCallback(() => {
     handleRechargeRedirect,
     handlePrizeDistribution,
     handleRemainingToday,
+    handleWinToday,
   };
 }

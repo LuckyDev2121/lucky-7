@@ -49,11 +49,14 @@ export default function Lucky777Game({
     const [isAutoMode, setIsAutoMode] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const isOverlayOpen = (activeModal !== null || prizeModal !== null);
-    const { betAmounts, options, placeBet, playerInfo } = useGame()
+    const { betAmounts, options, placeBet, playerInfo, handleWinToday } = useGame()
     const [currentBet, setCurrentBet] = useState(0)
     const [second, setSecond] = useState(0);
     const [startValue, setStartValue] = useState([0, 0, 0, 1, 1, 1, 2, 2, 2,])
     const [endValue, setEndValue] = useState([0, 0, 0, 1, 1, 1, 2, 2, 2,])
+    const [winAmount, setWinAmount] = useState(0)
+    const [showWinAmount, setShowWinAmount] = useState(0)
+    const [winToday, setWinToday] = useState(0)
     const rows = [0, 1, 2];
     useEffect(() => {
         if (!isPlaying)
@@ -73,6 +76,7 @@ export default function Lucky777Game({
                         setStartValue([response.result[0][0].option_id, response.result[0][1].option_id, response.result[0][1].option_id,
                         response.result[1][0].option_id, response.result[1][1].option_id, response.result[1][2].option_id,
                         response.result[2][0].option_id, response.result[2][1].option_id, response.result[2][2].option_id,])
+                        setWinAmount(Number.parseFloat(response.win_amount))
                     })
                 setIsFirst(false)
                 setIsPending(false);
@@ -81,8 +85,14 @@ export default function Lucky777Game({
             if (second === 2900) {
                 setIsRolling(false)
                 setIsResulting(true)
+                setShowWinAmount(winAmount)
+                void handleWinToday()
+                    .then((res) => {
+                        setWinToday(res.win)
+                    })
             }
             if (second === 4900) {
+                setShowWinAmount(0)
                 if (isAutoMode) {
                     setSecond(-100)
                     setIsResulting(false)
@@ -255,23 +265,23 @@ export default function Lucky777Game({
                                     )}
                                     {isRolling && (<>
                                         <StartAni left={26} delay={0} num0={startValue[0]} num1={startValue[3]} num2={startValue[6]} />
-                                        <StartAni left={123} delay={0.1} num0={startValue[1]} num1={startValue[4]} num2={startValue[7]} />
-                                        <StartAni left={218} delay={0.2} num0={startValue[2]} num1={startValue[5]} num2={startValue[8]} />
+                                        <StartAni left={123} delay={0.3} num0={startValue[1]} num1={startValue[4]} num2={startValue[7]} />
+                                        <StartAni left={218} delay={0.6} num0={startValue[2]} num1={startValue[5]} num2={startValue[8]} />
                                         <RepeatAni left={26} delay={0} num={4} />
-                                        <RepeatAni left={123} delay={0.1} num={1} />
-                                        <RepeatAni left={218} delay={0.2} num={3} />
+                                        <RepeatAni left={123} delay={0.3} num={1} />
+                                        <RepeatAni left={218} delay={0.6} num={3} />
                                         <RepeatAni left={26} delay={0.6} num={4} />
-                                        <RepeatAni left={123} delay={0.7} num={5} />
-                                        <RepeatAni left={218} delay={0.8} num={4} />
+                                        <RepeatAni left={123} delay={0.99} num={5} />
+                                        <RepeatAni left={218} delay={1.2} num={4} />
                                         <RepeatAni left={26} delay={1.2} num={2} />
-                                        <RepeatAni left={123} delay={1.3} num={4} />
-                                        <RepeatAni left={218} delay={1.4} num={5} />
+                                        <RepeatAni left={123} delay={1.5} num={4} />
+                                        <RepeatAni left={218} delay={1.8} num={5} />
                                         <RepeatAni left={26} delay={1.8} num={6} />
-                                        <RepeatAni left={123} delay={1.9} num={7} />
-                                        <RepeatAni left={218} delay={2.0} num={3} />
+                                        <RepeatAni left={123} delay={2.1} num={7} />
+                                        <RepeatAni left={218} delay={2.4} num={3} />
                                         <StopAni left={26} delay={2.4} num0={endValue[6]} num1={endValue[3]} num2={endValue[0]} />
-                                        <StopAni left={123} delay={2.5} num0={endValue[7]} num1={endValue[4]} num2={endValue[1]} />
-                                        <StopAni left={218} delay={2.6} num0={endValue[8]} num1={endValue[5]} num2={endValue[2]} />
+                                        <StopAni left={123} delay={2.7} num0={endValue[7]} num1={endValue[4]} num2={endValue[1]} />
+                                        <StopAni left={218} delay={3.0} num0={endValue[8]} num1={endValue[5]} num2={endValue[2]} />
                                     </>)}
                                     {isResulting && (<>
                                         {endValue.map((element, index) => (
@@ -311,11 +321,11 @@ export default function Lucky777Game({
                                             style={{ fontFamily: "MyBoldFont", letterSpacing: "2px" }}>{parseFloat(betAmounts[currentBet]?.amount).toString()}</span>
                                     </div>
                                     <div className="bg-[#000000] h-[24px] w-[100px] rounded-[4px] text-center">
-                                        <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle ">109000</span>
+                                        <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle ">{winToday}</span>
                                     </div>
                                     <div className="bg-[#000000] h-[24px] w-[100px] rounded-[4px] text-center ">
                                         <img src={light} alt="light" className="absolute" />
-                                        <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle">1050</span>
+                                        <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle">{showWinAmount}</span>
                                     </div>
                                 </div>
                             </div>
