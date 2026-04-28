@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RechargeMenu from "./RechargeMenu";
 import HelpMenu from "./HelpMenu";
 import HistoryMenu from "./HistoryMenu";
@@ -9,15 +9,12 @@ import PrizeDistribution from "./PrizeDistribution";
 import { GAME_ASSETS, getAssetUrl } from "../config/gameconfig";
 import MenuCoin from "./MenuCoin";
 import MenuTop from "./MenuTop";
-import cup from "../assets/Body/BodyTop/cup.svg"
-import shine from "../assets/Body/BodyTop/shine.svg"
 import light from "../assets/Body/BodyPlayboard/Light.svg"
-import digital from "../assets/Body/BodyPlayboard/Digital7.svg"
 import player from "../assets/Body/player.svg"
 import dotthree from "../assets/Body/BodyPlayboard/DotsThree.svg"
-import PlayBoard from "../components/PlayBoard"
-import { LightsAni, WinAni, RiseAni, RainMoney, PendingStar, RollingStar, ResultStar } from "./Assets";
-
+// import PlayBoard from "../components/PlayBoard"
+import { LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni, RepeatAni, PendingStar, RollingStar, ResultStar } from "./Assets";
+import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
 
@@ -45,7 +42,55 @@ export default function Lucky777Game({
 
     const [activeModal, setActiveModal] = useState<string | null>(null);
     const [prizeModal, setPrizeModal] = useState<string | null>(null);
+    const [isFirst, setIsFirst] = useState(true)
+    const [isPending, setIsPending] = useState(true)
+    const [isRolling, setIsRolling] = useState(false)
+    const [isResulting, setIsResulting] = useState(false)
+    const [isAutoMode, setIsAutoMode] = useState(false)
+    const [isPlaying, setIsPlaying] = useState(false)
     const isOverlayOpen = (activeModal !== null || prizeModal !== null);
+    const { betAmounts, options, placeBet, playerInfo } = useGame()
+    const [currentBet, setCurrentBet] = useState(0)
+    const [second, setSecond] = useState(0);
+    const rows = [0, 1, 2];
+
+    useEffect(() => {
+        if (!isPlaying)
+            return
+        const timer = setInterval(() => {
+            if (second === 0) {
+                if (Number.parseFloat(playerInfo?.balance ?? "0") < Number.parseFloat(betAmounts[currentBet]?.amount)) {
+                    setIsPlaying(false)
+                    setSecond(0)
+                    return
+                }
+                placeBet(Number.parseFloat(betAmounts[currentBet]?.amount))
+                setIsFirst(false)
+                setIsPending(false);
+                setIsRolling(true);
+            }
+            if (second === 2900) {
+                setIsRolling(false)
+                setIsResulting(true)
+            }
+            if (second === 4900) {
+                if (isAutoMode) {
+                    setSecond(-100)
+                    setIsResulting(false)
+                }
+                else {
+                    setIsResulting(false)
+                    setIsPending(true)
+                    setIsPlaying(false)
+                    return
+                }
+            }
+            setSecond((s) => s + 100);
+        }, 100);
+        return () => {
+            clearInterval(timer)
+        };
+    }, [second, isPlaying])
     return (
         <div className="relative flex min-h-[100dvh] w-full border-[#130E2C] border-[4px,4px,0px,4px] items-end justify-center overflow-hidden">
             <div className="fixed inset-0 flex items-end justify-center overflow-hidden ">
@@ -74,12 +119,12 @@ export default function Lucky777Game({
                             <button className="absolute z-20 top-[25px] left-[28px] h-[72px] w-[72px] rounded-full flex items-center justify-center"
                                 onClick={() => setActiveModal("ranking")}>
                                 <>
-                                    <motion.img src={shine} alt="shine" className="absolute h-[60px] w-[60px] top-[4px]"
+                                    <motion.img src={getAssetUrl(GAME_ASSETS.rotated)} alt="shine" className="absolute h-[60px] w-[60px] top-[4px]"
                                         animate={{ rotate: 360 }}
                                         transition={{
                                             rotate: { repeat: Infinity, duration: 5, ease: "linear" },
                                         }} />
-                                    <motion.img src={cup} alt="cup" className="absolute  h-[50px] w-[50px] left-[11px] top-[11px]"
+                                    <motion.img src={getAssetUrl(GAME_ASSETS.cup)} alt="cup" className="absolute  h-[50px] w-[50px] left-[11px] top-[11px]"
                                         animate={{ rotate: [5, -5, 5] }}
                                         transition={{
                                             rotate: { repeat: Infinity, duration: 1, ease: "linear" },
@@ -164,43 +209,105 @@ export default function Lucky777Game({
                             </div>
                             <div className="absolute h-[226px] w-[316px] top-[97px] left-[37px]  bg-gradient-to-t from-[#1D27BA] to-[#B11ECB] rounded-[9px]">
                                 <img src={getAssetUrl(GAME_ASSETS.gameBoard)} alt="gameboard" className="absolute h-[236px] w-[320px] left-[0px] -top-[5px] rounded-[9px]" />
-                                <PlayBoard />
+                                {/* <PlayBoard isFirstStart={true} Pending={true} Rolling={false} Result={false} /> */}
+                                <div className="relative  h-[226px] w-[310px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  inset-[2px] rounded-[7px] ">
+                                    {isPending && (
+                                        <>
+                                            {isFirst ? (
+                                                <>
+                                                    {rows.map((element) => (
+                                                        <>
+                                                            <img src={resolveAssetUrl(options[element]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
+                                                                style={{ left: `${26}px`, top: `${10 + element * 70}px` }} />
+                                                            <img src={resolveAssetUrl(options[element]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
+                                                                style={{ left: `${123}px`, top: `${10 + element * 70}px` }} />
+                                                            <img src={resolveAssetUrl(options[element]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
+                                                                style={{ left: `${218}px`, top: `${10 + element * 70}px` }} />
+                                                        </>
+                                                    ))}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {rows.map((element) => (
+                                                        <>
+                                                            <img src={resolveAssetUrl(options[element + 3]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
+                                                                style={{ left: `${26}px`, top: `${10 + element * 70}px` }} />
+                                                            <img src={resolveAssetUrl(options[element + 3]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
+                                                                style={{ left: `${123}px`, top: `${10 + element * 70}px` }} />
+                                                            <img src={resolveAssetUrl(options[element + 3]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
+                                                                style={{ left: `${218}px`, top: `${10 + element * 70}px` }} />
+                                                        </>
+                                                    ))}
+                                                </>
+                                            )}
+                                        </>
+                                    )}
+                                    {isRolling && (<>
+                                        <StartAni left={26} delay={0} />
+                                        <StartAni left={123} delay={0.1} />
+                                        <StartAni left={218} delay={0.2} />
+                                        <RepeatAni left={26} delay={0} />
+                                        <RepeatAni left={123} delay={0.1} />
+                                        <RepeatAni left={218} delay={0.2} />
+                                        <StopAni left={26} delay={2.4} />
+                                        <StopAni left={123} delay={2.5} />
+                                        <StopAni left={218} delay={2.6} />
+                                    </>)}
+                                    {isResulting && (<></>)}
+                                    <div className="absolute inset-0 z-30 pointer-events-none">
+                                        {isPending && (
+                                            <PendingStar />
+                                        )}
+                                        {isRolling && (
+                                            <RollingStar />
+                                        )}
+                                        {isResulting && (
+                                            <ResultStar />
+                                        )}
+                                    </div>
+
+                                </div>
                             </div>
-                            <div className="absolute left-[39px] top-[325px] h-[40px] w-[315px] grid grid-row-2">
+                            <div className="absolute left-[39px] top-[322px] h-[40px] w-[315px] grid grid-row-2">
                                 <div className="relative h-[18px] w-full">
                                     <span className="absolute left-[10px]">TOTAL BET</span>
                                     <span className="absolute left-[112px]">TODAY'S WIN</span>
                                     <span className="absolute left-[217px]">WIN</span>
                                 </div>
                                 <div className="relative h-[26] grid grid-cols-3 pl-[4px]">
-                                    <div className="flex bg-[#000000] h-[26px] w-[100px] rounded-[4px] pt-[2px] pl-[4px]">
-                                        <img src={digital} alt="digital" className="h-[22px]" />
-                                        <img src={digital} alt="digital" className="h-[22px]" />
-                                        <img src={digital} alt="digital" className="h-[22px]" />
-                                        <img src={digital} alt="digital" className="h-[22px]" />
-                                        <img src={digital} alt="digital" className="h-[22px]" />
-                                        <img src={digital} alt="digital" className="h-[22px]" />
+                                    <div className="flex bg-[#000000] h-[24px] w-[100px] rounded-[4px] pt-[2px] pl-[4px]">
+                                        <span className="absolute right-[220px]"
+                                            style={{ fontFamily: "MyBoldFont", letterSpacing: "2px" }}>{parseFloat(betAmounts[currentBet]?.amount).toString()}</span>
                                     </div>
-                                    <div className="bg-[#000000] h-[26px] w-[100px] rounded-[4px] text-center">
+                                    <div className="bg-[#000000] h-[24px] w-[100px] rounded-[4px] text-center">
                                         <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle ">109000</span>
                                     </div>
-                                    <div className="bg-[#000000] h-[26px] w-[100px] rounded-[4px] text-center ">
+                                    <div className="bg-[#000000] h-[24px] w-[100px] rounded-[4px] text-center ">
                                         <img src={light} alt="light" className="absolute" />
                                         <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle">1050</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="absolute top-[390px] h-[60px] pl-[18px] pr-[5px] w-full ">
-                                <button className="relative mx-[4px]">
+                                <button className="relative mx-[4px]"
+                                    onClick={() => { if (currentBet) setCurrentBet(currentBet - 1) }}>
                                     <img src={getAssetUrl(GAME_ASSETS.minusBtn)} alt="betmin" />
                                 </button>
-                                <button className="relative mx-[4px]">
+                                <button className="relative mx-[4px]"
+                                    onClick={() => { if (currentBet + 1 !== betAmounts.length) setCurrentBet(currentBet + 1) }}>
                                     <img src={getAssetUrl(GAME_ASSETS.plusBtn)} alt="betplu" />
                                 </button>
-                                <button className="relative mx-[4px]">
+                                <button className="relative mx-[4px]"
+                                    onClick={() => {
+                                        setIsAutoMode(true);
+                                        setIsPlaying(true);
+                                    }}>
                                     <img src={getAssetUrl(GAME_ASSETS.autoBtn)} alt="auto" />
                                 </button>
-                                <button className="relative mx-[4px]">
+                                <button className="relative mx-[4px]"
+                                    onClick={() => {
+                                        setIsPlaying(true);
+                                    }}>
                                     <img src={getAssetUrl(GAME_ASSETS.spinBtn)} alt="spin" />
                                 </button>
                             </div>
@@ -254,8 +361,7 @@ export default function Lucky777Game({
                                     <Ranking onCloseRanking={() => setActiveModal(null)}
                                         onOpenPrizeDistribution={() => setPrizeModal("prize")} />
                                 </motion.div>
-                            )
-                            }
+                            )}
                             {prizeModal === "prize" && (
                                 <motion.div
                                     key={prizeModal}
@@ -279,7 +385,7 @@ export default function Lucky777Game({
                                 />
                             )}
                         </AnimatePresence>
-                        {/* <LightsAni /> */}
+                        {isRolling && (<LightsAni />)}
                         {/* <WinAni /> */}
 
                         {/* <RainMoney /> */}

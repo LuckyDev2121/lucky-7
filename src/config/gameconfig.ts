@@ -25,7 +25,7 @@ export const RANKING_TODAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/ranking
 export const RECHARGE_URL_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/company/wallet/1`;
 export const PRIZE_DISTRIBUTIONS_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/prize-distributions/${GAME_ID}`;
 export const BET_PLACE_API_URL=`${API_BASE_URL.replace(/\/$/, "")}/bet-place`;
-
+export const WIN_TODAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/win_today`;
 export const PLAYER_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/player`;
 export const MUSIC_SETTING_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/music-setting`;
 
@@ -111,5 +111,7 @@ diamond:"super777/diamond.svg",
 gameBoard:"super777/game-board.svg",
 jackpot:"super777/jackpot.svg",
 loadingLogo:"super777/loading-logo.svg",
-
+cup:"super777/trofy.svg",
+rotated:"super777/Rotated-Instances.svg",
+coin:"super777/gold.svg"
     } as const;

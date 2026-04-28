@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { echo,  } from "./echo";
 import {
+  fetchWinToday,
   fetchGameDetail,
   fetchRemainingToday,
   fetchRankingToday,
@@ -11,6 +12,7 @@ import {
   fetchMusicSetting,
   saveMusicSetting,
   betPlace,
+  type WinToday,
   type GameDetailsData,
   type RankingItem,
   type RechargeUrlResponse,
@@ -37,6 +39,7 @@ type GameStore = {
   isMusicSettingLoading: boolean;
 musicOverridden: boolean;
 remaining:number;
+winToday:WinToday|null;
 };
 const listeners = new Set<(state: GameStore) => void>();
 let store: GameStore = {
@@ -51,8 +54,10 @@ let store: GameStore = {
   isMusicEnabled: true,
 musicOverridden: false,
 remaining:0,
+winToday:null,
 };
 let hasInitialized = false;
+let initialLoadPromise: Promise<void> | null = null;
 function emit() {
   listeners.forEach((listener) => listener(store));
 }
@@ -106,11 +111,19 @@ function initializeStore() {
 }
 export async function bootstrapGameStore() {
   initializeStore();
+  if (!initialLoadPromise) {
+    initialLoadPromise = runRefreshGameData().finally(() => {
+      initialLoadPromise = null;
+    });
+  }
+  await initialLoadPromise;
 }
 export function useGame() {
   const [snapshot, setSnapshot] = useState({ ...store });
   useEffect(() => {
-    initializeStore();
+    void bootstrapGameStore().catch((error) => {
+      console.error("Failed to bootstrap game store", error);
+    });
 
     const listener = (nextState: GameStore) => {
       setSnapshot({ ...nextState });
@@ -141,12 +154,12 @@ const handlePrizeDistribution= useCallback(async () => {
   }
 }, []);
 
-  const handlePlaceBet = useCallback(async (optionId: number, amount: number,) => {
-    const currentBalance = Number.parseFloat(store.playerInfo?.balance ?? "0");
-    if (currentBalance < amount) {
-      throw new Error("Insufficient balance");
-    }
-    const response: betPlace = await betPlace(optionId, amount,);
+  const handlePlaceBet = useCallback(async ( amount: number,) => {
+    // const currentBalance = Number.parseFloat(store.playerInfo?.balance ?? "0");
+    // if (currentBalance < amount) {
+    //   // throw new Error("Insufficient balance");
+    // }
+    const response: betPlace = await betPlace(amount, );
     return response;
   }, []);
 

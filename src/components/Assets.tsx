@@ -769,7 +769,7 @@ export function RepeatAni({ left, delay }: { left: number; delay: number }) {
                             duration: 0.6,
                             ease: "linear",
                             delay: delay + index * 0.15,
-                            repeat: 10,
+                            repeat: 3,
                         }}
                         style={{
                             background: "linear-gradient( white )",

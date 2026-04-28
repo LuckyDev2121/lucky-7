@@ -10,7 +10,7 @@ import {
   PRIZE_DISTRIBUTIONS_API_URL,
   RANKING_YESTERDAY_API_URL,
   REMAINING_API_URL,
-  
+  WIN_TODAY_API_URL,
 } from "../config/gameconfig";
 import { getUserId } from "../utils/user";
 
@@ -239,11 +239,12 @@ export type betPlace = {
     set_C:Element[],
   ]
 };
-export const betPlace = async (betId: number, amount: number,): Promise<betPlace> => {
+export const betPlace = async ( amount: number,): Promise<betPlace> => {
   const response = await axios.post<betPlace>(BET_PLACE_API_URL, {
     amount: amount,
     user_id: getUserId(),
   });
+  console.log('sen tmt', response)
   if (!response.data.status) {
     // throw new Error(response.data.message || "Failed to place bet");
     console.log("place-bet error")
@@ -284,3 +285,17 @@ export const saveMusicSetting = async (
   return response.data;
 };
 /////////////////////////////////////////////////////////////////////////////
+export type WinToday={
+  status:boolean;
+  user_id:number;
+  win:number;
+}
+
+export const fetchWinToday = async (): Promise<WinToday> => {
+  const response = await axios.get<WinToday>(`${WIN_TODAY_API_URL}/${getUserId()}/${GAME_ID}`);
+  if (!response.data.status) {
+    // throw new Error(response.data.message || "Failed to load music setting");
+    console.log("winToday get error")
+  }
+  return response.data;
+};

@@ -4,24 +4,70 @@ import { PendingStar, RollingStar, ResultStar, StartAni, StopAni, RepeatAni } fr
 import { resolveAssetUrl, useGame } from "../hooks/useGameHook";
 
 
-export default function PlayBoard() {
+export default function PlayBoard({
+    isFirstStart, Pending, Rolling, Result,
+}: {
+    isFirstStart: boolean; Pending: boolean; Rolling: boolean; Result: boolean
+}) {
+
     const { options } = useGame();
+    const rows = [0, 1, 2];
     return (
-        <div className="relative h-[226px] w-[310px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  inset-[2px] rounded-[7px] ">
-            {/* <RepeatAni left={26} delay={0} />
-            <RepeatAni left={123} delay={0.1} />
-            <RepeatAni left={218} delay={0.2} />
-            <StartAni left={26} delay={0} />
-            <StartAni left={123} delay={0.1} />
-            <StartAni left={218} delay={0.2} />
-            <StopAni left={26} delay={6.6} />
-            <StopAni left={123} delay={6.7} />
-            <StopAni left={218} delay={6.8} /> */}
-            {/* <img src={resolveAssetUrl(options[0].logo)} alt="a" className="absolute top-[1px] left-[1px] h-[65px] w-[65px]" /> */}
+        <div className="relative  h-[226px] w-[310px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  inset-[2px] rounded-[7px] ">
+
+            {Pending && (
+                <>
+                    {isFirstStart ? (
+                        <>
+                            {rows.map((element) => (
+                                <>
+                                    <img src={resolveAssetUrl(options[element]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
+                                        style={{ left: `${26}px`, top: `${10 + element * 70}px` }} />
+                                    <img src={resolveAssetUrl(options[element]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
+                                        style={{ left: `${123}px`, top: `${10 + element * 70}px` }} />
+                                    <img src={resolveAssetUrl(options[element]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
+                                        style={{ left: `${218}px`, top: `${10 + element * 70}px` }} />
+                                </>
+                            ))}
+                        </>
+                    ) : (
+                        <>
+                            {rows.map((element) => (
+                                <>
+                                    <img src={resolveAssetUrl(options[element + 3]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
+                                        style={{ left: `${26}px`, top: `${10 + element * 70}px` }} />
+                                    <img src={resolveAssetUrl(options[element + 3]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
+                                        style={{ left: `${123}px`, top: `${10 + element * 70}px` }} />
+                                    <img src={resolveAssetUrl(options[element + 3]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
+                                        style={{ left: `${218}px`, top: `${10 + element * 70}px` }} />
+                                </>
+                            ))}
+                        </>
+                    )}
+                </>
+            )}
+            {Rolling && (<>
+                <StartAni left={26} delay={0} />
+                <StartAni left={123} delay={0.1} />
+                <StartAni left={218} delay={0.2} />
+                <RepeatAni left={26} delay={0} />
+                <RepeatAni left={123} delay={0.1} />
+                <RepeatAni left={218} delay={0.2} />
+                <StopAni left={26} delay={2.4} />
+                <StopAni left={123} delay={2.5} />
+                <StopAni left={218} delay={2.6} />
+            </>)}
+            {Result && (<></>)}
             <div className="absolute inset-0 z-30 pointer-events-none">
-                {/* <PendingStar /> */}
-                {/* <RollingStar /> */}
-                {/* <ResultStar /> */}
+                {Pending && (
+                    <PendingStar />
+                )}
+                {Rolling && (
+                    <RollingStar />
+                )}
+                {Result && (
+                    <ResultStar />
+                )}
             </div>
 
         </div>
