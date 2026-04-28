@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { Fragment, useState, useEffect } from "react";
 import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
-import coin1 from "../assets/coin1.svg"
-import coin2 from "../assets/coin2.svg"
+import { getAssetUrl, GAME_ASSETS } from "../config/gameconfig";
 
 export function RectangleIcon() {
     return (
@@ -395,7 +394,7 @@ export function WinAni() {
     return (
         win_duration.map((index, i) => (<motion.img
             key={i}
-            src={coin1}
+            src={getAssetUrl(GAME_ASSETS.coin)}
             className="absolute w-10 h-10 left-1/2 -translate-x-1/2 scale-50"
             animate={{
                 x: [win_positionXStart[i], win_positionXMiddle[i], win_positionXEnd[i]],
@@ -480,7 +479,7 @@ export function RiseAni({ left, top }: { left: number, top: number }) {
         {
             duration.map((index, i) => (<motion.img
                 key={i}
-                src={coin1}
+                src={getAssetUrl(GAME_ASSETS.coin)}
                 className="absolute  w-3 h-3 z-[20]"
                 style={{ top: `${top}px`, left: `${left}px` }}
                 animate={{
@@ -500,7 +499,7 @@ export function RiseAni({ left, top }: { left: number, top: number }) {
         {
             duration1.map((index, i) => (<motion.img
                 key={i}
-                src={coin2}
+                src={getAssetUrl(GAME_ASSETS.coin)}
                 className="absolute w-3 h-3 z-[20]"
                 style={{ top: `${top}px`, left: `${left}px` }}
                 animate={{
@@ -653,7 +652,7 @@ export function RainMoney() {
             {
                 duration.map((index, i) => (<motion.img
                     key={i}
-                    src={coin1}
+                    src={getAssetUrl(GAME_ASSETS.coin)}
                     className="absolute w-10 h-10 left-1/2 -translate-x-1/2 scale-50"
                     animate={{
                         x: [positionXStart[i], positionXEnd[i]],
@@ -672,7 +671,7 @@ export function RainMoney() {
             {
                 duration1.map((index, i) => (<motion.img
                     key={i}
-                    src={coin2}
+                    src={getAssetUrl(GAME_ASSETS.coin)}
                     className="absolute w-10 h-10 left-1/2 -translate-x-1/2"
                     animate={{
                         x: [positionXStart1[i], positionXEnd1[i]],

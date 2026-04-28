@@ -182,13 +182,21 @@ const handleRemainingToday= useCallback(async () => {
   }, []);
 const handleRankingToday= useCallback(async () => {
     const data = await fetchRankingToday();
+    updateStore({rankingTodays:data  });
     return data;
   }, []);
 const handleRankingYesterday= useCallback(async () => {
     const data = await fetchRankingYesterday();
+    updateStore({rankingTodays:data  });
+    return data;
+  }, []);
+const handlePlayerInfo= useCallback(async () => {
+    const data = await fetchPlayerInfo();
+    updateStore({playerInfo:data})
     return data;
   }, []);
 const clearCurrentRoundBets = useCallback(() => {
+  
   }, []);
 
   return {
@@ -212,5 +220,6 @@ const clearCurrentRoundBets = useCallback(() => {
     handleWinToday,
     handleRankingToday,
     handleRankingYesterday,
+    handlePlayerInfo,
   };
 }

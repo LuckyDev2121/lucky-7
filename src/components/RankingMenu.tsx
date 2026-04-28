@@ -1,7 +1,7 @@
 import { ButtonMenu, CloseIcon, QuestionMarkIcon, } from "./ButtonMenu";
 import { getAssetUrl, GAME_ASSETS } from "../config/gameconfig";
 import { useEffect, useState } from "react";
-import { useGame } from "../hooks/useGameHook";
+import { resolveAssetUrl, useGame } from "../hooks/useGameHook";
 export function HistoryIcon() {
     return (
         <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true">
@@ -58,29 +58,103 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                     <span className=" relative font-sans text-[#ffffff]/60">Diamonds Play</span>
                 </div>
                 <div className="absolute top-[35px] w-[292px] h-[231px] left-1/2 -translate-x-1/2 scrollbar-hidden overflow-x-hidden overflow-y-auto">
-                    <div className="relative w-[292px] h-[47px] mt-[5px] flex ">
-                        <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#cf9800] from-1%  via-50% via-[#FFF987] to-[#fdc21f] to-90% rounded-l-[10px]">
-                            <img src={""} alt="prize" className=" absolute h-[35px] w-[35px] left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
+                    {isTodayRanking ?
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex ">
+                            <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#cf9800] from-1%  via-50% via-[#FFF987] to-[#fdc21f] to-90% rounded-l-[10px]">
+                                <img src={""} alt="prize" className=" absolute h-[35px] w-[35px] left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#FBBA07]   to-[#FFF987] items-center rounded-r-[10px] {resolveAssetUrl(rankingToday[0].player?.">
+                                <img src={resolveAssetUrl(rankingToday[0].player?.avater ?? "")} alt="avatar" className="h-[45px] w-[45px] rounded-full" />
+                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingToday[0].player?.username}</span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
+                                <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingToday[0].total_win}</span>
+                            </div>
                         </div>
-                        <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#FBBA07]   to-[#FFF987] items-center rounded-r-[10px]">
-                            <img src={""} alt="avatar" className="h-[45px] w-[45px]" />
-                            <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">00</span>
-                            <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
-                            <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">0</span>
+                        :
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex ">
+                            <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#cf9800] from-1%  via-50% via-[#FFF987] to-[#fdc21f] to-90% rounded-l-[10px]">
+                                <img src={""} alt="prize" className=" absolute h-[35px] w-[35px] left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#FBBA07]   to-[#FFF987] items-center rounded-r-[10px] {resolveAssetUrl(rankingToday[0].player?.">
+                                <img src={resolveAssetUrl(rankingYesterday[0].player?.avater ?? "")} alt="avatar" className="h-[45px] w-[45px] rounded-full" />
+                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingYesterday[0].player?.username}</span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
+                                <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingYesterday[0].total_win}</span>
+                            </div>
+                        </div>}
+                    {isTodayRanking ?
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex ">
+                            <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#cf9800] from-1%  via-50% via-[#FFF987] to-[#fdc21f] to-90% rounded-l-[10px]">
+                                <img src={""} alt="prize" className=" absolute h-[35px] w-[35px] left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#FBBA07]   to-[#FFF987] items-center rounded-r-[10px] {resolveAssetUrl(rankingToday[0].player?.">
+                                <img src={resolveAssetUrl(rankingToday[0].player?.avater ?? "")} alt="avatar" className="h-[45px] w-[45px] rounded-full" />
+                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingToday[1].player?.username}</span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
+                                <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingToday[1].total_win}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="relative w-[292px] h-[47px] mt-[5px] flex">
-                        <div className="relative content-center pl-[20px] h-[47px] w-[47px] text-[#ffcf68] text-[20px] bg-gradient-to-br from-[#7fd5fd] from-1%  via-50% via-[#fbfdff] to-[#7fd5fd] to-90% [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown] rounded-l-[10px]">
-                            {9}
+                        :
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex ">
+                            <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#cf9800] from-1%  via-50% via-[#FFF987] to-[#fdc21f] to-90% rounded-l-[10px]">
+                                <img src={""} alt="prize" className=" absolute h-[35px] w-[35px] left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#FBBA07]   to-[#FFF987] items-center rounded-r-[10px] {resolveAssetUrl(rankingToday[0].player?.">
+                                <img src={resolveAssetUrl(rankingYesterday[0].player?.avater ?? "")} alt="avatar" className="h-[45px] w-[45px] rounded-full" />
+                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingYesterday[1].player?.username}</span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
+                                <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingYesterday[1].total_win}</span>
+                            </div>
+                        </div>}
+                    {isTodayRanking ?
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex ">
+                            <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#cf9800] from-1%  via-50% via-[#FFF987] to-[#fdc21f] to-90% rounded-l-[10px]">
+                                <img src={""} alt="prize" className=" absolute h-[35px] w-[35px] left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#FBBA07]   to-[#FFF987] items-center rounded-r-[10px] {resolveAssetUrl(rankingToday[0].player?.">
+                                <img src={resolveAssetUrl(rankingToday[0].player?.avater ?? "")} alt="avatar" className="h-[45px] w-[45px] rounded-full" />
+                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingToday[2].player?.username}</span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
+                                <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingToday[2].total_win}</span>
+                            </div>
                         </div>
-                        <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#7fd5fd]   to-[#b8d6f8] items-center rounded-r-[10px]">
-                            <img src={""} alt="avatar" />
-                            <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">00000</span>
-                            <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
-                            <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">dfd</span>
+                        :
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex ">
+                            <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#cf9800] from-1%  via-50% via-[#FFF987] to-[#fdc21f] to-90% rounded-l-[10px]">
+                                <img src={""} alt="prize" className=" absolute h-[35px] w-[35px] left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#FBBA07]   to-[#FFF987] items-center rounded-r-[10px] {resolveAssetUrl(rankingToday[0].player?.">
+                                <img src={resolveAssetUrl(rankingYesterday[0].player?.avater ?? "")} alt="avatar" className="h-[45px] w-[45px] rounded-full" />
+                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingYesterday[2].player?.username}</span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
+                                <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingYesterday[2].total_win}</span>
+                            </div>
+                        </div>}
+                    {isTodayRanking ?
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex">
+                            <div className="relative content-center pl-[20px] h-[47px] w-[47px] text-[#ffcf68] text-[20px] bg-gradient-to-br from-[#7fd5fd] from-1%  via-50% via-[#fbfdff] to-[#7fd5fd] to-90% [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown] rounded-l-[10px]">
+                                {9}
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#7fd5fd]   to-[#b8d6f8] items-center rounded-r-[10px]">
+                                <img src={resolveAssetUrl(rankingToday[1].player?.avater ?? "")} alt="avatar" />
+                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingYesterday[2].player?.username}</span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
+                                <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">{rankingYesterday[2].total_win}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="relative w-[292px] h-[47px] mt-[5px] flex">
+                        :
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex">
+                            <div className="relative content-center pl-[20px] h-[47px] w-[47px] text-[#ffcf68] text-[20px] bg-gradient-to-br from-[#7fd5fd] from-1%  via-50% via-[#fbfdff] to-[#7fd5fd] to-90% [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown] rounded-l-[10px]">
+                                {9}
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#7fd5fd]   to-[#b8d6f8] items-center rounded-r-[10px]">
+                                <img src={resolveAssetUrl(rankingYesterday[1].player?.avater ?? "")} alt="avatar" />
+                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">00000</span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
+                                <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">dfd</span>
+                            </div>
+                        </div>}
+                    {isTodayRanking ? <div className="relative w-[292px] h-[47px] mt-[5px] flex">
                         <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#d47e37] from-1%  via-50% via-[#fec79a] to-[#eea162] to-90% rounded-l-[10px]">
 
                         </div>
@@ -91,17 +165,42 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                             <span></span>
                         </div>
                     </div>
-                    <div className="relative w-[292px] h-[47px] mt-[5px] flex">
-                        <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#c29542] from-1%  via-50% via-[#fffae6] to-[#dfba77] to-90% rounded-l-[10px]">
-                            {/* <img src="" alt="" /> */}
+                        :
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex">
+                            <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#d47e37] from-1%  via-50% via-[#fec79a] to-[#eea162] to-90% rounded-l-[10px]">
+
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#f1a362]   to-[#fec79a] items-center rounded-r-[10px]">
+                                <div></div>
+                                <span className="text-[#A45721] font-bold">Sumiya BD</span>
+                                {/* <img src="" alt="" /> */}
+                                <span></span>
+                            </div>
+                        </div>}
+                    {isTodayRanking ?
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex">
+                            <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#c29542] from-1%  via-50% via-[#fffae6] to-[#dfba77] to-90% rounded-l-[10px]">
+                                {/* <img src="" alt="" /> */}
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#d6b579]   to-[#fffae6] items-center rounded-r-[10px]">
+                                <div></div>
+                                <span className="text-[#A45721] font-bold">Sumiya BD</span>
+                                {/* <img src="" alt="" /> */}
+                                <span></span>
+                            </div>
                         </div>
-                        <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#d6b579]   to-[#fffae6] items-center rounded-r-[10px]">
-                            <div></div>
-                            <span className="text-[#A45721] font-bold">Sumiya BD</span>
-                            {/* <img src="" alt="" /> */}
-                            <span></span>
-                        </div>
-                    </div>
+                        :
+                        <div className="relative w-[292px] h-[47px] mt-[5px] flex">
+                            <div className="relative h-[47px] w-[47px] bg-gradient-to-br from-[#c29542] from-1%  via-50% via-[#fffae6] to-[#dfba77] to-90% rounded-l-[10px]">
+                                {/* <img src="" alt="" /> */}
+                            </div>
+                            <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#d6b579]   to-[#fffae6] items-center rounded-r-[10px]">
+                                <div></div>
+                                <span className="text-[#A45721] font-bold">Sumiya BD</span>
+                                {/* <img src="" alt="" /> */}
+                                <span></span>
+                            </div>
+                        </div>}
                 </div>
             </div>
             <div className="absolute flex items-center top-[432px] left-1/2 -translate-x-1/2 w-[316px] h-[48px] bg-gradient-to-br from-[#FBBA07] from-1%  via-30% via-[#FFF987] to-[#D5831F] to-90% rounded-[9px]">

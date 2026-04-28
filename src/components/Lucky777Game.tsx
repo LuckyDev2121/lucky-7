@@ -49,7 +49,7 @@ export default function Lucky777Game({
     const [isAutoMode, setIsAutoMode] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const isOverlayOpen = (activeModal !== null || prizeModal !== null);
-    const { betAmounts, options, placeBet, playerInfo, handleWinToday } = useGame()
+    const { betAmounts, options, placeBet, playerInfo, handleWinToday, handlePlayerInfo } = useGame()
     const [currentBet, setCurrentBet] = useState(0)
     const [second, setSecond] = useState(0);
     const [startValue, setStartValue] = useState([13, 13, 13, 14, 14, 14, 15, 15, 15,])
@@ -79,6 +79,7 @@ export default function Lucky777Game({
                         response.result.set_C[0].option_id, response.result.set_C[1].option_id, response.result.set_C[2].option_id,])
                         setWinAmount(Number.parseFloat(response.win_amount))
                     })
+                handlePlayerInfo()
                 setIsWinAniShowed(false)
                 setIsFirst(false)
                 setIsPending(false);
@@ -159,7 +160,7 @@ export default function Lucky777Game({
                                             }} />}
                                     <span className="absolute top-[55px] left-1/2 -translate-x-1/2 z-[20] font-bold font-sans text-[#ffffff] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]">+99</span>
                                     {isResulting && winAmount && <RiseAni left={30} top={-35} />}
-                                    {/* <motion.span className="absolute z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                    {isResulting && winAmount && <motion.span className="absolute z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                         initial={{ y: -5, }}
                                         animate={{ y: 5, }}
                                         transition={{
@@ -167,7 +168,7 @@ export default function Lucky777Game({
                                             repeat: Infinity, // 👈 add this
                                             repeatType: "reverse"
                                         }}
-                                    >+{formatNumber(100000000)}</motion.span> */}
+                                    >+{formatNumber(winAmount)}</motion.span>}
                                 </>
                             </button>
                             <div className="absolute h-[66px] w-[266px] top-[30px] left-[91px] bg-gradient-to-t from-[#0E0038] to-[#140433] rounded-[4px]">
