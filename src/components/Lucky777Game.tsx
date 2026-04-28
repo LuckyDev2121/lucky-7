@@ -280,7 +280,7 @@ export default function Lucky777Game({
                                         <RepeatAni left={123} delay={0.3} num={1} />
                                         <RepeatAni left={218} delay={0.6} num={3} />
                                         <RepeatAni left={26} delay={0.6} num={4} />
-                                        <RepeatAni left={123} delay={0.99} num={5} />
+                                        <RepeatAni left={123} delay={0.9} num={5} />
                                         <RepeatAni left={218} delay={1.2} num={4} />
                                         <RepeatAni left={26} delay={1.2} num={2} />
                                         <RepeatAni left={123} delay={1.5} num={4} />
