@@ -180,6 +180,14 @@ const handleRemainingToday= useCallback(async () => {
     const data = await fetchRemainingToday();
     return data;
   }, []);
+const handleRankingToday= useCallback(async () => {
+    const data = await fetchRankingToday();
+    return data;
+  }, []);
+const handleRankingYesterday= useCallback(async () => {
+    const data = await fetchRankingYesterday();
+    return data;
+  }, []);
 const clearCurrentRoundBets = useCallback(() => {
   }, []);
 
@@ -202,5 +210,7 @@ const clearCurrentRoundBets = useCallback(() => {
     handlePrizeDistribution,
     handleRemainingToday,
     handleWinToday,
+    handleRankingToday,
+    handleRankingYesterday,
   };
 }

@@ -1,6 +1,7 @@
 import { ButtonMenu, CloseIcon, QuestionMarkIcon, } from "./ButtonMenu";
 import { getAssetUrl, GAME_ASSETS } from "../config/gameconfig";
-
+import { useEffect, useState } from "react";
+import { useGame } from "../hooks/useGameHook";
 export function HistoryIcon() {
     return (
         <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true">
@@ -17,6 +18,12 @@ type RankingProps = {
 };
 
 export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: RankingProps) {
+    const [isTodayRanking, setIsTodayRanking] = useState(true)
+    const { handleRankingToday, handleRankingYesterday, rankingToday, rankingYesterday } = useGame()
+    useEffect(() => {
+        handleRankingToday()
+        handleRankingYesterday()
+    }, [])
     return (
         <div className="h-[530px] bg-gradient-to-t from-[#120D25] to-[#43308B] w-[343px] rounded-t-[20px]">
             <div className="absolute top-[12px] right-[12px] z-20">
@@ -108,8 +115,14 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                 </div>
             </div>
             <div className="absolute top-[489px] left-1/2 -translate-x-1/2 w-[269px] h-[31px] justify-between flex">
-                <button className="relative w-[131px] h-[31px] bg-gradient-to-t from-[#705FEC] to-[#C990F7] rounded-[5px] border-[#fde453] border-[1px] text-[#FFFFFF] font-sans">Today</button>
-                <button className="relative w-[131px] h-[31px] bg-gradient-to-t from-[#705FEC]/40 to-[#C990F7]/40 rounded-[5px] border-[#fde453]/40 border-[1px] text-[#FFFFFF]/40 font-sans">Yesterday</button>
+                {isTodayRanking ?
+                    <>
+                        <button className="relative w-[131px] h-[31px] bg-gradient-to-t from-[#705FEC] to-[#C990F7] rounded-[5px] border-[#fde453] border-[1px] text-[#FFFFFF] font-sans" onClick={() => { }}>Today</button>
+                        <button className="relative w-[131px] h-[31px] bg-gradient-to-t from-[#705FEC]/40 to-[#C990F7]/40 rounded-[5px] border-[#fde453]/40 border-[1px] text-[#FFFFFF]/40 font-sans" onClick={() => { setIsTodayRanking(false) }}>Yesterday</button>
+                    </> : <>
+                        <button className="relative w-[131px] h-[31px] bg-gradient-to-t from-[#705FEC]/40 to-[#C990F7]/40 rounded-[5px] border-[#fde453]/40 border-[1px] text-[#FFFFFF]/40  font-sans" onClick={() => { setIsTodayRanking(true) }}>Today</button>
+                        <button className="relative w-[131px] h-[31px] bg-gradient-to-t from-[#705FEC] to-[#C990F7] rounded-[5px] border-[#fde453]/40 border-[1px] text-[#FFFFFF] font-sans" onClick={() => { }}>Yesterday</button>
+                    </>}
             </div>
         </div >
     )
