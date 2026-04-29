@@ -58,6 +58,7 @@ export default function Lucky777Game({
     const [showWinAmount, setShowWinAmount] = useState(0)
     const [winToday, setWinToday] = useState(0)
     const [isWinAniShowed, setIsWinAniShowed] = useState(false)
+    const [pressedBtn, setPressedBtn] = useState<string | null>(null);
 
     const rows = [0, 1, 2];
     useEffect(() => {
@@ -116,6 +117,18 @@ export default function Lucky777Game({
             clearInterval(timer)
         };
     }, [second, isPlaying])
+
+    const getClass = (name: string) => {
+        // 🔥 Auto mode logic (priority)
+        if (isAutoMode) {
+            return `relative mx-[4px] transition ${name !== "auto" ? "brightness-50" : ""
+                }`;
+        }
+
+        // 🎯 Press logic
+        return `relative mx-[4px] transition ${pressedBtn && pressedBtn !== name ? "brightness-50" : ""
+            }`;
+    };
     return (
         <div className="relative flex min-h-[100dvh] w-full border-[#130E2C] border-[4px,4px,0px,4px] items-end justify-center overflow-hidden">
             <div className="fixed inset-0 flex items-end justify-center overflow-hidden ">
@@ -514,25 +527,59 @@ export default function Lucky777Game({
                                 </div>
                             </div>
                             <div className="absolute top-[390px] h-[60px] pl-[18px] pr-[5px] w-full ">
-                                <button className="relative mx-[4px]"
-                                    onClick={() => { if (currentBet) setCurrentBet(currentBet - 1) }}>
+                                <button
+                                    className={getClass("minus")}
+                                    onPointerDown={() => setPressedBtn("minus")}
+                                    onPointerUp={() => setPressedBtn(null)}
+                                    onPointerLeave={() => setPressedBtn(null)}
+                                    onClick={() => {
+                                        if (currentBet) setCurrentBet(currentBet - 1);
+                                    }}
+                                >
                                     <img src={getAssetUrl(GAME_ASSETS.minusBtn)} alt="betmin" />
                                 </button>
-                                <button className="relative mx-[4px]"
-                                    onClick={() => { if (currentBet + 1 !== betAmounts.length) setCurrentBet(currentBet + 1) }}>
+
+                                <button
+                                    className={getClass("plus")}
+                                    onPointerDown={() => setPressedBtn("plus")}
+                                    onPointerUp={() => setPressedBtn(null)}
+                                    onPointerLeave={() => setPressedBtn(null)}
+                                    onClick={() => {
+                                        if (currentBet + 1 !== betAmounts.length)
+                                            setCurrentBet(currentBet + 1);
+                                    }}
+                                >
                                     <img src={getAssetUrl(GAME_ASSETS.plusBtn)} alt="betplu" />
                                 </button>
-                                <button className="relative mx-[4px]"
+
+                                <button
+                                    className={getClass("auto")}
+                                    onPointerDown={() => setPressedBtn("auto")}
+                                    onPointerUp={() => setPressedBtn(null)}
+                                    onPointerLeave={() => setPressedBtn(null)}
                                     onClick={() => {
-                                        setIsAutoMode(true);
-                                        setIsPlaying(true);
-                                    }}>
+                                        if (isAutoMode) {
+                                            setIsAutoMode(false);
+                                            setPressedBtn(null)
+                                        } else {
+                                            setPressedBtn("auto")
+                                            setIsAutoMode(true);
+                                            setIsPlaying(true);
+                                        }
+                                    }}
+                                >
                                     <img src={getAssetUrl(GAME_ASSETS.autoBtn)} alt="auto" />
                                 </button>
-                                <button className="relative mx-[4px]"
+
+                                <button
+                                    className={getClass("spin")}
+                                    onPointerDown={() => setPressedBtn("spin")}
+                                    onPointerUp={() => setPressedBtn(null)}
+                                    onPointerLeave={() => setPressedBtn(null)}
                                     onClick={() => {
                                         setIsPlaying(true);
-                                    }}>
+                                    }}
+                                >
                                     <img src={getAssetUrl(GAME_ASSETS.spinBtn)} alt="spin" />
                                 </button>
                             </div>
