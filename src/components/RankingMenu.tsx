@@ -149,7 +149,7 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                             </div>
                             <div className="relative flex h-[47px] w-[245px] bg-gradient-to-t from-[#7fd5fd]   to-[#b8d6f8] items-center rounded-r-[10px]">
                                 <img src={resolveAssetUrl(rankingYesterday[1].player?.avater ?? "")} alt="avatar" />
-                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">00000</span>
+                                <span className="absolute left-[50px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">99999</span>
                                 <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute left-[130px] h-[40px] w-[40px]" />
                                 <span className="absolute left-[160px] text-[#fde4c7] font-bold  h-[40px] w-[80px] content-center">dfd</span>
                             </div>
