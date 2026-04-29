@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import RechargeMenu from "./RechargeMenu";
@@ -12,12 +11,10 @@ import MenuTop from "./MenuTop";
 import light from "../assets/Body/BodyPlayboard/Light.svg"
 import player from "../assets/Body/player.svg"
 import dotthree from "../assets/Body/BodyPlayboard/DotsThree.svg"
-// import PlayBoard from "../components/PlayBoard"
-import { LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni, RepeatAni, PendingStar, RollingStar, ResultStar } from "./Assets";
+import { LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni, RepeatAni, PendingStar, RollingStar, ResultStar, TopBottomAni, BottomTopAni, TopAni, MiddleAni, BottomAni } from "./Assets";
 import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
-
 function formatNumber(num: number): string {
     if (num >= 1_000_000_000) {
         return (num / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'B';
@@ -30,8 +27,6 @@ function formatNumber(num: number): string {
     }
     return num.toString();
 }
-
-
 export default function Lucky777Game({
     onToggleMusic,
     isMusicPlaying,
@@ -39,7 +34,6 @@ export default function Lucky777Game({
     onToggleMusic: () => void;
     isMusicPlaying: boolean;
 }) {
-
     const [activeModal, setActiveModal] = useState<string | null>(null);
     const [prizeModal, setPrizeModal] = useState<string | null>(null);
     const [isFirst, setIsFirst] = useState(true)
@@ -59,7 +53,6 @@ export default function Lucky777Game({
     const [winToday, setWinToday] = useState(0)
     const [isWinAniShowed, setIsWinAniShowed] = useState(false)
     const [pressedBtn, setPressedBtn] = useState<string | null>(null);
-
     const rows = [0, 1, 2];
     useEffect(() => {
         if (!isPlaying)
@@ -119,16 +112,14 @@ export default function Lucky777Game({
     }, [second, isPlaying])
 
     const getClass = (name: string) => {
-        // 🔥 Auto mode logic (priority)
         if (isAutoMode) {
             return `relative mx-[4px] transition ${name !== "auto" ? "brightness-50" : ""
                 }`;
         }
-
-        // 🎯 Press logic
         return `relative mx-[4px] transition ${pressedBtn && pressedBtn !== name ? "brightness-50" : ""
             }`;
     };
+
     return (
         <div className="relative flex min-h-[100dvh] w-full border-[#130E2C] border-[4px,4px,0px,4px] items-end justify-center overflow-hidden">
             <div className="fixed inset-0 flex items-end justify-center overflow-hidden ">
@@ -335,176 +326,16 @@ export default function Lucky777Game({
                                 </div>
                             </div>
                             <div className="absolute h-[226px] w-[310px] left-1/2 top-[97px] -translate-x-1/2  inset-[2px] rounded-[7px]" >
-                                {isResulting && winAmount > 0 && endValue[0] === endValue[4] && endValue[0] === endValue[8] && (< div className="absolute inset-0 z-30 pointer-events-none">
-                                    <svg className="" width="600" height="400">
-                                        {/* background path */}
-                                        <path
-                                            d="M30 35 L60 35 L255 185 L280 185"
-                                            stroke="none"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                        />
-
-                                        {/* animated progress */}
-                                        <motion.path
-                                            d="M30 35 L60 35 L255 185 L280 185"
-                                            stroke="rgba(255, 220, 0, 0.8)"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                        />
-                                        <motion.path
-                                            d="M30 35 L60 35 L255 185 L280 185"
-                                            stroke="rgba(255,255,255,1)"
-                                            strokeWidth="3"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                            style={{ filter: "blur(2px)", }}
-                                        />
-                                    </svg>
-                                </div>)}
-                                {isResulting && winAmount > 0 && endValue[6] === endValue[4] && endValue[6] === endValue[2] && (<div className="absolute inset-0 z-30 pointer-events-none">
-                                    <svg className="" width="600" height="400">
-                                        {/* background path */}
-                                        <path
-                                            d="M30 185 L60 185 L250 35 L280 35"
-                                            stroke="none"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                        />
-
-                                        {/* animated progress */}
-                                        <motion.path
-                                            d="M30 185 L60 185 L250 35 L280 35"
-                                            stroke="rgba(180, 80, 255, 0.8)"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                        />
-                                        <motion.path
-                                            d="M30 185 L60 185 L250 35 L280 35"
-                                            stroke="rgba(255,255,255,1)"
-                                            strokeWidth="4"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                            style={{ filter: "blur(2px)", }}
-                                        />
-                                    </svg>
-                                </div>)}
-                                {isResulting && winAmount > 0 && endValue[0] === endValue[1] && endValue[0] === endValue[2] && (<div className="absolute inset-0 z-30 pointer-events-none">
-                                    <svg className="" width="600" height="400">
-                                        {/* background path */}
-                                        <path
-                                            d="M30 40 L280 40"
-                                            stroke="none"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                        />
-
-                                        {/* animated progress */}
-                                        <motion.path
-                                            d="M30 40 L280 40"
-                                            stroke="rgba(0, 150, 255, 0.8)"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                        />
-                                        <motion.path
-                                            d="M30 40 L280 40"
-                                            stroke="rgba(255,255,255,1)"
-                                            strokeWidth="4"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                            style={{ filter: "blur(2px)", }}
-                                        />
-                                    </svg>
-                                </div>)}
-                                {isResulting && winAmount > 0 && endValue[3] === endValue[4] && endValue[3] === endValue[5] && (<div className="absolute inset-0 z-30 pointer-events-none">
-                                    <svg className="" width="600" height="400">
-                                        {/* background path */}
-                                        <path
-                                            d="M30 140 L280 140"
-                                            stroke="none"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                        />
-
-                                        {/* animated progress */}
-                                        <motion.path
-                                            d="M30 110 L280 110"
-                                            stroke="rgba(255, 60, 60, 0.8)"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                        />
-                                        <motion.path
-                                            d="M30 110 L280 110"
-                                            stroke="rgba(255,255,255,1)"
-                                            strokeWidth="4"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                            style={{ filter: "blur(2px)", }}
-                                        />
-                                    </svg>
-                                </div>)}
-                                {isResulting && winAmount > 0 && endValue[6] === endValue[7] && endValue[6] === endValue[8] && (<div className="absolute inset-0 z-30 pointer-events-none">
-                                    <svg className="" width="600" height="400">
-                                        {/* background path */}
-                                        <path
-                                            d="M30 180 L280 180"
-                                            stroke="none"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                        />
-
-                                        {/* animated progress */}
-                                        <motion.path
-                                            d="M30 180 L280 180"
-                                            stroke="rgba(0,255,0,0.8)"
-                                            strokeWidth="10"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                        />
-                                        <motion.path
-                                            d="M30 180 L280 180"
-                                            stroke="rgba(255,255,255,1)"
-                                            strokeWidth="4"
-                                            fill="transparent"
-                                            strokeDasharray="500"
-                                            initial={{ strokeDashoffset: 500 }}
-                                            animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 1, ease: "linear" }}
-                                            style={{ filter: "blur(2px)", }}
-                                        />
-                                    </svg>
-                                </div>)}
+                                {isResulting && winAmount > 0 && endValue[0] === endValue[4] && endValue[0] === endValue[8] && (
+                                    <TopBottomAni />)}
+                                {isResulting && winAmount > 0 && endValue[6] === endValue[4] && endValue[6] === endValue[2] && (
+                                    <BottomTopAni />)}
+                                {isResulting && winAmount > 0 && endValue[0] === endValue[1] && endValue[0] === endValue[2] && (
+                                    <TopAni />)}
+                                {isResulting && winAmount > 0 && endValue[3] === endValue[4] && endValue[3] === endValue[5] && (
+                                    <MiddleAni />)}
+                                {isResulting && winAmount > 0 && endValue[6] === endValue[7] && endValue[6] === endValue[8] && (
+                                    <BottomAni />)}
                             </div>
                             <div className="absolute left-[39px] top-[322px] h-[40px] w-[315px] grid grid-row-2">
                                 <div className="relative h-[18px] w-full">
@@ -521,7 +352,15 @@ export default function Lucky777Game({
                                         <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle ">{winToday}</span>
                                     </div>
                                     <div className="bg-[#000000] h-[24px] w-[100px] rounded-[4px] text-center ">
-                                        <img src={light} alt="light" className="absolute" />
+                                        {isResulting && winAmount > 0 && (<motion.img src={light} alt="light" className="absolute"
+                                            animate={{
+                                                opacity: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+                                                filter: "brightness(5)"
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                ease: "easeInOut",
+                                            }} />)}
                                         <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle">{showWinAmount}</span>
                                     </div>
                                 </div>

@@ -790,7 +790,186 @@ export function RepeatAni({ left, delay, num }: { left: number; delay: number; n
         </Fragment>
     )
 }
+export function TopBottomAni() {
+    return < div className="absolute inset-0 z-30 pointer-events-none">
+        <svg className="" width="600" height="400">
+            {/* background path */}
+            <path
+                d="M30 35 L60 35 L255 185 L280 185"
+                stroke="none"
+                strokeWidth="10"
+                fill="transparent"
+            />
 
+            {/* animated progress */}
+            <motion.path
+                d="M30 35 L60 35 L255 185 L280 185"
+                stroke="rgba(255, 220, 0, 0.8)"
+                strokeWidth="10"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+            />
+            <motion.path
+                d="M30 35 L60 35 L255 185 L280 185"
+                stroke="rgba(255,255,255,1)"
+                strokeWidth="3"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+                style={{ filter: "blur(2px)", }}
+            />
+        </svg>
+    </div>
+}
+export function BottomTopAni() {
+    return <div className="absolute inset-0 z-30 pointer-events-none">
+        <svg className="" width="600" height="400">
+            {/* background path */}
+            <path
+                d="M30 185 L60 185 L250 35 L280 35"
+                stroke="none"
+                strokeWidth="10"
+                fill="transparent"
+            />
+
+            {/* animated progress */}
+            <motion.path
+                d="M30 185 L60 185 L250 35 L280 35"
+                stroke="rgba(180, 80, 255, 0.8)"
+                strokeWidth="10"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+            />
+            <motion.path
+                d="M30 185 L60 185 L250 35 L280 35"
+                stroke="rgba(255,255,255,1)"
+                strokeWidth="4"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+                style={{ filter: "blur(2px)", }}
+            />
+        </svg>
+    </div>
+}
+export function TopAni() {
+    return <div className="absolute inset-0 z-30 pointer-events-none">
+        <svg className="" width="600" height="400">
+            {/* background path */}
+            <path
+                d="M30 40 L280 40"
+                stroke="none"
+                strokeWidth="10"
+                fill="transparent"
+            />
+
+            {/* animated progress */}
+            <motion.path
+                d="M30 40 L280 40"
+                stroke="rgba(0, 150, 255, 0.8)"
+                strokeWidth="10"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+            />
+            <motion.path
+                d="M30 40 L280 40"
+                stroke="rgba(255,255,255,1)"
+                strokeWidth="4"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+                style={{ filter: "blur(2px)", }}
+            />
+        </svg>
+    </div>
+}
+export function MiddleAni() {
+    return <div className="absolute inset-0 z-30 pointer-events-none">
+        <svg className="" width="600" height="400">
+            {/* background path */}
+            <path
+                d="M30 140 L280 140"
+                stroke="none"
+                strokeWidth="10"
+                fill="transparent"
+            />
+
+            {/* animated progress */}
+            <motion.path
+                d="M30 110 L280 110"
+                stroke="rgba(255, 60, 60, 0.8)"
+                strokeWidth="10"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+            />
+            <motion.path
+                d="M30 110 L280 110"
+                stroke="rgba(255,255,255,1)"
+                strokeWidth="4"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+                style={{ filter: "blur(2px)", }}
+            />
+        </svg>
+    </div>
+}
+export function BottomAni() {
+    return <div className="absolute inset-0 z-30 pointer-events-none">
+        <svg className="" width="600" height="400">
+            {/* background path */}
+            <path
+                d="M30 180 L280 180"
+                stroke="none"
+                strokeWidth="10"
+                fill="transparent"
+            />
+
+            {/* animated progress */}
+            <motion.path
+                d="M30 180 L280 180"
+                stroke="rgba(0,255,0,0.8)"
+                strokeWidth="10"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+            />
+            <motion.path
+                d="M30 180 L280 180"
+                stroke="rgba(255,255,255,1)"
+                strokeWidth="4"
+                fill="transparent"
+                strokeDasharray="500"
+                initial={{ strokeDashoffset: 500 }}
+                animate={{ strokeDashoffset: 0 }}
+                transition={{ duration: 1, ease: "linear" }}
+                style={{ filter: "blur(2px)", }}
+            />
+        </svg>
+    </div>
+}
 {/* <div
                                 className="absolute bottom-0 left-0 h-[70px] w-full bg-gradient-to-br from-[#D5831F] from-1% via-30% via-[#FFF987]  to-[#D5831F] to-90%"
                                 style={{
