@@ -341,7 +341,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                         />
                                         <motion.path
                                             d="M30 35 L60 35 L255 185 L280 185"
@@ -351,7 +351,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                             style={{ filter: "blur(2px)", }}
                                         />
                                     </svg>
@@ -375,7 +375,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                         />
                                         <motion.path
                                             d="M30 185 L60 185 L250 35 L280 35"
@@ -385,7 +385,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                             style={{ filter: "blur(2px)", }}
                                         />
                                     </svg>
@@ -409,7 +409,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                         />
                                         <motion.path
                                             d="M30 40 L280 40"
@@ -419,7 +419,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                             style={{ filter: "blur(2px)", }}
                                         />
                                     </svg>
@@ -443,7 +443,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                         />
                                         <motion.path
                                             d="M30 110 L280 110"
@@ -453,7 +453,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                             style={{ filter: "blur(2px)", }}
                                         />
                                     </svg>
@@ -477,7 +477,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                         />
                                         <motion.path
                                             d="M30 180 L280 180"
@@ -487,7 +487,7 @@ export default function Lucky777Game({
                                             strokeDasharray="500"
                                             initial={{ strokeDashoffset: 500 }}
                                             animate={{ strokeDashoffset: 0 }}
-                                            transition={{ duration: 2, ease: "linear" }}
+                                            transition={{ duration: 1, ease: "linear" }}
                                             style={{ filter: "blur(2px)", }}
                                         />
                                     </svg>
