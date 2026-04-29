@@ -1003,22 +1003,22 @@ export function ResultPending({ status, }: { status: number[], }) {
     }
     useEffect(() => {
         const timer = setInterval(() => {
-            if (second === (index0 + total * times) * 1000) {
+            if (second === (index0 + (total + 1) * times) * 1000) {
                 setChoosed("topbottom")
             }
-            if (second === (index1 + total * times) * 1000) {
+            if (second === (index1 + (total + 1) * times) * 1000) {
                 setChoosed("bottomtop")
             }
-            if (second === (index2 + total * times) * 1000) {
+            if (second === (index2 + (total + 1) * times) * 1000) {
                 setChoosed("top")
             }
-            if (second === (index3 + total * times) * 1000) {
+            if (second === (index3 + (total + 1) * times) * 1000) {
                 setChoosed("middle")
             }
-            if (second === (index4 + total * times) * 1000) {
+            if (second === (index4 + (total + 1) * times) * 1000) {
                 setChoosed("bottom")
             }
-            if (second === (total + total * times) * 1000) {
+            if (second === (total + (total + 1) * times) * 1000) {
                 setChoosed("total")
                 setTimes((prev) => prev + 1)
             }
@@ -1042,10 +1042,10 @@ export function ResultPending({ status, }: { status: number[], }) {
             {choosed === "middle" && (
                 <MiddleAni />
             )}
-            {choosed === "topbottom" && (
+            {choosed === "bottom" && (
                 <BottomAni />
             )}
-            {choosed === "total" && (
+            {choosed === "total" && total > 1 && (
                 <>
                     {status[8] && status[4] === 1 && status[0] === 1 &&
                         <TopBottomAni />
