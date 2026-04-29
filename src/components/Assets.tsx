@@ -970,6 +970,104 @@ export function BottomAni() {
         </svg>
     </div>
 }
+// export function ResultPending({ status, index0, index1, index2, index3, index4, total }: { status: number[], index0: number, index1: number, index2: number, index3: number, index4: number, total: number }) {
+export function ResultPending({ status, }: { status: number[], }) {
+    const [second, setSecond] = useState(0);
+    const [times, setTimes] = useState(0);
+    const [choosed, setChoosed] = useState("")
+    let total = 0;
+    let index0 = -1
+    let index1 = -1
+    let index2 = -1
+    let index3 = -1
+    let index4 = -1
+    if (status[0] === 1 && status[4] === 1 && status[8] === 1) {
+        index0 = total
+        total += 1
+    }
+    if (status[6] === 1 && status[4] === 1 && status[2] === 1) {
+        index1 = total
+        total += 1
+    }
+    if (status[0] === 1 && status[1] === 1 && status[2] === 1) {
+        index2 = total
+        total += 1
+    }
+    if (status[3] === 1 && status[4] === 1 && status[5] === 1) {
+        index3 = total
+        total += 1
+    }
+    if (status[6] === 1 && status[7] === 1 && status[8] === 1) {
+        index4 = total
+        total += 1
+    }
+    useEffect(() => {
+        const timer = setInterval(() => {
+            if (second === (index0 + total * times) * 1000) {
+                setChoosed("topbottom")
+            }
+            if (second === (index1 + total * times) * 1000) {
+                setChoosed("bottomtop")
+            }
+            if (second === (index2 + total * times) * 1000) {
+                setChoosed("top")
+            }
+            if (second === (index3 + total * times) * 1000) {
+                setChoosed("middle")
+            }
+            if (second === (index4 + total * times) * 1000) {
+                setChoosed("bottom")
+            }
+            if (second === (total + total * times) * 1000) {
+                setChoosed("total")
+                setTimes((prev) => prev + 1)
+            }
+            setSecond((s) => s + 1000);
+        }, 1000);
+        return () => {
+            clearInterval(timer)
+        };
+    }, [second,])
+    return (
+        <>
+            {choosed === "topbottom" && (
+                <TopBottomAni />
+            )}
+            {choosed === "bottomtop" && (
+                <BottomTopAni />
+            )}
+            {choosed === "top" && (
+                <TopAni />
+            )}
+            {choosed === "middle" && (
+                <MiddleAni />
+            )}
+            {choosed === "topbottom" && (
+                <BottomAni />
+            )}
+            {choosed === "total" && (
+                <>
+                    {status[8] && status[4] === 1 && status[0] === 1 &&
+                        <TopBottomAni />
+                    }
+                    {status[6] && status[4] === 1 && status[2] === 1 &&
+                        <BottomTopAni />
+                    }
+                    {status[0] === 1 && status[1] === 1 && status[2] === 1 &&
+                        <TopAni />
+                    }
+                    {status[3] === 1 && status[4] === 1 && status[5] === 1 &&
+                        <MiddleAni />
+                    }
+                    {status[6] === 1 && status[7] === 1 && status[0] === 1 &&
+                        <BottomAni />
+                    }
+                </>
+            )}
+
+        </>
+    )
+}
 {/* <div
                                 className="absolute bottom-0 left-0 h-[70px] w-full bg-gradient-to-br from-[#D5831F] from-1% via-30% via-[#FFF987]  to-[#D5831F] to-90%"
                                 style={{

@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, } from "framer-motion";
 import { useEffect, useState } from "react";
 import RechargeMenu from "./RechargeMenu";
 import HelpMenu from "./HelpMenu";
@@ -11,7 +11,7 @@ import MenuTop from "./MenuTop";
 import light from "../assets/Body/BodyPlayboard/Light.svg"
 import player from "../assets/Body/player.svg"
 import dotthree from "../assets/Body/BodyPlayboard/DotsThree.svg"
-import { LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni, RepeatAni, PendingStar, RollingStar, ResultStar, TopBottomAni, BottomTopAni, TopAni, MiddleAni, BottomAni } from "./Assets";
+import { ResultPending, LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni, RepeatAni, PendingStar, RollingStar, ResultStar, TopBottomAni, BottomTopAni, TopAni, MiddleAni, BottomAni } from "./Assets";
 import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
@@ -40,6 +40,7 @@ export default function Lucky777Game({
     const [isPending, setIsPending] = useState(true)
     const [isRolling, setIsRolling] = useState(false)
     const [isResulting, setIsResulting] = useState(false)
+    const [resultPending, setResultPending] = useState(false)
     const [isAutoMode, setIsAutoMode] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
     const isOverlayOpen = (activeModal !== null || prizeModal !== null);
@@ -48,11 +49,15 @@ export default function Lucky777Game({
     const [second, setSecond] = useState(0);
     const [startValue, setStartValue] = useState([13, 13, 13, 14, 14, 14, 15, 15, 15,])
     const [endValue, setEndValue] = useState([13, 13, 13, 14, 14, 14, 15, 15, 15,])
+    const [statusArray, setStatusArray] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     const [winAmount, setWinAmount] = useState(0)
     const [showWinAmount, setShowWinAmount] = useState(0)
     const [winToday, setWinToday] = useState(0)
     const [isWinAniShowed, setIsWinAniShowed] = useState(false)
     const [pressedBtn, setPressedBtn] = useState<string | null>(null);
+    const [forCoinBoard, setForCoinBoard] = useState(0)
+    const [normalWin, setNormalWin] = useState(true)
+    const [normalResult, setNormalResult] = useState(true)
     const rows = [0, 1, 2];
     useEffect(() => {
         if (!isPlaying)
@@ -74,13 +79,47 @@ export default function Lucky777Game({
                         response.result.set_C[0].option_id, response.result.set_C[1].option_id, response.result.set_C[2].option_id,])
                         setWinAmount(Number.parseFloat(response.win_amount))
                     })
+                setStatusArray([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                setShowWinAmount(0)
+                setForCoinBoard(Number(playerInfo?.balance) - Number.parseFloat(betAmounts[currentBet]?.amount))
                 handlePlayerInfo()
                 setIsWinAniShowed(false)
                 setIsFirst(false)
+                setResultPending(false)
+                setIsResulting(false)
                 setIsPending(false);
                 setIsRolling(true);
             }
             if (second === 2900) {
+                setStatusArray((prev) => {
+                    const newStatus = [...prev];
+                    if (endValue[0] === endValue[4] && endValue[0] === endValue[8]) {
+                        newStatus[0] = 1;
+                        newStatus[4] = 1;
+                        newStatus[8] = 1;
+                    }
+                    if (endValue[6] === endValue[4] && endValue[6] === endValue[2]) {
+                        newStatus[4] = 1;
+                        newStatus[6] = 1;
+                        newStatus[2] = 1;
+                    }
+                    if (endValue[0] === endValue[1] && endValue[0] === endValue[2]) {
+                        newStatus[0] = 1;
+                        newStatus[1] = 1;
+                        newStatus[2] = 1;
+                    }
+                    if (endValue[3] === endValue[4] && endValue[3] === endValue[5]) {
+                        newStatus[3] = 1;
+                        newStatus[4] = 1;
+                        newStatus[5] = 1;
+                    }
+                    if (endValue[6] === endValue[7] && endValue[6] === endValue[8]) {
+                        newStatus[6] = 1;
+                        newStatus[7] = 1;
+                        newStatus[8] = 1;
+                    }
+                    return newStatus;
+                });
                 setIsRolling(false)
                 setIsResulting(true)
                 setShowWinAmount(winAmount)
@@ -89,21 +128,47 @@ export default function Lucky777Game({
                         setWinToday(res.win)
                     })
             }
-            if (second === 4900) {
-                console.log(startValue)
-                setShowWinAmount(0)
-                if (isAutoMode) {
-                    setSecond(-100)
-                    setIsResulting(false)
+            if (normalWin) {
+                if (second === 3300) {
+                    setForCoinBoard(0)
                 }
-                else {
-                    setIsResulting(false)
-                    setIsPending(true)
-                    setIsPlaying(false)
-                    setSecond(0)
-                    return
+                if (second === 4900) {
+                    if (isAutoMode) {
+                        setSecond(-100)
+                    }
+                    else {
+                        if (winAmount) {
+                            setResultPending(true)
+                        } else {
+                            setIsResulting(false)
+                            setIsPending(true)
+                        }
+                        setIsPlaying(false)
+                        setSecond(0)
+                        return
+                    }
                 }
             }
+            else {
+                if (second === 6900) {
+                    if (isAutoMode) {
+                        setSecond(-100)
+                        setIsResulting(false)
+                    }
+                    else {
+                        if (winAmount) {
+                            setResultPending(true)
+                        } else {
+                            setIsResulting(false)
+                            setIsPending(true)
+                        }
+                        setIsPlaying(false)
+                        setSecond(0)
+                        return
+                    }
+                }
+            }
+
             setSecond((s) => s + 100);
         }, 100);
         return () => {
@@ -140,7 +205,8 @@ export default function Lucky777Game({
                         <img src={getAssetUrl(GAME_ASSETS.bg)} alt="bg" className="absolute inset-0 " />
                         <div className="absolute top-[135px] left-0  h-[454px] w-[393px]">
                             <div className="absolute -top-[17px] left-0 flex w-full items-center justify-between pl-[7px] pr-[20px] z-20">
-                                <MenuCoin onOpenModal={() => setActiveModal("recharge")} />
+                                <MenuCoin onOpenModal={() => setActiveModal("recharge")}
+                                    current={forCoinBoard} />
                                 <MenuTop onOpenModal={(modal) => { setActiveModal(modal) }}
                                     onToggleMusic={onToggleMusic}
                                     isMusicPlaying={isMusicPlaying} />
@@ -301,12 +367,62 @@ export default function Lucky777Game({
                                         {endValue.map((element, index) => (
                                             <>
                                                 {index % 3 === 0 && (
-                                                    <img src={resolveAssetUrl(options[element - 13]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
-                                                        style={{ left: `${26}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
-                                                {index % 3 === 1 && (<img src={resolveAssetUrl(options[element - 13]?.logo)} alt="b" className="absolute   h-[65px] w-[65px]"
-                                                    style={{ left: `${123}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
-                                                {index % 3 === 2 && (<img src={resolveAssetUrl(options[element - 13]?.logo)} alt="c" className="absolute   h-[65px] w-[65px]"
-                                                    style={{ left: `${218}px`, top: `${10 + Math.floor(index / 3) * 70}px` }} />)}
+                                                    <>
+                                                        {statusArray[index] ?
+                                                            <motion.img src={resolveAssetUrl(options[element - 13]?.logo ?? "0")} alt="a" className="absolute   h-[65px] w-[65px]"
+                                                                style={{ left: `${26}px`, top: `${10 + Math.floor(index / 3) * 70}px`, }}
+                                                                animate={{
+                                                                    opacity: [1, 0, 1, 0,],
+                                                                    filter: "brightness(5)"
+                                                                }}
+                                                                transition={{
+                                                                    duration: 2,
+                                                                    ease: "easeInOut",
+                                                                    repeat: Infinity
+                                                                }} />
+                                                            :
+                                                            <img src={resolveAssetUrl(options[element - 13]?.logo ?? "0")} alt="a" className="absolute transition opacity-50  h-[65px] w-[65px]"
+                                                                style={{ left: `${26}px`, top: `${10 + Math.floor(index / 3) * 70}px`, }} />
+                                                        }
+                                                    </>)}
+                                                {index % 3 === 1 && (
+                                                    <>
+                                                        {statusArray[index] ?
+                                                            <motion.img src={resolveAssetUrl(options[element - 13]?.logo)} alt="b" className="absolute h-[65px] w-[65px] "
+                                                                style={{ left: `${123}px`, top: `${10 + Math.floor(index / 3) * 70}px` }}
+                                                                animate={{
+                                                                    opacity: [1, 0, 1, 0,],
+                                                                    filter: "brightness(5)"
+                                                                }}
+                                                                transition={{
+                                                                    duration: 2,
+                                                                    ease: "easeInOut",
+                                                                    repeat: Infinity
+                                                                }} />
+
+                                                            : <img src={resolveAssetUrl(options[element - 13]?.logo)} alt="b" className="absolute transition opacity-50 h-[65px] w-[65px]"
+                                                                style={{ left: `${123}px`, top: `${10 + Math.floor(index / 3) * 70}px`, }} />
+                                                        }
+                                                    </>)}
+                                                {index % 3 === 2 && (
+                                                    <>
+                                                        {statusArray[index] ?
+                                                            <motion.img src={resolveAssetUrl(options[element - 13]?.logo)} alt="c" className="absolute h-[65px] w-[65px]"
+                                                                style={{ left: `${218}px`, top: `${10 + Math.floor(index / 3) * 70}px` }}
+                                                                animate={{
+                                                                    opacity: [1, 0, 1, 0,],
+                                                                    filter: "brightness(5)"
+                                                                }}
+                                                                transition={{
+                                                                    duration: 2,
+                                                                    ease: "easeInOut",
+                                                                    repeat: Infinity
+                                                                }} />
+                                                            :
+                                                            <img src={resolveAssetUrl(options[element - 13]?.logo)} alt="c" className="absolute transition opacity-50 h-[65px] w-[65px]"
+                                                                style={{ left: `${218}px`, top: `${10 + Math.floor(index / 3) * 70}px`, }} />
+                                                        }
+                                                    </>)}
                                             </>
                                         ))}</>)}
                                     <div className="absolute inset-0 z-30 pointer-events-none">
@@ -322,20 +438,22 @@ export default function Lucky777Game({
                                             </>
                                         )}
                                     </div>
-
                                 </div>
                             </div>
                             <div className="absolute h-[226px] w-[310px] left-1/2 top-[97px] -translate-x-1/2  inset-[2px] rounded-[7px]" >
-                                {isResulting && winAmount > 0 && endValue[0] === endValue[4] && endValue[0] === endValue[8] && (
+                                {isResulting && !resultPending && winAmount > 0 && endValue[0] === endValue[4] && endValue[0] === endValue[8] && (
                                     <TopBottomAni />)}
-                                {isResulting && winAmount > 0 && endValue[6] === endValue[4] && endValue[6] === endValue[2] && (
+                                {isResulting && !resultPending && winAmount > 0 && endValue[6] === endValue[4] && endValue[6] === endValue[2] && (
                                     <BottomTopAni />)}
-                                {isResulting && winAmount > 0 && endValue[0] === endValue[1] && endValue[0] === endValue[2] && (
+                                {isResulting && !resultPending && winAmount > 0 && endValue[0] === endValue[1] && endValue[0] === endValue[2] && (
                                     <TopAni />)}
-                                {isResulting && winAmount > 0 && endValue[3] === endValue[4] && endValue[3] === endValue[5] && (
+                                {isResulting && !resultPending && winAmount > 0 && endValue[3] === endValue[4] && endValue[3] === endValue[5] && (
                                     <MiddleAni />)}
-                                {isResulting && winAmount > 0 && endValue[6] === endValue[7] && endValue[6] === endValue[8] && (
+                                {isResulting && !resultPending && winAmount > 0 && endValue[6] === endValue[7] && endValue[6] === endValue[8] && (
                                     <BottomAni />)}
+                                {resultPending &&
+                                    <ResultPending status={statusArray} />
+                                }
                             </div>
                             <div className="absolute left-[39px] top-[322px] h-[40px] w-[315px] grid grid-row-2">
                                 <div className="relative h-[18px] w-full">
@@ -354,12 +472,13 @@ export default function Lucky777Game({
                                     <div className="bg-[#000000] h-[24px] w-[100px] rounded-[4px] text-center ">
                                         {isResulting && winAmount > 0 && (<motion.img src={light} alt="light" className="absolute"
                                             animate={{
-                                                opacity: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+                                                opacity: [1, 0, 1, 0, 1, 0,],
                                                 filter: "brightness(5)"
                                             }}
                                             transition={{
                                                 duration: 2,
                                                 ease: "easeInOut",
+                                                repeat: Infinity
                                             }} />)}
                                         <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle">{showWinAmount}</span>
                                     </div>
@@ -377,7 +496,6 @@ export default function Lucky777Game({
                                 >
                                     <img src={getAssetUrl(GAME_ASSETS.minusBtn)} alt="betmin" />
                                 </button>
-
                                 <button
                                     className={getClass("plus")}
                                     onPointerDown={() => setPressedBtn("plus")}
@@ -390,7 +508,6 @@ export default function Lucky777Game({
                                 >
                                     <img src={getAssetUrl(GAME_ASSETS.plusBtn)} alt="betplu" />
                                 </button>
-
                                 <button
                                     className={getClass("auto")}
                                     onPointerDown={() => setPressedBtn("auto")}
@@ -409,7 +526,6 @@ export default function Lucky777Game({
                                 >
                                     <img src={getAssetUrl(GAME_ASSETS.autoBtn)} alt="auto" />
                                 </button>
-
                                 <button
                                     className={getClass("spin")}
                                     onPointerDown={() => setPressedBtn("spin")}
