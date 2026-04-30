@@ -15,6 +15,42 @@ import { ResultPending, LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni
 import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
+
+function getGameScale() {
+    if (typeof window === "undefined") {
+        return 1;
+    }
+
+    const viewport = window.visualViewport;
+    const viewportWidth = viewport?.width ?? window.innerWidth;
+    const viewportHeight = viewport?.height ?? window.innerHeight;
+
+    return viewportWidth / GAME_WIDTH;
+}
+
+function useResponsiveGameScale() {
+    const [gameScale, setGameScale] = useState(getGameScale);
+
+    useEffect(() => {
+        const updateScale = () => {
+            setGameScale(getGameScale());
+        };
+
+        updateScale();
+        window.addEventListener("resize", updateScale);
+        window.visualViewport?.addEventListener("resize", updateScale);
+        window.visualViewport?.addEventListener("scroll", updateScale);
+
+        return () => {
+            window.removeEventListener("resize", updateScale);
+            window.visualViewport?.removeEventListener("resize", updateScale);
+            window.visualViewport?.removeEventListener("scroll", updateScale);
+        };
+    }, []);
+
+    return gameScale;
+}
+
 function formatNumber(num: number): string {
     if (num >= 1_000_000) {
         return (num / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -55,6 +91,7 @@ export default function Lucky777Game({
     const [num, setNum] = useState(0);
     const [winModal, setWinModal] = useState(false)
     const isOverlayOpen = (activeModal !== null || prizeModal !== null || winModal === true);
+    const gameScale = useResponsiveGameScale();
 
     useEffect(() => {
         if (!winModal) {
@@ -208,20 +245,21 @@ export default function Lucky777Game({
     };
 
     return (
-        <div className="relative flex min-h-[100dvh] w-full border-[#130E2C] border-[4px,4px,0px,4px] items-end justify-center overflow-hidden">
+        <div className="relative flex min-h-[100dvh] w-full items-end justify-center overflow-hidden">
             <div className="fixed inset-0 flex items-end justify-center overflow-hidden ">
                 <div
-                    className="relative"
+                    className="relative shrink-0"
                     style={{
-                        width: `${GAME_WIDTH}px`,
-                        height: `${GAME_HEIGHT}px`,
+                        width: `${GAME_WIDTH * gameScale}px`,
+                        height: `${GAME_HEIGHT * gameScale}px`,
                     }}
                 >
                     <div
-                        className="relative left-0 top-0 origin-top-left "
+                        className="absolute bottom-0 left-1/2 origin-bottom "
                         style={{
                             width: `${GAME_WIDTH}px`,
                             height: `${GAME_HEIGHT}px`,
+                            transform: `translateX(-50%) scale(${gameScale})`,
                         }}
                     >
                         <img src={getAssetUrl(GAME_ASSETS.bg)} alt="bg" className="absolute inset-0 " />
