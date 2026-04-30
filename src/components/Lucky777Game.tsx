@@ -87,6 +87,7 @@ export default function Lucky777Game({
     const [forCoinBoard, setForCoinBoard] = useState(0)
     const [normalWin, setNormalWin] = useState(true)
     const [normalResult, setNormalResult] = useState<string | null>(null);
+    const [isOpenWinAni, setIsOpenWinAni] = useState(false)
     const rows = [0, 1, 2];
     const [num, setNum] = useState(0);
     const [winModal, setWinModal] = useState(false)
@@ -183,6 +184,7 @@ export default function Lucky777Game({
                     })
                 if (normalWin) {
                     setWinModal(false)
+                    setIsOpenWinAni(true)
                 } else {
                     setWinModal(true)
                 }
@@ -209,6 +211,9 @@ export default function Lucky777Game({
                 }
             }
             else {
+                if (second === 4900) {
+                    setIsOpenWinAni(true)
+                }
                 if (second === 6900) {
                     if (isAutoMode) {
                         setSecond(-100)
@@ -602,19 +607,55 @@ export default function Lucky777Game({
                         {winModal && (<>
                             <RainMoney />
                             {normalResult === "BIG WIN" && (<>
-                                <img src={getAssetUrl(GAME_ASSETS.bigWin)} alt="bigwin" className="absolute top-[130px] left-1/2 -translate-x-1/2 " />
-                                <img src={getAssetUrl(GAME_ASSETS.bigWinDis)} alt="bigwinDis" className="absolute top-[400px] left-1/2 -translate-x-1/2 " />
+                                <motion.img src={getAssetUrl(GAME_ASSETS.bigWin)} alt="bigwin" className="absolute top-[130px] left-1/2 -translate-x-1/2 z-[50]"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: [1, 0.8, 1, 0.8, 1] }}
+                                    transition={{
+                                        duration: 0.3,
+                                        ease: "easeOut",
+                                    }} />
+                                <motion.img src={getAssetUrl(GAME_ASSETS.bigWinDis)} alt="bigwinDis" className="absolute top-[400px] left-1/2 -translate-x-1/2 z-[50]"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                        duration: 0.3,
+                                        ease: "easeOut",
+                                    }} />
                             </>)}
                             {normalResult === "SUPER WIN" && (<>
-                                <img src={getAssetUrl(GAME_ASSETS.superWin)} alt="superWin" className="absolute top-[130px] left-1/2 -translate-x-1/2 " />
-                                <img src={getAssetUrl(GAME_ASSETS.superWinDis)} alt="superWinDis" className="absolute top-[400px] left-1/2 -translate-x-1/2 " />
+                                <motion.img src={getAssetUrl(GAME_ASSETS.superWin)} alt="superWin" className="absolute top-[130px] left-1/2 -translate-x-1/2 z-[50]"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: [1, 0.8, 1, 0.8, 1] }}
+                                    transition={{
+                                        duration: 0.3,
+                                        ease: "easeOut",
+                                    }} />
+                                <motion.img src={getAssetUrl(GAME_ASSETS.superWinDis)} alt="superWinDis" className="absolute top-[400px] left-1/2 -translate-x-1/2 z-[50]"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                        duration: 0.3,
+                                        ease: "easeOut",
+                                    }} />
                             </>)}
                             {normalResult === "MEGA WIN" && (<>
-                                <img src={getAssetUrl(GAME_ASSETS.megaWin)} alt="megaWin" className="absolute top-[130px] left-1/2 -translate-x-1/2 " />
-                                <img src={getAssetUrl(GAME_ASSETS.megaWinDis)} alt="megaWinDis" className="absolute top-[400px] left-1/2 -translate-x-1/2 " />
+                                <motion.img src={getAssetUrl(GAME_ASSETS.megaWin)} alt="megaWin" className="absolute top-[130px] left-1/2 -translate-x-1/2 z-[50]"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: [1, 0.8, 1, 0.8, 1] }}
+                                    transition={{
+                                        duration: 0.3,
+                                        ease: "easeOut",
+                                    }} />
+                                <motion.img src={getAssetUrl(GAME_ASSETS.megaWinDis)} alt="megaWinDis" className="absolute top-[400px] left-1/2 -translate-x-1/2 z-[50]"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                        duration: 0.3,
+                                        ease: "easeOut",
+                                    }} />
                             </>)}
-                            <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute top-[400px] left-1/4" />
-                            <span className="absolute top-[400px] right-1/4 text-[40px]">{formatNumber(num)}</span>
+                            <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute top-[400px] left-1/4 z-[50]" />
+                            <span className="absolute top-[400px] right-1/4 text-[40px] z-[50]">{formatNumber(num)}</span>
                         </>)}
                         {/* {isResulting&&!normalWin&&(
                             
@@ -693,7 +734,7 @@ export default function Lucky777Game({
                             )}
                         </AnimatePresence>
                         {isRolling && (<LightsAni />)}
-                        {isResulting && winAmount > 0 && !isWinAniShowed && (
+                        {isResulting && winAmount > 0 && !isWinAniShowed && isOpenWinAni && (
                             <WinAni />
                         )}
 
