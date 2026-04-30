@@ -133,6 +133,7 @@ export default function Lucky777Game({
                         setNormalResult(response.win_type);
                         if (response.win_type === null) setNormalWin(true)
                         else setNormalWin(false)
+                        console.log(response.win_type)
                     })
                 setStatusArray([0, 0, 0, 0, 0, 0, 0, 0, 0]);
                 setShowWinAmount(0)
