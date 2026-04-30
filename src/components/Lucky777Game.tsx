@@ -16,14 +16,8 @@ import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
 function formatNumber(num: number): string {
-    if (num >= 1_000_000_000) {
-        return (num / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'B';
-    }
     if (num >= 1_000_000) {
         return (num / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
-    }
-    if (num >= 1_000) {
-        return (num / 1_000).toFixed(1).replace(/\.0$/, '') + 'K';
     }
     return num.toString();
 }
@@ -43,7 +37,6 @@ export default function Lucky777Game({
     const [resultPending, setResultPending] = useState(false)
     const [isAutoMode, setIsAutoMode] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
-    const isOverlayOpen = (activeModal !== null || prizeModal !== null);
     const { betAmounts, options, placeBet, playerInfo, handleWinToday, handlePlayerInfo } = useGame()
     const [currentBet, setCurrentBet] = useState(0)
     const [second, setSecond] = useState(0);
@@ -57,8 +50,29 @@ export default function Lucky777Game({
     const [pressedBtn, setPressedBtn] = useState<string | null>(null);
     const [forCoinBoard, setForCoinBoard] = useState(0)
     const [normalWin, setNormalWin] = useState(true)
-    const [normalResult, setNormalResult] = useState(true)
+    const [normalResult, setNormalResult] = useState<string | null>(null);
     const rows = [0, 1, 2];
+    const [num, setNum] = useState(0);
+    const [winModal, setWinModal] = useState(false)
+    const isOverlayOpen = (activeModal !== null || prizeModal !== null || winModal === true);
+
+    useEffect(() => {
+        if (!winModal) {
+            return
+        }
+        let i = 0;
+        let j = 0;
+        j = Math.floor(showWinAmount / 1500)
+        const interval = setInterval(() => {
+            i += j
+            setNum(i);
+
+            if (i >= showWinAmount) clearInterval(interval);
+        }, 1);
+
+        return () => clearInterval(interval);
+    }, [winModal]);
+
     useEffect(() => {
         if (!isPlaying)
             return
@@ -78,6 +92,9 @@ export default function Lucky777Game({
                         response.result.set_B[0].option_id, response.result.set_B[1].option_id, response.result.set_B[2].option_id,
                         response.result.set_C[0].option_id, response.result.set_C[1].option_id, response.result.set_C[2].option_id,])
                         setWinAmount(Number.parseFloat(response.win_amount))
+                        setNormalResult(response.win_type);
+                        if (response.win_type === null) setNormalWin(true)
+                        else setNormalWin(false)
                     })
                 setStatusArray([0, 0, 0, 0, 0, 0, 0, 0, 0]);
                 setShowWinAmount(0)
@@ -127,6 +144,11 @@ export default function Lucky777Game({
                     .then((res) => {
                         setWinToday(res.win)
                     })
+                if (normalWin) {
+                    setWinModal(false)
+                } else {
+                    setWinModal(true)
+                }
             }
             if (normalWin) {
                 if (second === 3300) {
@@ -467,7 +489,7 @@ export default function Lucky777Game({
                                             style={{ fontFamily: "MyBoldFont", letterSpacing: "2px" }}>{parseFloat(betAmounts[currentBet]?.amount).toString()}</span>
                                     </div>
                                     <div className="bg-[#000000] h-[24px] w-[100px] rounded-[4px] text-center">
-                                        <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle ">{winToday}</span>
+                                        <span className="bg-gradient-to-t from-[#EFC32F] to-[#FBF9D2] bg-clip-text text-transparent font-bold text-[17px] align-middle ">{formatNumber(Number(winToday))}</span>
                                     </div>
                                     <div className="bg-[#000000] h-[24px] w-[100px] rounded-[4px] text-center ">
                                         {isResulting && winAmount > 0 && (<motion.img src={light} alt="light" className="absolute"
@@ -539,6 +561,26 @@ export default function Lucky777Game({
                                 </button>
                             </div>
                         </div >
+                        {winModal && (<>
+                            <RainMoney />
+                            {normalResult === "BIG WIN" && (<>
+                                <img src={getAssetUrl(GAME_ASSETS.bigWin)} alt="bigwin" className="absolute top-[130px] left-1/2 -translate-x-1/2 " />
+                                <img src={getAssetUrl(GAME_ASSETS.bigWinDis)} alt="bigwinDis" className="absolute top-[400px] left-1/2 -translate-x-1/2 " />
+                            </>)}
+                            {normalResult === "SUPER WIN" && (<>
+                                <img src={getAssetUrl(GAME_ASSETS.superWin)} alt="superWin" className="absolute top-[130px] left-1/2 -translate-x-1/2 " />
+                                <img src={getAssetUrl(GAME_ASSETS.superWinDis)} alt="superWinDis" className="absolute top-[400px] left-1/2 -translate-x-1/2 " />
+                            </>)}
+                            {normalResult === "MEGA WIN" && (<>
+                                <img src={getAssetUrl(GAME_ASSETS.megaWin)} alt="megaWin" className="absolute top-[130px] left-1/2 -translate-x-1/2 " />
+                                <img src={getAssetUrl(GAME_ASSETS.megaWinDis)} alt="megaWinDis" className="absolute top-[400px] left-1/2 -translate-x-1/2 " />
+                            </>)}
+                            <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="diamond" className="absolute top-[400px] left-1/4" />
+                            <span className="absolute top-[400px] right-1/4 text-[40px]">{formatNumber(num)}</span>
+                        </>)}
+                        {/* {isResulting&&!normalWin&&(
+                            
+                        )} */}
                         <AnimatePresence>
                             {activeModal === "help" && (
                                 <motion.div

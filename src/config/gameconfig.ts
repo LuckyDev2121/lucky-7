@@ -25,7 +25,7 @@ export const RANKING_TODAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/ranking
 export const RECHARGE_URL_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/company/wallet/1`;
 export const PRIZE_DISTRIBUTIONS_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/prize-distributions/${GAME_ID}`;
 export const BET_PLACE_API_URL=`${API_BASE_URL.replace(/\/$/, "")}/bet-place`;
-export const WIN_TODAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/win_today`;
+export const WIN_TODAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/win-super777`;
 export const PLAYER_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/player`;
 export const MUSIC_SETTING_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/music-setting`;
 
@@ -102,7 +102,7 @@ spinBtn:"super777/spin-button.svg",
 bigWin: "super777/Big-win.svg",
 bigWinDis: "super777/big-win-display.svg",
 megaWin:"super777/mega-win.svg",
-megaWinDis:"super777/mega-win-dispaly.svg",
+megaWinDis:"super777/mega-win-display.svg",
 superWin:"super777/super-win.svg",
 superWinDis:"super777/super-win-display.svg",
 

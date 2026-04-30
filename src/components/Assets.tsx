@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, } from "framer-motion";
 import { Fragment, useState, useEffect } from "react";
 import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 import { getAssetUrl, GAME_ASSETS } from "../config/gameconfig";
@@ -1068,6 +1068,9 @@ export function ResultPending({ status, }: { status: number[], }) {
         </>
     )
 }
+
+
+
 {/* <div
                                 className="absolute bottom-0 left-0 h-[70px] w-full bg-gradient-to-br from-[#D5831F] from-1% via-30% via-[#FFF987]  to-[#D5831F] to-90%"
                                 style={{

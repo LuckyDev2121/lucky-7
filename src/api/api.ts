@@ -237,7 +237,8 @@ export type betPlace = {
     set_A:Element[],
     set_B:Element[],
     set_C:Element[],
-}
+};
+  win_type:string;
 };
 export const betPlace = async ( amount: number,): Promise<betPlace> => {
   const response = await axios.post<betPlace>(BET_PLACE_API_URL, {
@@ -292,7 +293,7 @@ export type WinToday={
 }
 
 export const fetchWinToday = async (): Promise<WinToday> => {
-  const response = await axios.get<WinToday>(`${WIN_TODAY_API_URL}/${getUserId()}/${GAME_ID}`);
+  const response = await axios.get<WinToday>(`${WIN_TODAY_API_URL}/${getUserId()}`);
   if (!response.data.status) {
     // throw new Error(response.data.message || "Failed to load music setting");
     console.log("winToday get error")
