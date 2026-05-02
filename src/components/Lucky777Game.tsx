@@ -6,10 +6,10 @@ import HistoryMenu from "./HistoryMenu";
 import Ranking from "./RankingMenu";
 import PrizeDistribution from "./PrizeDistribution";
 import { GAME_ASSETS, getAssetUrl } from "../config/gameconfig";
+import { type ActivePlayers } from "../api/api"
 import MenuCoin from "./MenuCoin";
 import MenuTop from "./MenuTop";
 import light from "../assets/Body/BodyPlayboard/Light.svg"
-import player from "../assets/Body/player.svg"
 import dotthree from "../assets/Body/BodyPlayboard/DotsThree.svg"
 import { ResultPending, LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni, RepeatAni, PendingStar, RollingStar, ResultStar, TopBottomAni, BottomTopAni, TopAni, MiddleAni, BottomAni } from "./Assets";
 import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
@@ -73,7 +73,7 @@ export default function Lucky777Game({
     const [resultPending, setResultPending] = useState(false)
     const [isAutoMode, setIsAutoMode] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
-    const { betAmounts, options, placeBet, playerInfo, handleWinToday, handlePlayerInfo } = useGame()
+    const { betAmounts, options, placeBet, playerInfo, ActivePlayers, handleWinToday, handlePlayerInfo } = useGame()
     const [currentBet, setCurrentBet] = useState(0)
     const [second, setSecond] = useState(0);
     const [startValue, setStartValue] = useState([13, 13, 13, 14, 14, 14, 15, 15, 15,])
@@ -88,25 +88,48 @@ export default function Lucky777Game({
     const [normalWin, setNormalWin] = useState(true)
     const [normalResult, setNormalResult] = useState<string | null>(null);
     const [isOpenWinAni, setIsOpenWinAni] = useState(false)
+    const [oldActivePlayer, setOldActivePlayer] = useState<ActivePlayers | null>(null);
+    const [isActivePlayer0, setIsActivePlayer0] = useState(false);
+    const [isActivePlayer1, setIsActivePlayer1] = useState(false);
+    const [isActivePlayer2, setIsActivePlayer2] = useState(false);
+    const [isActivePlayer3, setIsActivePlayer3] = useState(false);
     const rows = [0, 1, 2];
     const [num, setNum] = useState(0);
     const [winModal, setWinModal] = useState(false)
     const isOverlayOpen = (activeModal !== null || prizeModal !== null || winModal === true);
     const gameScale = useResponsiveGameScale();
-
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (ActivePlayers?.data[0].win_amount !== oldActivePlayer?.data[0].win_amount || ActivePlayers?.data[0].win_amount !== oldActivePlayer?.data[0].user_id) setIsActivePlayer0(true)
+            if (ActivePlayers?.data[1].win_amount !== oldActivePlayer?.data[1].win_amount || ActivePlayers?.data[1].win_amount !== oldActivePlayer?.data[1].user_id) setIsActivePlayer1(true)
+            if (ActivePlayers?.data[2].win_amount !== oldActivePlayer?.data[2].win_amount || ActivePlayers?.data[2].win_amount !== oldActivePlayer?.data[2].user_id) setIsActivePlayer2(true)
+            if (ActivePlayers?.total_amount !== oldActivePlayer?.total_amount || ActivePlayers?.total_user !== oldActivePlayer?.total_user) setIsActivePlayer3(true)
+        }, 4);
+        return () => {
+            clearInterval(interval);
+            setIsActivePlayer0(false)
+            setIsActivePlayer1(false)
+            setIsActivePlayer2(false)
+            setIsActivePlayer3(false)
+            setOldActivePlayer(ActivePlayers);
+        }
+    }, [ActivePlayers])
     useEffect(() => {
         if (!winModal) {
             return
         }
         let i = 0;
         let j = 0;
-        j = Math.floor(showWinAmount / 1500)
+        j = Math.floor(showWinAmount / 150)
         const interval = setInterval(() => {
             i += j
             setNum(i);
 
-            if (i >= showWinAmount) clearInterval(interval);
-        }, 1);
+            if (i >= showWinAmount) {
+                setNum(showWinAmount)
+                clearInterval(interval);
+            }
+        }, 10);
 
         return () => clearInterval(interval);
     }, [winModal]);
@@ -213,6 +236,7 @@ export default function Lucky777Game({
             }
             else {
                 if (second === 4900) {
+                    setWinModal(false)
                     setIsOpenWinAni(true)
                 }
                 if (second === 6900) {
@@ -311,58 +335,58 @@ export default function Lucky777Game({
                             <div className="absolute h-[66px] w-[266px] top-[30px] left-[91px] bg-gradient-to-t from-[#0E0038] to-[#140433] rounded-[4px]">
                                 <div className="relative grid grid-cols-4 justify-center h-[60px] w-[260px] pt-[2px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-[#1A0D38] to-[#160A38] border-2 border-[#A75991] rounded-[4px]">
                                     <div className="relative items-center justify-center">
-                                        <img src={player} alt="player" className="absolute left-1/2 -translate-x-1/2" />
-                                        <span className="absolute inset-x-0 text-center top-[42px]  text-[8px]">Sumiya BD</span>
-                                        {/* <RiseAni left={25} top={-50} /> */}
-                                        {/* <motion.span className="absolute left-[10px] top-[10px]  z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
-                                            initial={{ y: -5, }}
-                                            animate={{ y: 5, }}
-                                            transition={{
-                                                duration: 0.4,
-                                                repeat: Infinity, // 👈 add this
-                                                repeatType: "reverse"
-                                            }}
-                                        >+{formatNumber(100000000)}</motion.span> */}
+                                        <img src={resolveAssetUrl(ActivePlayers?.data[0].user.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 rounded-full" />
+                                        <span className="absolute inset-x-0 text-center top-[42px]  text-[8px]">{ActivePlayers?.data[0].user.username}</span>
+                                        {isActivePlayer0 && <><RiseAni left={25} top={-50} />
+                                            <motion.span className="absolute left-[10px] top-[10px]  z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                                initial={{ y: -5, }}
+                                                animate={{ y: 5, }}
+                                                transition={{
+                                                    duration: 0.4,
+                                                    repeat: Infinity, // 👈 add this
+                                                    repeatType: "reverse"
+                                                }}
+                                            >{ActivePlayers?.data[0].win_type === null ? `+${formatNumber(ActivePlayers.data[0].win_amount)}` : ActivePlayers?.data[0].win_type}</motion.span> </>}
                                     </div>
                                     <div className="relative">
-                                        <img src={player} alt="player" className="absolute left-1/2 -translate-x-1/2" />
-                                        <span className="absolute inset-x-0 text-center top-[42px] align-middle text-[8px]">Sumiya BD</span>
-                                        {/* <RiseAni left={25} top={-50} /> */}
-                                        {/* <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
-                                            initial={{ y: -5, }}
-                                            animate={{ y: 5, }}
-                                            transition={{
-                                                duration: 0.4,
-                                                repeat: Infinity, // 👈 add this
-                                                repeatType: "reverse"
-                                            }}
-                                        >+{formatNumber(1000000)}</motion.span> */}
+                                        <img src={resolveAssetUrl(ActivePlayers?.data[1].user.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 rounded-full" />
+                                        <span className="absolute inset-x-0 text-center top-[42px] align-middle text-[8px]">{ActivePlayers?.data[1].user.username}</span>
+                                        {isActivePlayer1 && <><RiseAni left={25} top={-50} />
+                                            <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                                initial={{ y: -5, }}
+                                                animate={{ y: 5, }}
+                                                transition={{
+                                                    duration: 0.4,
+                                                    repeat: Infinity, // 👈 add this
+                                                    repeatType: "reverse"
+                                                }}
+                                            >{ActivePlayers?.data[1].win_type === null ? `+${formatNumber(ActivePlayers.data[1].win_amount)}` : ActivePlayers?.data[1].win_type}</motion.span> </>}
                                     </div>
                                     <div className="relative">
-                                        <img src={player} alt="player" className="absolute left-1/2 -translate-x-1/2" />
-                                        <span className="absolute inset-x-0 text-center top-[42px] algin-middle text-[8px]">Sumiya BD</span>
-                                        {/* <RiseAni left={25} top={-50} /> */}
-                                        {/* <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
-                                            initial={{ y: -5, }}
-                                            animate={{ y: 5, }}
-                                            transition={{
-                                                duration: 0.4,
-                                                repeat: Infinity, // 👈 add this
-                                                repeatType: "reverse"
-                                            }}
-                                        >+{formatNumber(1000000)}</motion.span> */}
+                                        <img src={resolveAssetUrl(ActivePlayers?.data[2].user.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 rounded-full" />
+                                        <span className="absolute inset-x-0 text-center top-[42px] algin-middle text-[8px]">{ActivePlayers?.data[2].user.username}</span>
+                                        {isActivePlayer2 && <><RiseAni left={25} top={-50} />
+                                            <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                                initial={{ y: -5, }}
+                                                animate={{ y: 5, }}
+                                                transition={{
+                                                    duration: 0.4,
+                                                    repeat: Infinity, // 👈 add this
+                                                    repeatType: "reverse"
+                                                }}
+                                            >{ActivePlayers?.data[2].win_type === null ? `+${formatNumber(ActivePlayers.data[2].win_amount)}` : ActivePlayers?.data[2].win_type}</motion.span></>}
                                     </div>
                                     <div className="relative ">
-                                        <img src={player} alt="player" className="absolute top-[10px] left-[10px] h-[20px] z-30" />
-                                        <img src={player} alt="player" className="absolute top-[10px] left-[20px] h-[20px] z-20" />
-                                        <div className="absolute top-[10px] left-[35px] h-[20px] w-[20px] bg-gray-700 rounded-full z-10">
-                                            <img src={dotthree} alt="dotthree" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 " />
+                                        <img src={resolveAssetUrl(ActivePlayers?.data[3].user.avater ?? "")} alt="player" className="absolute top-[10px] left-[10px] h-[20px] z-30 rounded-full" />
+                                        <img src={resolveAssetUrl(ActivePlayers?.data[4].user.avater ?? "")} alt="player" className="absolute top-[10px] left-[20px] h-[20px] z-20 rounded-full" />
+                                        <div className="absolute top-[10px] left-[35px] h-[20px] w-[20px] bg-gray-700 rounded-full z-10 ">
+                                            <img src={dotthree} alt="dotthree" className="absolute left-1/2 top-1/2 rounded-full -translate-x-1/2 -translate-y-1/2 " />
                                         </div>
                                         <div className="absolute top-[30px] inset-x-0 text-center">
                                             <span className="text-[8px]">Online : </span>
-                                            <span className="text-[10px]">248</span>
+                                            <span className="text-[10px]">{ActivePlayers?.total_user}</span>
                                         </div>
-                                        {/* <motion.span className="absolute left-[10px] top-[10px] z-[30] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                        {isActivePlayer3 && < motion.span className="absolute left-[10px] top-[10px] z-[30] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                             initial={{ y: -5, }}
                                             animate={{ y: 5, }}
                                             transition={{
@@ -370,7 +394,7 @@ export default function Lucky777Game({
                                                 repeat: Infinity, // 👈 add this
                                                 repeatType: "reverse"
                                             }}
-                                        >+{formatNumber(1000000)}</motion.span> */}
+                                        >+{formatNumber(ActivePlayers?.total_amount ?? 0)}</motion.span>}
                                     </div>
                                 </div>
                             </div>
@@ -416,15 +440,27 @@ export default function Lucky777Game({
                                         <RepeatAni left={26} delay={0} num={4} />
                                         <RepeatAni left={123} delay={0.3} num={1} />
                                         <RepeatAni left={218} delay={0.6} num={3} />
+                                        <RepeatAni left={26} delay={0.3} num={1} />
+                                        <RepeatAni left={123} delay={0.6} num={4} />
+                                        <RepeatAni left={218} delay={0.9} num={2} />
                                         <RepeatAni left={26} delay={0.6} num={4} />
                                         <RepeatAni left={123} delay={0.9} num={5} />
                                         <RepeatAni left={218} delay={1.2} num={4} />
+                                        <RepeatAni left={26} delay={0.9} num={2} />
+                                        <RepeatAni left={123} delay={1.2} num={4} />
+                                        <RepeatAni left={218} delay={1.5} num={5} />
                                         <RepeatAni left={26} delay={1.2} num={2} />
                                         <RepeatAni left={123} delay={1.5} num={4} />
                                         <RepeatAni left={218} delay={1.8} num={5} />
+                                        <RepeatAni left={26} delay={1.5} num={2} />
+                                        <RepeatAni left={123} delay={1.8} num={1} />
+                                        <RepeatAni left={218} delay={2.1} num={5} />
                                         <RepeatAni left={26} delay={1.8} num={6} />
                                         <RepeatAni left={123} delay={2.1} num={7} />
                                         <RepeatAni left={218} delay={2.4} num={3} />
+                                        <RepeatAni left={26} delay={2.1} num={3} />
+                                        <RepeatAni left={123} delay={2.4} num={4} />
+                                        <RepeatAni left={218} delay={2.7} num={2} />
                                         <StopAni left={26} delay={2.4} num0={endValue[6]} num1={endValue[3]} num2={endValue[0]} />
                                         <StopAni left={123} delay={2.7} num0={endValue[7]} num1={endValue[4]} num2={endValue[1]} />
                                         <StopAni left={218} delay={3.0} num0={endValue[8]} num1={endValue[5]} num2={endValue[2]} />

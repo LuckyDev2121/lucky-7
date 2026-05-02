@@ -11,6 +11,7 @@ import {
   RANKING_YESTERDAY_API_URL,
   REMAINING_API_URL,
   WIN_TODAY_API_URL,
+  ACTIVE_PLAYERS_API_URL,
 } from "../config/gameconfig";
 import { getUserId } from "../utils/user";
 
@@ -300,3 +301,32 @@ export const fetchWinToday = async (): Promise<WinToday> => {
   }
   return response.data;
 };
+
+ export type ACtivePlayersData={
+  id:number;
+  user_id:number;
+  win_amount:number;
+  win_type:string;
+  user:{
+    id:number;
+    username:string;
+    avater:string;
+  }
+}
+export type ActivePlayers={
+  status:boolean;
+  total_amount:number;
+  total_user:number;
+  data:ACtivePlayersData[]
+}
+
+export const fetchActivePlayers = async (): Promise<ActivePlayers> => {
+  const response = await axios.get<ActivePlayers>(ACTIVE_PLAYERS_API_URL);
+  if (!response.data.status) {
+    // throw new Error(response.data.message || "Failed to load music setting");
+    console.log("winToday get error")
+  }
+  return response.data;
+};
+
+

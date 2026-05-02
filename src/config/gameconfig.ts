@@ -28,6 +28,7 @@ export const BET_PLACE_API_URL=`${API_BASE_URL.replace(/\/$/, "")}/bet-place`;
 export const WIN_TODAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/win-super777`;
 export const PLAYER_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/player`;
 export const MUSIC_SETTING_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/music-setting`;
+export const ACTIVE_PLAYERS_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/active-players`;
 
 
 export const REVERB_KEY =
@@ -46,6 +47,9 @@ export const REALTIME_PORT = Number(
 export const FALLBACK_REFRESH_MS = 5_000;
 
 export const ASSET_BASE_URL = `${BACKEND_ORIGIN}/core/storage/app/public/`;
+
+export const ACTIVE_CHANNEL ="user-activity";
+export const ACTIVE_EVENT ="user-activity.updated"
 
 export function getAssetUrl(path: string): string {
   if (!path) {

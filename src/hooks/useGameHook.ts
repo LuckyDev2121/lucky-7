@@ -12,14 +12,18 @@ import {
   fetchMusicSetting,
   saveMusicSetting,
   betPlace,
+  fetchActivePlayers,
   type WinToday,
   type GameDetailsData,
   type RankingItem,
   type RechargeUrlResponse,
   type PrizeDistributionProps,
   type PlayerDetailsData,
+  type ActivePlayers,
 } from "../api/api";
 import {
+  ACTIVE_CHANNEL,
+  ACTIVE_EVENT,
   REALTIME_CHANNEL,
   REALTIME_EVENT,
   getAssetUrl,
@@ -40,6 +44,7 @@ type GameStore = {
 musicOverridden: boolean;
 remaining:number;
 winToday:WinToday|null;
+ActivePlayers:ActivePlayers|null;
 };
 const listeners = new Set<(state: GameStore) => void>();
 let store: GameStore = {
@@ -55,9 +60,12 @@ let store: GameStore = {
 musicOverridden: false,
 remaining:0,
 winToday:null,
+ActivePlayers:null,
 };
 let hasInitialized = false;
+let hasActive = false;
 let initialLoadPromise: Promise<void> | null = null;
+let initialActivePlayers: Promise<void> | null = null;
 function emit() {
   listeners.forEach((listener) => listener(store));
 }
@@ -102,6 +110,10 @@ async function runRefreshGameData() {
     throw error;
   }
 }
+async function fetchActiveData(){
+  const [activePlayers]= await Promise.all([fetchActivePlayers()])
+  updateStore({ActivePlayers:activePlayers})
+}
 function initializeStore() {
   if (hasInitialized) return;
   hasInitialized = true;
@@ -109,6 +121,16 @@ function initializeStore() {
   const eventName = `.${REALTIME_EVENT}`;
   channel.listen(eventName, async () => {
     await runRefreshGameData();
+  });
+}
+
+function updateActiveUsers(){
+if (hasActive) return;
+ hasActive = true;
+ const channel = echo.channel(ACTIVE_CHANNEL);
+ const eventName = `.${ACTIVE_EVENT}`;
+  channel.listen(eventName, async () => {
+    await fetchActiveData();
   });
 }
 export async function bootstrapGameStore() {
@@ -119,6 +141,15 @@ export async function bootstrapGameStore() {
     });
   }
   await initialLoadPromise;
+}
+export async function bootstrapActivePlayers() {
+  updateActiveUsers();
+  if (!initialActivePlayers) {
+    initialActivePlayers = runRefreshGameData().finally(() => {
+      initialActivePlayers = null;
+    });
+  }
+  await initialActivePlayers;
 }
 export function useGame() {
   const [snapshot, setSnapshot] = useState({ ...store });
@@ -136,7 +167,20 @@ export function useGame() {
       listeners.delete(listener);
     };
   }, []);
+useEffect(() => {
+    void bootstrapActivePlayers().catch((error) => {
+      console.error("Failed to bootstrap Active store", error);
+    });
 
+    const listener = (nextState: GameStore) => {
+      setSnapshot({ ...nextState });
+    };
+
+    listeners.add(listener);
+    return () => {
+      listeners.delete(listener);
+    };
+  }, []);
 const handlePrizeDistribution= useCallback(async () => {
     const data = await fetchPrizeDistribution();
     updateStore({ prizeDistribution: data });
@@ -211,6 +255,7 @@ const clearCurrentRoundBets = useCallback(() => {
     rankingYesterday: snapshot.rankingYesterdays,
     rechargeUrl: snapshot.url?.url || null,
     prizeDistribution:snapshot.prizeDistribution,
+    ActivePlayers:snapshot.ActivePlayers,
     placeBet: handlePlaceBet,
     setMusicEnabled: handleSetMusicEnabled,
     clearCurrentRoundBets,

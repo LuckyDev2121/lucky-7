@@ -520,13 +520,20 @@ export function RiseAni({ left, top }: { left: number, top: number }) {
     )
 }
 export function RainMoney() {
-    const duration = [2.9, 3.2, 3.2, 2.1, 2.7,
-        2.5, 2.4, 2.6, 2.2, 3.1,
-        2.3, 2.6, 3.5, 2.7, 1.6,
-        2.7, 3.8, 1.5, 1.8, 2,
-        2.9, 1.2, 1.2, 2.1, 2.7,
-        2.5, 2.4, 2.6, 3.2, 2.1,
-        3.3, 2.6, 2.5, 2.7, 3.6,
+    const delay = [0.1, 0.8, 0, 0.6, 0.4, 0, 0.7, 0,
+        0.3, 0.6, 0.5, 0.3, 0.4, 0,
+        0.4, 0.3, 0, 0.5, 0, 0.3, 0.5, 0,
+        0.6, 0.4, 0.6, 0.3, 0.3, 0,
+        0.6, 0.7, 0.4, 0.7, 0.3, 0,
+        0.6, 0.3, 0.6, 0.5, 0.8, 0,
+    ]
+    const duration = [1.9, 1.2, 1.2, 2.1, 1.7,
+        1.5, 2.4, 1.6, 2.2, 1.1,
+        2.3, 1.6, 1.5, 1.7, 1.6,
+        1.7, 1.8, 1.5, 1.8, 2,
+        2.9, 1.2, 1.2, 2.1, 1.7,
+        1.5, 1.4, 1.6, 1.2, 2.1,
+        1.3, 1.6, 1.5, 1.7, 1.6,
         1.7, 1.8, 2.5, 1.8, 2];
     const rotateX = [360, 326, 360, 326, 297,
         110, 38, 10, 320, 194,
@@ -552,48 +559,42 @@ export function RainMoney() {
         110, 38, 10, 320, 194,
         360, 326, 360, 326, 297,
         110, 38, 10, 320, 194];
-    const positionYStart = [-20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20];
-    const positionYEnd = [600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600
+    const positionYStart = [370, 310, 420, 330, 320,
+        360, 326, 360, 326, 297,
+        360, 326, 360, 326, 297,
+        210, 338, 310, 320, 394,
+        360, 326, 360, 326, 297,
+        310, 238, 210, 320, 394,
+        211, 300, 333, 230, 230,
+        274, 415, 314, 412, 211,
     ];
-    const positionXStart = [0, 101, 102, 10, 30,
-        40, 50, 60, 107, 60,
-        40, 50, 50, 40, 30,
-        40, 10, 22, 134, 20,
-        140, 50, 60, 107, 60,
-        40, 50, 150, 40, 30,
-        40, 10, 112, 4, 160, 40,
-        30, 120, 50, 60, 107,];
-    const positionXEnd = [176, 168, 191, 68, 159,
-        174, 159, 163, 35, 74,
-        78, 84, 91, 75, 45,
-        19, 34, 84, 98, 56,
-        163, 35, 74, 84, 98,
-        78, 84, 91, 75, 45,
-        19, 34, 84, 98, 56,
-        84, 91, 75, 45, 19,
+    const positionYMiddle = [274, 215, 314, 212, 211,
+        260, 225, 260, 249, 264,
+        160, 235, 254, 223, 217,
+        117, 178, 207, 270, 298,
+        278, 237, 273, 226, 167,
+        132, 163, 154, 232, 141,
+        121, 230, 235, 150, 140,
+        142, 234, 232, 322, 121,
+    ];
+    const positionXStart = [
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
     ];
 
-    const duration1 = [2.9, 1.2, 1.2, 2.1, 2.7,
-        2.5, 2.4, 3.6, 2.9, 1.1,
-        2.3, 2.6, 2.5, 2.7, 3.6,
+    const duration1 = [1.9, 1.2, 1.2, 2.1, 1.7,
+        2.5, 2.4, 1.6, 1.9, 1.1,
+        2.3, 1.6, 1.5, 1.7, 1.6,
         1.7, 1.8, 1.5, 1.8, 2,
         2.3, 2.6, 2.5, 3.7, 1.6,
         1.7, 1.8, 1.5, 1.8, 2,
-        2.9, 1.2, 3.2, 2.1, 2.7,
+        2.9, 1.2, 1.2, 2.1, 2.7,
         2.5, 2.4, 2.6, 2.2, 2.1,];
     const rotateX1 = [297, 326, 360, 326, 360,
         110, 38, 10, 320, 194,
@@ -619,44 +620,45 @@ export function RainMoney() {
         110, 38, 10, 320, 194,
         360, 326, 360, 326, 297,
         110, 38, 10, 320, 194,];
-    const positionYStart1 = [-20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,
-    -20, -20, -20, -20, -20,];
-    const positionYEnd1 = [600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,
-        600, 600, 600, 600, 600,];
-    const positionXStart1 = [0, -200, -40, -120, -130,
-        -140, -150, -160, -170, -180,
-        -190, -140, -32, -30, -90,
-        -80, -20, -80, -70, -60,
-        -140, -150, -160, -170, -180,
-        -190, -140, -32, -30, -90,
-        -80, -20, -80, -70, -60,
-        -140, -150, -160, -170, -180];
-    const positionXEnd1 = [-149, -129, -144, -150, -28,
-    -34, -34, -43, -145, -34,
-    -45, -52, -47, -82, -46,
-    -47, -57, -51, -67, -63,];
+    const positionYStart1 = [370, 310, 420, 330, 320,
+        360, 326, 360, 326, 297,
+        360, 326, 360, 326, 297,
+        210, 338, 315, 325, 394,
+        365, 326, 365, 326, 297,
+        315, 238, 215, 320, 394,
+        211, 300, 333, 230, 230,
+        274, 415, 314, 412, 211,
+    ];
+    const positionYMiddle1 = [274, 215, 314, 212, 211,
+        260, 225, 260, 249, 264,
+        160, 235, 254, 223, 217,
+        117, 178, 207, 270, 298,
+        278, 237, 273, 226, 167,
+        132, 163, 154, 232, 141,
+        121, 230, 235, 150, 140,
+        142, 234, 232, 322, 121,
+    ];
+    const positionXStart1 = [
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+        200, 200, 200, 200, 200,
+    ];
+
     return (
         <>
             {
                 duration.map((index, i) => (<motion.img
                     key={i}
                     src={getAssetUrl(GAME_ASSETS.coin)}
-                    className="absolute w-10 h-10 left-1/2 -translate-x-1/2 scale-50"
+                    className="absolute w-10 h-10 left-1/2 -translate-x-1/2 scale-50 z-[30]"
                     animate={{
-                        x: [positionXStart[i], positionXEnd[i]],
-                        y: [positionYStart[i], positionYEnd[i]],   // rise then drop
+                        x: [positionXStart[i], positionXStart[i] - 450,],
+                        y: [positionYStart[i] + 100, positionYMiddle[i] + 100, positionYStart[i] + 150],   // rise then drop
                         rotateX: [0, rotateX[i]],
                         rotateY: [0, rotateY[i]],
                         rotateZ: [0, rotateZ[i]],    // spin
@@ -665,6 +667,7 @@ export function RainMoney() {
                         duration: index,
                         ease: "easeInOut",
                         repeat: Infinity,
+                        delay: delay[i],
                     }}
                 />))
             }
@@ -672,19 +675,19 @@ export function RainMoney() {
                 duration1.map((index, i) => (<motion.img
                     key={i}
                     src={getAssetUrl(GAME_ASSETS.coin)}
-                    className="absolute w-10 h-10 left-1/2 -translate-x-1/2"
+                    className="absolute w-10 h-10 left-1/2 -translate-x-1/2 z-[30]"
                     animate={{
-                        x: [positionXStart1[i], positionXEnd1[i]],
-                        y: [positionYStart1[i], positionYEnd1[i]],   // rise then drop
+                        x: [positionXStart1[i] - 450, positionXStart1[i] + 50,],
+                        y: [positionYStart1[i] + 100, positionYMiddle1[i] + 100, positionYStart1[i] + 150],   // rise then drop
                         rotateX: [0, rotateX1[i]],
                         rotateY: [0, rotateY1[i]],
                         rotateZ: [0, rotateZ1[i]],    // spin
                     }}
                     transition={{
-                        delay: 0.1,
                         duration: index,
                         ease: "easeInOut",
                         repeat: Infinity,
+                        delay: delay[i],
                     }}
                 />))
             }
@@ -707,7 +710,7 @@ export function StartAni({ left, delay, num0, num1, num2 }: { left: number; dela
                         initial={{ y: 5 + index * 70, opacity: 1 }}
                         animate={{ y: 215, opacity: 1 }}
                         transition={{
-                            duration: 0.45 - index * 0.15,
+                            duration: 0.225 - index * 0.075,
                             ease: "linear",
                             delay: delay,
                             // repeat: Infinity,
@@ -740,7 +743,7 @@ export function StopAni({ left, delay, num0, num1, num2 }: { left: number; delay
                         initial={{ y: -65, opacity: 1 }}
                         animate={{ y: 145 - 70 * index, opacity: 1 }}
                         transition={{
-                            duration: 0.45 - 0.15 * index,
+                            duration: 0.225 - 0.075 * index,
                             ease: "linear",
                             delay: delay + 0.15 * index,
                         }}
@@ -773,9 +776,9 @@ export function RepeatAni({ left, delay, num }: { left: number; delay: number; n
                         initial={{ y: -65, opacity: 1 }}
                         animate={{ y: 215, opacity: 1 }}
                         transition={{
-                            duration: 0.6,
+                            duration: 0.3,
                             ease: "linear",
-                            delay: delay + index * 0.15,
+                            delay: delay + index * 0.075,
                             // repeat: 3,
                         }}
                         style={{
