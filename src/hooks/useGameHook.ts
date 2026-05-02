@@ -145,7 +145,7 @@ export async function bootstrapGameStore() {
 export async function bootstrapActivePlayers() {
   updateActiveUsers();
   if (!initialActivePlayers) {
-    initialActivePlayers = runRefreshGameData().finally(() => {
+    initialActivePlayers = fetchActiveData().finally(() => {
       initialActivePlayers = null;
     });
   }

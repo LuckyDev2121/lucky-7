@@ -100,9 +100,9 @@ export default function Lucky777Game({
     const gameScale = useResponsiveGameScale();
     useEffect(() => {
         const interval = setInterval(() => {
-            if (ActivePlayers?.data[0].win_amount !== oldActivePlayer?.data[0].win_amount || ActivePlayers?.data[0].win_amount !== oldActivePlayer?.data[0].user_id) setIsActivePlayer0(true)
-            if (ActivePlayers?.data[1].win_amount !== oldActivePlayer?.data[1].win_amount || ActivePlayers?.data[1].win_amount !== oldActivePlayer?.data[1].user_id) setIsActivePlayer1(true)
-            if (ActivePlayers?.data[2].win_amount !== oldActivePlayer?.data[2].win_amount || ActivePlayers?.data[2].win_amount !== oldActivePlayer?.data[2].user_id) setIsActivePlayer2(true)
+            if (ActivePlayers?.data?.[0]?.win_amount !== oldActivePlayer?.data?.[0]?.win_amount || ActivePlayers?.data?.[0]?.user_id !== oldActivePlayer?.data?.[0]?.user_id) setIsActivePlayer0(true)
+            if (ActivePlayers?.data?.[1]?.win_amount !== oldActivePlayer?.data?.[1]?.win_amount || ActivePlayers?.data?.[1]?.user_id !== oldActivePlayer?.data?.[1]?.user_id) setIsActivePlayer1(true)
+            if (ActivePlayers?.data?.[2]?.win_amount !== oldActivePlayer?.data?.[2]?.win_amount || ActivePlayers?.data?.[2]?.user_id !== oldActivePlayer?.data?.[2]?.user_id) setIsActivePlayer2(true)
             if (ActivePlayers?.total_amount !== oldActivePlayer?.total_amount || ActivePlayers?.total_user !== oldActivePlayer?.total_user) setIsActivePlayer3(true)
         }, 4);
         return () => {
@@ -133,7 +133,9 @@ export default function Lucky777Game({
 
         return () => clearInterval(interval);
     }, [winModal]);
-
+    useEffect(() => {
+        console.log(ActivePlayers)
+    }, [ActivePlayers])
     useEffect(() => {
         if (!isPlaying)
             return
@@ -335,8 +337,8 @@ export default function Lucky777Game({
                             <div className="absolute h-[66px] w-[266px] top-[30px] left-[91px] bg-gradient-to-t from-[#0E0038] to-[#140433] rounded-[4px]">
                                 <div className="relative grid grid-cols-4 justify-center h-[60px] w-[260px] pt-[2px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-[#1A0D38] to-[#160A38] border-2 border-[#A75991] rounded-[4px]">
                                     <div className="relative items-center justify-center">
-                                        <img src={resolveAssetUrl(ActivePlayers?.data[0].user.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 rounded-full" />
-                                        <span className="absolute inset-x-0 text-center top-[42px]  text-[8px]">{ActivePlayers?.data[0].user.username}</span>
+                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[0]?.user?.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 rounded-full" />
+                                        <span className="absolute inset-x-0 text-center top-[42px]  text-[8px]">{ActivePlayers?.data?.[0]?.user?.username}</span>
                                         {isActivePlayer0 && <><RiseAni left={25} top={-50} />
                                             <motion.span className="absolute left-[10px] top-[10px]  z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                                 initial={{ y: -5, }}
@@ -346,11 +348,11 @@ export default function Lucky777Game({
                                                     repeat: Infinity, // 👈 add this
                                                     repeatType: "reverse"
                                                 }}
-                                            >{ActivePlayers?.data[0].win_type === null ? `+${formatNumber(ActivePlayers.data[0].win_amount)}` : ActivePlayers?.data[0].win_type}</motion.span> </>}
+                                            >{ActivePlayers?.data?.[0]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[0]?.win_amount ?? 0)}` : ActivePlayers?.data?.[0]?.win_type}</motion.span> </>}
                                     </div>
                                     <div className="relative">
-                                        <img src={resolveAssetUrl(ActivePlayers?.data[1].user.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 rounded-full" />
-                                        <span className="absolute inset-x-0 text-center top-[42px] align-middle text-[8px]">{ActivePlayers?.data[1].user.username}</span>
+                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[1]?.user?.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 rounded-full" />
+                                        <span className="absolute inset-x-0 text-center top-[42px] align-middle text-[8px]">{ActivePlayers?.data?.[1]?.user?.username}</span>
                                         {isActivePlayer1 && <><RiseAni left={25} top={-50} />
                                             <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                                 initial={{ y: -5, }}
@@ -360,11 +362,11 @@ export default function Lucky777Game({
                                                     repeat: Infinity, // 👈 add this
                                                     repeatType: "reverse"
                                                 }}
-                                            >{ActivePlayers?.data[1].win_type === null ? `+${formatNumber(ActivePlayers.data[1].win_amount)}` : ActivePlayers?.data[1].win_type}</motion.span> </>}
+                                            >{ActivePlayers?.data?.[1]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[1]?.win_amount ?? 0)}` : ActivePlayers?.data?.[1]?.win_type}</motion.span> </>}
                                     </div>
                                     <div className="relative">
-                                        <img src={resolveAssetUrl(ActivePlayers?.data[2].user.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 rounded-full" />
-                                        <span className="absolute inset-x-0 text-center top-[42px] algin-middle text-[8px]">{ActivePlayers?.data[2].user.username}</span>
+                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[2]?.user?.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 rounded-full" />
+                                        <span className="absolute inset-x-0 text-center top-[42px] algin-middle text-[8px]">{ActivePlayers?.data?.[2]?.user?.username}</span>
                                         {isActivePlayer2 && <><RiseAni left={25} top={-50} />
                                             <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                                 initial={{ y: -5, }}
@@ -374,11 +376,11 @@ export default function Lucky777Game({
                                                     repeat: Infinity, // 👈 add this
                                                     repeatType: "reverse"
                                                 }}
-                                            >{ActivePlayers?.data[2].win_type === null ? `+${formatNumber(ActivePlayers.data[2].win_amount)}` : ActivePlayers?.data[2].win_type}</motion.span></>}
+                                            >{ActivePlayers?.data?.[2]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[2]?.win_amount ?? 0)}` : ActivePlayers?.data?.[2]?.win_type}</motion.span></>}
                                     </div>
                                     <div className="relative ">
-                                        <img src={resolveAssetUrl(ActivePlayers?.data[3].user.avater ?? "")} alt="player" className="absolute top-[10px] left-[10px] h-[20px] z-30 rounded-full" />
-                                        <img src={resolveAssetUrl(ActivePlayers?.data[4].user.avater ?? "")} alt="player" className="absolute top-[10px] left-[20px] h-[20px] z-20 rounded-full" />
+                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[3]?.user?.avater ?? "")} alt="player" className="absolute top-[10px] left-[10px] h-[20px] z-30 rounded-full" />
+                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[4]?.user?.avater ?? "")} alt="player" className="absolute top-[10px] left-[20px] h-[20px] z-20 rounded-full" />
                                         <div className="absolute top-[10px] left-[35px] h-[20px] w-[20px] bg-gray-700 rounded-full z-10 ">
                                             <img src={dotthree} alt="dotthree" className="absolute left-1/2 top-1/2 rounded-full -translate-x-1/2 -translate-y-1/2 " />
                                         </div>
