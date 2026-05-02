@@ -775,7 +775,7 @@ export default function Lucky777Game({
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.25 }}
-                                    className="absolute inset-0 z-[20] rounded-t-[110px] bg-black/60"
+                                    className="absolute inset-0 z-[20] bg-black/60 top-[118px]"
                                 />
                             )}
                         </AnimatePresence>
