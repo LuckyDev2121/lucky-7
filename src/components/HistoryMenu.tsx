@@ -43,9 +43,24 @@ export default function HistoryMenu({ onCloseHistory }: HistoryMenuProps) {
                             <span className="text-[#c6b6ff]">{element.id}</span>
                             <span className="text-[#c6b6ff]">{formatDateTime(element.created_at)}</span>
                         </div>
-                        <div className="absolute top-[23px] h-[117px] w-[302px] bg-[#000000]/25 rounded-b-[5px] px-[6px]">
-                            <div>
+                        <div className="absolute top-[23px] h-[117px] w-[302px] bg-[#000000]/25 rounded-b-[5px] px-[6px] ">
+                            <div className="flex items-center">
                                 <span className="text-[#c6b6ff]">winning pattern : </span>
+                                {element.round_result.set_A[0].option_id === element.round_result.set_B[1].option_id
+                                    && element.round_result.set_A[0].option_id === element.round_result.set_C[2].option_id
+                                    && <hr className="h-[5px] bg-gradient-to-t from-[#fadc58] via-[#ffffff] to-[#fadc58] border-0 w-[35px]  ml-[5px]" />}
+                                {element.round_result.set_C[0].option_id === element.round_result.set_B[1].option_id
+                                    && element.round_result.set_C[0].option_id === element.round_result.set_A[2].option_id
+                                    && <hr className="h-[5px] bg-gradient-to-t from-[#cf68ff] via-[#ffffff] to-[#cf68ff] border-0 w-[35px]  ml-[5px]" />}
+                                {element.round_result.set_A[0].option_id === element.round_result.set_A[1].option_id
+                                    && element.round_result.set_A[0].option_id === element.round_result.set_A[2].option_id
+                                    && <hr className="h-[5px] bg-gradient-to-t from-[#357ec4] via-[#ffffff] to-[#357ec4] border-0 w-[35px]  ml-[5px]" />}
+                                {element.round_result.set_B[0].option_id === element.round_result.set_B[1].option_id
+                                    && element.round_result.set_B[0].option_id === element.round_result.set_B[2].option_id
+                                    && <hr className="h-[5px] bg-gradient-to-t from-[#e63b3b] via-[#ffffff] to-[#e63b3b] border-0 w-[35px]  ml-[5px]" />}
+                                {element.round_result.set_C[0].option_id === element.round_result.set_C[1].option_id
+                                    && element.round_result.set_C[0].option_id === element.round_result.set_C[2].option_id
+                                    && <hr className="h-[5px] bg-gradient-to-t from-[#4bdf64] via-[#ffffff] to-[#4bdf64] border-0 w-[35px]  ml-[5px]" />}
                             </div>
                             <div className="flex text-[#c6b6ff]">
                                 <span className="text-[#c6b6ff]">Bet : </span>
