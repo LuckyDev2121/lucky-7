@@ -1,11 +1,26 @@
 import { ButtonMenu, CloseIcon } from "./ButtonMenu";
-import RecordBoard from "./RecordBoard";
 import { RectangleIcon } from "./Assets";
+import { GAME_ASSETS, getAssetUrl } from "../config/gameconfig";
+import { useGame } from "../hooks/useGameHook";
 type HistoryMenuProps = {
     onCloseHistory: () => void;
 };
+const formatDateTime = (isoString: string) => {
+    const date = new Date(isoString);
 
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // months are 0-indexed
+    const year = String(date.getFullYear()).slice(-2); // last two digits
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+};
 export default function HistoryMenu({ onCloseHistory }: HistoryMenuProps) {
+    const { history } = useGame()
+
+
     return (
         <div className="h-[428px] bg-gradient-to-t from-[#120D25] to-[#43308B] w-[343px] rounded-t-[20px]">
             <div className="absolute left-1/2 transform -translate-x-1/2" >
@@ -22,16 +37,37 @@ export default function HistoryMenu({ onCloseHistory }: HistoryMenuProps) {
                 />
             </div>
             <div className="absolute w-[302px] h-[371px] top-[57px] left-1/2 -translate-x-1/2 scrollbar-hidden overflow-x-hidden overflow-y-auto">
-                <div className="absolute top-[0px] left-[0px] ">
-                    <RecordBoard />
-                </div>
-                <div className="absolute top-[153px] left-[0px]">
-                    <RecordBoard />
-                </div>
-                <div className="absolute top-[307px] left-[0px]">
-                    <RecordBoard />
-                </div>
+                {history?.data?.map((element) => (
+                    <div className="relative mb-[8px] h-[141px] w-[302px] rounded-[5px]">
+                        <div className="absolute h-[22px] w-[302px] bg-[#000000]/25 rounded-t-[5px] px-[6px] flex justify-between">
+                            <span className="text-[#c6b6ff]">{element.id}</span>
+                            <span className="text-[#c6b6ff]">{formatDateTime(element.created_at)}</span>
+                        </div>
+                        <div className="absolute top-[23px] h-[117px] w-[302px] bg-[#000000]/25 rounded-b-[5px] px-[6px]">
+                            <div>
+                                <span className="text-[#c6b6ff]">winning pattern : </span>
+                            </div>
+                            <div className="flex text-[#c6b6ff]">
+                                <span className="text-[#c6b6ff]">Bet : </span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="coin" className="mt-[2px] w-[15px] h-[15px]" />
+                                <span className="text-[#c6b6ff]">{Number(element.bet_amount)}</span>
+                            </div>
+                            <div className="flex ">
+                                <span className="text-[#c6b6ff]">Win Diamonds : </span>
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="coin" className="mt-[2px] w-[15px] h-[15px]" />
+                                <span className="text-[#c6b6ff]">{Number(element.win_amount)}</span>
+                            </div>
+                            <div>
+                                <span className="text-[#c6b6ff]">Diamond Balance : </span>
+                            </div>
+                            <div className="m-[10px] flex">
+                                <img src={getAssetUrl(GAME_ASSETS.diamond)} alt="coin" className="mt-[2px] w-[15px] h-[15px]" />
+                                <span className="text-[#c6b6ff]">{`${Number(element.post_balance)} => ${Number(element.current_balance)}`}</span>
+                            </div>
+                        </div >
+                    </div >
+                ))}
             </div>
-        </div>
+        </div >
     )
 }

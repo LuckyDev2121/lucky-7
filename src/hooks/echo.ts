@@ -1,8 +1,6 @@
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import {
-  APP_ORIGIN,
-  BACKEND_ORIGIN,
   REALTIME_HOST,
   REALTIME_PORT,
   REVERB_KEY,
@@ -18,8 +16,7 @@ declare global {
 window.Pusher = Pusher;
 
 const shouldEnableRealtime =
-  import.meta.env.VITE_REVERB_ENABLED === "true" ||
-  (!import.meta.env.DEV && APP_ORIGIN !== BACKEND_ORIGIN);
+  import.meta.env.VITE_REVERB_ENABLED !== "false";
 
 type EchoLike = Pick<Echo<"reverb">, "channel">;
 

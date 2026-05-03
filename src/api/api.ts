@@ -12,6 +12,7 @@ import {
   REMAINING_API_URL,
   WIN_TODAY_API_URL,
   ACTIVE_PLAYERS_API_URL,
+  HISTORY_API_URL,
 } from "../config/gameconfig";
 import { getUserId } from "../utils/user";
 
@@ -322,6 +323,40 @@ export type ActivePlayers={
 
 export const fetchActivePlayers = async (): Promise<ActivePlayers> => {
   const response = await axios.get<ActivePlayers>(ACTIVE_PLAYERS_API_URL);
+  if (!response.data.status) {
+    // throw new Error(response.data.message || "Failed to load music setting");
+    console.log("winToday get error")
+  }
+  return response.data;
+};
+
+type HistoryElement={
+  id:number;
+  option_id:number;
+}
+type HistoryResult={
+  set_A:HistoryElement[];
+  set_B:HistoryElement[];
+  set_C:HistoryElement[];
+}
+type HistoryData={
+  id:number;
+  user_id:number;
+  bet_amount:string;
+  round_result:HistoryResult;
+  win_amount:string;
+  post_balance:string;
+  current_balance:string;
+  status:string;
+  created_at:string;
+}
+export type History={
+status:boolean;
+data:HistoryData[];
+}
+
+export const fetchHistory = async (): Promise<History> => {
+  const response = await axios.get<History>(`${HISTORY_API_URL}/${getUserId()}`);
   if (!response.data.status) {
     // throw new Error(response.data.message || "Failed to load music setting");
     console.log("winToday get error")

@@ -29,20 +29,21 @@ export const WIN_TODAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/win-super77
 export const PLAYER_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/player`;
 export const MUSIC_SETTING_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/music-setting`;
 export const ACTIVE_PLAYERS_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/active-players`;
+export const HISTORY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/game-records`;
 
 
 export const REVERB_KEY =
   import.meta.env.VITE_REVERB_APP_KEY || "k6dbocgucm0at6gwak3y";
 export const REALTIME_HOST =
-  import.meta.env.VITE_REVERB_HOST || new URL(RUNTIME_ORIGIN).hostname;
+  import.meta.env.VITE_REVERB_HOST || new URL(BACKEND_ORIGIN).hostname;
 export const REALTIME_CHANNEL =
   import.meta.env.VITE_REVERB_CHANNEL || "game-channel";
 export const REALTIME_EVENT = import.meta.env.VITE_REVERB_EVENT || "game.updated";
 export const REALTIME_SCHEME =
-  import.meta.env.VITE_REVERB_SCHEME || new URL(RUNTIME_ORIGIN).protocol.replace(":", "");
+  import.meta.env.VITE_REVERB_SCHEME || "http";
 export const USE_TLS = REALTIME_SCHEME === "https";
 export const REALTIME_PORT = Number(
-  import.meta.env.VITE_REVERB_PORT || (USE_TLS ? 443 : 8080),
+  import.meta.env.VITE_REVERB_PORT || 8080,
 );
 export const FALLBACK_REFRESH_MS = 5_000;
 

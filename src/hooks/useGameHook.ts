@@ -13,6 +13,8 @@ import {
   saveMusicSetting,
   betPlace,
   fetchActivePlayers,
+  fetchHistory,
+  type History,
   type WinToday,
   type GameDetailsData,
   type RankingItem,
@@ -20,6 +22,7 @@ import {
   type PrizeDistributionProps,
   type PlayerDetailsData,
   type ActivePlayers,
+  type ACtivePlayersData,
 } from "../api/api";
 import {
   ACTIVE_CHANNEL,
@@ -45,6 +48,7 @@ musicOverridden: boolean;
 remaining:number;
 winToday:WinToday|null;
 ActivePlayers:ActivePlayers|null;
+History:History|null;
 };
 const listeners = new Set<(state: GameStore) => void>();
 let store: GameStore = {
@@ -61,11 +65,18 @@ musicOverridden: false,
 remaining:0,
 winToday:null,
 ActivePlayers:null,
+History:null,
 };
 let hasInitialized = false;
 let hasActive = false;
 let initialLoadPromise: Promise<void> | null = null;
 let initialActivePlayers: Promise<void> | null = null;
+type ActivePlayersEvent = {
+  players?: ACtivePlayersData[];
+  total_amount?: number;
+  total_user?: number;
+};
+
 function emit() {
   listeners.forEach((listener) => listener(store));
 }
@@ -83,7 +94,7 @@ function updateStore(
 async function runRefreshGameData() {
   updateStore({ isLoading: true, isMusicSettingLoading: true });
   try {
-    const [gameDetail,rankingToday,rankingYesterday,player,url,prizeDistribution,isMusicEnabled, winToday] = await Promise.all([
+    const [gameDetail,rankingToday,rankingYesterday,player,url,prizeDistribution,isMusicEnabled, winToday,history] = await Promise.all([
       fetchGameDetail(),
       fetchRankingToday(),
       fetchRankingYesterday(),
@@ -92,6 +103,7 @@ async function runRefreshGameData() {
       fetchPrizeDistribution(),
       fetchMusicSetting(),
       fetchWinToday(),
+      fetchHistory(),
     ]);
   updateStore({
     gameDetails: gameDetail,
@@ -104,6 +116,7 @@ async function runRefreshGameData() {
   isMusicEnabled,
   isLoading: false,
   winToday:winToday,
+  History:history,
 });
   } catch (error) {
     updateStore({ isLoading: false, isMusicSettingLoading: false,});
@@ -113,6 +126,19 @@ async function runRefreshGameData() {
 async function fetchActiveData(){
   const [activePlayers]= await Promise.all([fetchActivePlayers()])
   updateStore({ActivePlayers:activePlayers})
+}
+function updateActiveDataFromSocket(event: ActivePlayersEvent) {
+  const players = event.players ?? [];
+  updateStore({
+    ActivePlayers: {
+      status: true,
+      total_amount:
+        event.total_amount ??
+        players.reduce((total, player) => total + Number(player.win_amount ?? 0), 0),
+      total_user: event.total_user ?? players.length,
+      data: players,
+    },
+  });
 }
 function initializeStore() {
   if (hasInitialized) return;
@@ -129,8 +155,8 @@ if (hasActive) return;
  hasActive = true;
  const channel = echo.channel(ACTIVE_CHANNEL);
  const eventName = `.${ACTIVE_EVENT}`;
-  channel.listen(eventName, async () => {
-    await fetchActiveData();
+  channel.listen(eventName, (event: ActivePlayersEvent) => {
+    updateActiveDataFromSocket(event);
   });
 }
 export async function bootstrapGameStore() {
@@ -242,7 +268,11 @@ const handlePlayerInfo= useCallback(async () => {
 const clearCurrentRoundBets = useCallback(() => {
   
   }, []);
-
+const handleHistory= useCallback(async () => {
+    const data = await fetchHistory();
+    updateStore({History:data})
+    return data;
+  }, []);
   return {
     betAmounts: snapshot.gameDetails?.bet_amounts ?? [],
     options: snapshot.gameDetails?.options ?? [],
@@ -256,6 +286,7 @@ const clearCurrentRoundBets = useCallback(() => {
     rechargeUrl: snapshot.url?.url || null,
     prizeDistribution:snapshot.prizeDistribution,
     ActivePlayers:snapshot.ActivePlayers,
+    history:snapshot.History,
     placeBet: handlePlaceBet,
     setMusicEnabled: handleSetMusicEnabled,
     clearCurrentRoundBets,
@@ -266,5 +297,6 @@ const clearCurrentRoundBets = useCallback(() => {
     handleRankingToday,
     handleRankingYesterday,
     handlePlayerInfo,
+    handleHistory,
   };
 }

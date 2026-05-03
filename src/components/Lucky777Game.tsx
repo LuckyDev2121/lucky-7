@@ -104,7 +104,7 @@ export default function Lucky777Game({
             if (ActivePlayers?.data?.[1]?.win_amount !== oldActivePlayer?.data?.[1]?.win_amount || ActivePlayers?.data?.[1]?.user_id !== oldActivePlayer?.data?.[1]?.user_id) setIsActivePlayer1(true)
             if (ActivePlayers?.data?.[2]?.win_amount !== oldActivePlayer?.data?.[2]?.win_amount || ActivePlayers?.data?.[2]?.user_id !== oldActivePlayer?.data?.[2]?.user_id) setIsActivePlayer2(true)
             if (ActivePlayers?.total_amount !== oldActivePlayer?.total_amount || ActivePlayers?.total_user !== oldActivePlayer?.total_user) setIsActivePlayer3(true)
-        }, 4);
+        }, 3000);
         return () => {
             clearInterval(interval);
             setIsActivePlayer0(false)
