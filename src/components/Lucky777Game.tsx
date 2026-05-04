@@ -10,7 +10,6 @@ import { type ActivePlayers } from "../api/api"
 import MenuCoin from "./MenuCoin";
 import MenuTop from "./MenuTop";
 import light from "../assets/Body/BodyPlayboard/Light.svg"
-import dotthree from "../assets/Body/BodyPlayboard/DotsThree.svg"
 import { ResultPending, LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni, RepeatAni, PendingStar, RollingStar, ResultStar, TopBottomAni, BottomTopAni, TopAni, MiddleAni, BottomAni } from "./Assets";
 import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 const GAME_WIDTH = 393;
@@ -158,7 +157,6 @@ export default function Lucky777Game({
                         setNormalResult(response.win_type);
                         if (response.win_type === null) setNormalWin(true)
                         else setNormalWin(false)
-                        console.log(response.win_type)
                     })
                 setStatusArray([0, 0, 0, 0, 0, 0, 0, 0, 0]);
                 setShowWinAmount(0)
@@ -337,53 +335,50 @@ export default function Lucky777Game({
                             <div className="absolute h-[66px] w-[266px] top-[30px] left-[91px] bg-gradient-to-t from-[#0E0038] to-[#140433] rounded-[4px]">
                                 <div className="relative grid grid-cols-4 justify-center h-[60px] w-[260px] pt-[2px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-[#1A0D38] to-[#160A38] border-2 border-[#A75991] rounded-[4px]">
                                     <div className="relative items-center justify-center">
-                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[0]?.user?.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2 w-[50px] h-[50px] rounded-full" />
-                                        <span className="absolute inset-x-0 text-center top-[35px] font-blod font-sans text-[12px]">{ActivePlayers?.data?.[0]?.user?.username}</span>
-                                        {isActivePlayer0 && <><RiseAni left={25} top={-50} />
-                                            <motion.span className="absolute left-[10px] top-[10px]  z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
-                                                initial={{ y: -5, }}
-                                                animate={{ y: 5, }}
-                                                transition={{
-                                                    duration: 0.4,
-                                                    repeat: Infinity, // 👈 add this
-                                                    repeatType: "reverse"
-                                                }}
-                                            >{ActivePlayers?.data?.[0]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[0]?.win_amount ?? 0)}` : ActivePlayers?.data?.[0]?.win_type}</motion.span> </>}
-                                    </div>
+                                        {ActivePlayers?.data?.[0] && <> <img src={resolveAssetUrl(ActivePlayers?.data?.[0]?.user?.avater)} alt="player" className="absolute left-1/2 -translate-x-1/2 w-[50px] h-[50px] rounded-full" />
+                                            <span className="absolute inset-x-0 text-center top-[35px] font-blod font-sans text-[12px]">{ActivePlayers?.data?.[0]?.user?.username}</span>
+                                            {isActivePlayer0 && <><RiseAni left={25} top={-50} />
+                                                <motion.span className="absolute left-[10px] top-[10px]  z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                                    initial={{ y: -5, }}
+                                                    animate={{ y: 5, }}
+                                                    transition={{
+                                                        duration: 0.4,
+                                                        repeat: Infinity, // 👈 add this
+                                                        repeatType: "reverse"
+                                                    }}
+                                                >{ActivePlayers?.data?.[0]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[0]?.win_amount ?? 0)}` : ActivePlayers?.data?.[0]?.win_type}</motion.span> </>}
+                                        </>}</div>
                                     <div className="relative">
-                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[1]?.user?.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2  w-[50px] h-[50px]  rounded-full" />
-                                        <span className="absolute inset-x-0 text-center top-[35px] font-blod font-sans text-[12px] align-middle ">{ActivePlayers?.data?.[1]?.user?.username}</span>
-                                        {isActivePlayer1 && <><RiseAni left={25} top={-50} />
-                                            <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
-                                                initial={{ y: -5, }}
-                                                animate={{ y: 5, }}
-                                                transition={{
-                                                    duration: 0.4,
-                                                    repeat: Infinity, // 👈 add this
-                                                    repeatType: "reverse"
-                                                }}
-                                            >{ActivePlayers?.data?.[1]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[1]?.win_amount ?? 0)}` : ActivePlayers?.data?.[1]?.win_type}</motion.span> </>}
-                                    </div>
+                                        {ActivePlayers?.data?.[1] && <><img src={resolveAssetUrl(ActivePlayers?.data?.[1]?.user?.avater)} alt="player" className="absolute left-1/2 -translate-x-1/2  w-[50px] h-[50px]  rounded-full" />
+                                            <span className="absolute inset-x-0 text-center top-[35px] font-blod font-sans text-[12px] align-middle ">{ActivePlayers?.data?.[1]?.user?.username}</span>
+                                            {isActivePlayer1 && <><RiseAni left={25} top={-50} />
+                                                <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                                    initial={{ y: -5, }}
+                                                    animate={{ y: 5, }}
+                                                    transition={{
+                                                        duration: 0.4,
+                                                        repeat: Infinity, // 👈 add this
+                                                        repeatType: "reverse"
+                                                    }}
+                                                >{ActivePlayers?.data?.[1]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[1]?.win_amount ?? 0)}` : ActivePlayers?.data?.[1]?.win_type}</motion.span> </>}
+                                        </>}</div>
                                     <div className="relative">
-                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[2]?.user?.avater ?? "")} alt="player" className="absolute left-1/2 -translate-x-1/2  w-[50px] h-[50px]  rounded-full" />
-                                        <span className="absolute inset-x-0 text-center top-[35px] font-blod font-sans text-[12px] algin-middle ">{ActivePlayers?.data?.[2]?.user?.username}</span>
-                                        {isActivePlayer2 && <><RiseAni left={25} top={-50} />
-                                            <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
-                                                initial={{ y: -5, }}
-                                                animate={{ y: 5, }}
-                                                transition={{
-                                                    duration: 0.4,
-                                                    repeat: Infinity, // 👈 add this
-                                                    repeatType: "reverse"
-                                                }}
-                                            >{ActivePlayers?.data?.[2]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[2]?.win_amount ?? 0)}` : ActivePlayers?.data?.[2]?.win_type}</motion.span></>}
-                                    </div>
+                                        {ActivePlayers?.data?.[2] && <> <img src={resolveAssetUrl(ActivePlayers?.data?.[2]?.user?.avater)} alt="player" className="absolute left-1/2 -translate-x-1/2  w-[50px] h-[50px]  rounded-full" />
+                                            <span className="absolute inset-x-0 text-center top-[35px] font-blod font-sans text-[12px] algin-middle ">{ActivePlayers?.data?.[2]?.user?.username}</span>
+                                            {isActivePlayer2 && <><RiseAni left={25} top={-50} />
+                                                <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                                    initial={{ y: -5, }}
+                                                    animate={{ y: 5, }}
+                                                    transition={{
+                                                        duration: 0.4,
+                                                        repeat: Infinity, // 👈 add this
+                                                        repeatType: "reverse"
+                                                    }}
+                                                >{ActivePlayers?.data?.[2]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[2]?.win_amount ?? 0)}` : ActivePlayers?.data?.[2]?.win_type}</motion.span></>}
+                                        </>}</div>
                                     <div className="relative ">
-                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[3]?.user?.avater ?? "")} alt="player" className="absolute top-[10px] left-[10px] h-[20px]  w-[20px]  z-30 rounded-full" />
-                                        <img src={resolveAssetUrl(ActivePlayers?.data?.[4]?.user?.avater ?? "")} alt="player" className="absolute top-[10px] left-[20px] h-[20px]  w-[20px]  z-20 rounded-full" />
-                                        <div className="absolute top-[10px] left-[35px] h-[20px] w-[20px] bg-gray-700 rounded-full z-10 ">
-                                            <img src={dotthree} alt="dotthree" className="absolute left-1/2 top-1/2 rounded-full -translate-x-1/2 -translate-y-1/2 " />
-                                        </div>
+                                        {ActivePlayers?.data?.[3] && <img src={resolveAssetUrl(ActivePlayers?.data?.[3]?.user?.avater)} alt="player" className="absolute top-[10px] left-[10px] h-[20px]  w-[20px]  z-30 rounded-full" />}
+                                        {ActivePlayers?.data?.[4] && <img src={resolveAssetUrl(ActivePlayers?.data?.[4]?.user?.avater)} alt="player" className="absolute top-[10px] left-[20px] h-[20px]  w-[20px]  z-20 rounded-full" />}
                                         <div className="absolute top-[30px] inset-x-0 text-center">
                                             <span className="text-[8px]">Online : </span>
                                             <span className="text-[10px]">{ActivePlayers?.total_user}</span>
