@@ -5,10 +5,10 @@ import {
   PLAYER_API_URL,
   BET_PLACE_API_URL,
   MUSIC_SETTING_API_URL,
-  RANKING_TODAY_API_URL,
+  RANKING_API_URL,
   RECHARGE_URL_API_URL,
   PRIZE_DISTRIBUTIONS_API_URL,
-  RANKING_YESTERDAY_API_URL,
+  JACKPOT_API_URL,
   REMAINING_API_URL,
   WIN_TODAY_API_URL,
   ACTIVE_PLAYERS_API_URL,
@@ -138,34 +138,40 @@ export const fetchRemainingToday =async()=>{
 }
 ///////////////////////////////////////////////////////////////
 export type RankingItem = {
-  player_id: number;
+  user_id: number;
   total_win: string;
-  player?: {
+  total_bet:string;
+  user?: {
     id: number;
     username: string;
     avater: string;
   };
 };
-type RankingResponse = {
+export type RankingResponse = {
   status?: boolean;
-  data?: RankingItem[];
-  message?: string;
+  today?: RankingItem[];
+  yesterday?: RankingItem[];
 };
-export const fetchRankingToday = async (): Promise<RankingItem[]> => {
-  const response = await axios.get<RankingResponse>(RANKING_TODAY_API_URL);
+export const fetchRanking= async (): Promise<RankingResponse> => {
+  const response = await axios.get<RankingResponse>(RANKING_API_URL);
   if (!response.data.status) {
     // throw new Error(response.data.message || "Failed to load ranking today");
     console.log("ranking today error")
   }
-  return response.data.data ?? [];
+  return response.data;
 };
-export const fetchRankingYesterday = async (): Promise<RankingItem[]> => {
-  const response = await axios.get<RankingResponse>(RANKING_YESTERDAY_API_URL);
+
+type Jackpot ={
+  status:boolean;
+  amount:string;
+}
+export const fetchJackpot = async (): Promise<Jackpot> => {
+  const response = await axios.get<Jackpot>(JACKPOT_API_URL);
   if (!response.data.status) {
     // throw new Error(response.data.message || "Failed to load ranking today");
      console.log("ranking yesterday error")
   }
-  return response.data.data ?? [];
+  return response.data;
 };
 //////////////////////////////////////////////////////////////////////////
 export type RechargeUrlResponse={

@@ -20,8 +20,7 @@ const API_BASE_URL =
   export const INTRO_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/intro`;
 export const GAME_DETAILS_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/game-details/${GAME_ID}`;
 export const REMAINING_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/remaining_today`
-export const RANKING_YESTERDAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/ranking-yesterday/${GAME_ID}`;
-export const RANKING_TODAY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/ranking-today/${GAME_ID}`;
+export const RANKING_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/ranking-yesterday/${GAME_ID}`;
 export const RECHARGE_URL_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/company/wallet/1`;
 export const PRIZE_DISTRIBUTIONS_API_URL= `${API_BASE_URL.replace(/\/$/, "")}/prize-distributions/${GAME_ID}`;
 export const BET_PLACE_API_URL=`${API_BASE_URL.replace(/\/$/, "")}/bet-place`;
@@ -30,6 +29,7 @@ export const PLAYER_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/player`;
 export const MUSIC_SETTING_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/music-setting`;
 export const ACTIVE_PLAYERS_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/active-players`;
 export const HISTORY_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/game-records`;
+export const JACKPOT_API_URL = `${API_BASE_URL.replace(/\/$/, "")}/life-time-bet-placed`;
 
 
 export const REVERB_KEY =

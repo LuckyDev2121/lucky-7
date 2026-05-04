@@ -4,8 +4,8 @@ import {
   fetchWinToday,
   fetchGameDetail,
   fetchRemainingToday,
-  fetchRankingToday,
-  fetchRankingYesterday,
+  fetchRanking,
+  fetchJackpot,
   fetchRechargeUrl,
   fetchPrizeDistribution,
   fetchPlayerInfo,
@@ -17,7 +17,7 @@ import {
   type History,
   type WinToday,
   type GameDetailsData,
-  type RankingItem,
+  type RankingResponse,
   type RechargeUrlResponse,
   type PrizeDistributionProps,
   type PlayerDetailsData,
@@ -36,8 +36,8 @@ export function resolveAssetUrl(path: string): string {
 }
 type GameStore = {
   gameDetails: GameDetailsData | null;
-  rankingTodays: RankingItem[];
-  rankingYesterdays:RankingItem[];
+  ranking:RankingResponse|null ;
+  jackpot:string;
   url?:RechargeUrlResponse | null;
   prizeDistribution:PrizeDistributionProps|null;
   playerInfo: PlayerDetailsData | null;
@@ -53,8 +53,8 @@ History:History|null;
 const listeners = new Set<(state: GameStore) => void>();
 let store: GameStore = {
   gameDetails: null,
-  rankingTodays: [],
-  rankingYesterdays: [],
+  ranking: null,
+  jackpot: "",
   url:null,
   prizeDistribution:null,
   playerInfo: null,
@@ -94,10 +94,10 @@ function updateStore(
 async function runRefreshGameData() {
   updateStore({ isLoading: true, isMusicSettingLoading: true });
   try {
-    const [gameDetail,rankingToday,rankingYesterday,player,url,prizeDistribution,isMusicEnabled, winToday,history] = await Promise.all([
+    const [gameDetail,ranking,jackpot,player,url,prizeDistribution,isMusicEnabled, winToday,history] = await Promise.all([
       fetchGameDetail(),
-      fetchRankingToday(),
-      fetchRankingYesterday(),
+      fetchRanking(),
+      fetchJackpot(),
       fetchPlayerInfo(),
       fetchRechargeUrl(),
       fetchPrizeDistribution(),
@@ -107,8 +107,8 @@ async function runRefreshGameData() {
     ]);
   updateStore({
     gameDetails: gameDetail,
-    rankingTodays: rankingToday,
-    rankingYesterdays: rankingYesterday,
+    ranking: ranking,
+    jackpot: jackpot.amount,
   playerInfo: player,
   url: url,
   isMusicSettingLoading: false,
@@ -250,15 +250,15 @@ const handleRemainingToday= useCallback(async () => {
     const data = await fetchRemainingToday();
     return data;
   }, []);
-const handleRankingToday= useCallback(async () => {
-    const data = await fetchRankingToday();
-    updateStore({rankingTodays:data  });
+const handleRanking= useCallback(async () => {
+    const data = await fetchRanking();
+    updateStore({ranking:data  });
     return data;
   }, []);
-const handleRankingYesterday= useCallback(async () => {
-    const data = await fetchRankingYesterday();
-    updateStore({rankingTodays:data  });
-    return data;
+const handleJackPot= useCallback(async () => {
+    const data = await fetchJackpot();
+    updateStore({jackpot:data.amount  });
+    return data.amount;
   }, []);
 const handlePlayerInfo= useCallback(async () => {
     const data = await fetchPlayerInfo();
@@ -281,8 +281,8 @@ const handleHistory= useCallback(async () => {
     isLoading: snapshot.isLoading,
     isMusicEnabled: snapshot.isMusicEnabled,
     isMusicSettingLoading: snapshot.isMusicSettingLoading,
-    rankingToday: snapshot.rankingTodays,
-    rankingYesterday: snapshot.rankingYesterdays,
+    ranking: snapshot.ranking,
+    jackpot: snapshot.jackpot,
     rechargeUrl: snapshot.url?.url || null,
     prizeDistribution:snapshot.prizeDistribution,
     ActivePlayers:snapshot.ActivePlayers,
@@ -294,8 +294,8 @@ const handleHistory= useCallback(async () => {
     handlePrizeDistribution,
     handleRemainingToday,
     handleWinToday,
-    handleRankingToday,
-    handleRankingYesterday,
+    handleRanking,
+    handleJackPot,
     handlePlayerInfo,
     handleHistory,
   };
