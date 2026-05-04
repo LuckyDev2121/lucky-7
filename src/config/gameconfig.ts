@@ -119,5 +119,8 @@ jackpot:"super777/jackpot.svg",
 loadingLogo:"super777/loading-logo.svg",
 cup:"super777/trofy.svg",
 rotated:"super777/Rotated-Instances.svg",
-coin:"super777/gold.png"
+coin:"super777/gold.png",
+first:"super777/1st-position.svg",
+second:"super777/2nd-possition.svg",
+thirdP:"super777/3rd-position.svg",
     } as const;
