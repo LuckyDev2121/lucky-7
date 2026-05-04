@@ -329,7 +329,7 @@ export const fetchActivePlayers = async (): Promise<ActivePlayers> => {
   const response = await axios.get<ActivePlayers>(ACTIVE_PLAYERS_API_URL);
   if (!response.data.status) {
     // throw new Error(response.data.message || "Failed to load music setting");
-    console.log("winToday get error")
+    console.log("activePlayers get error")
   }
   return response.data;
 };

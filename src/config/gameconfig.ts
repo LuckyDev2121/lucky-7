@@ -40,7 +40,8 @@ export const REALTIME_CHANNEL =
   import.meta.env.VITE_REVERB_CHANNEL || "game-channel";
 export const REALTIME_EVENT = import.meta.env.VITE_REVERB_EVENT || "game.updated";
 export const REALTIME_SCHEME =
-  import.meta.env.VITE_REVERB_SCHEME || "http";
+  import.meta.env.VITE_REVERB_SCHEME ||
+  (new URL(BACKEND_ORIGIN).protocol === "https:" ? "https" : "http");
 export const USE_TLS = REALTIME_SCHEME === "https";
 export const REALTIME_PORT = Number(
   import.meta.env.VITE_REVERB_PORT || 8080,

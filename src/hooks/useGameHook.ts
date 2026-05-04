@@ -70,7 +70,8 @@ History:null,
 let hasInitialized = false;
 let hasActive = false;
 let initialLoadPromise: Promise<void> | null = null;
-let initialActivePlayers: Promise<void> | null = null;
+let activePlayersPromise: Promise<ActivePlayers> | null = null;
+let activePlayersClearTimer: ReturnType<typeof setTimeout> | null = null;
 type ActivePlayersEvent = {
   players?: ACtivePlayersData[];
   total_amount?: number;
@@ -124,8 +125,34 @@ async function runRefreshGameData() {
   }
 }
 async function fetchActiveData(){
-  const [activePlayers]= await Promise.all([fetchActivePlayers()])
+  if (!activePlayersPromise) {
+    activePlayersPromise = fetchActivePlayers().finally(() => {
+      activePlayersPromise = null;
+    });
+  }
+  const activePlayers = await activePlayersPromise;
   updateStore({ActivePlayers:activePlayers})
+  scheduleActivePlayersClear();
+  return activePlayers;
+}
+function clearActivePlayers() {
+  updateStore({
+    ActivePlayers: {
+      status: true,
+      total_amount: 0,
+      total_user: 0,
+      data: [],
+    },
+  });
+}
+function scheduleActivePlayersClear() {
+  if (activePlayersClearTimer) {
+    clearTimeout(activePlayersClearTimer);
+  }
+  activePlayersClearTimer = setTimeout(() => {
+    clearActivePlayers();
+    activePlayersClearTimer = null;
+  }, 10_000);
 }
 function updateActiveDataFromSocket(event: ActivePlayersEvent) {
   const players = event.players ?? [];
@@ -139,6 +166,7 @@ function updateActiveDataFromSocket(event: ActivePlayersEvent) {
       data: players,
     },
   });
+  scheduleActivePlayersClear();
 }
 function initializeStore() {
   if (hasInitialized) return;
@@ -156,7 +184,13 @@ if (hasActive) return;
  const channel = echo.channel(ACTIVE_CHANNEL);
  const eventName = `.${ACTIVE_EVENT}`;
   channel.listen(eventName, (event: ActivePlayersEvent) => {
-    updateActiveDataFromSocket(event);
+    if (event.players) {
+      updateActiveDataFromSocket(event);
+      return;
+    }
+    void fetchActiveData().catch((error) => {
+      console.error("Failed to refresh active players from socket", error);
+    });
   });
 }
 export async function bootstrapGameStore() {
@@ -170,12 +204,10 @@ export async function bootstrapGameStore() {
 }
 export async function bootstrapActivePlayers() {
   updateActiveUsers();
-  if (!initialActivePlayers) {
-    initialActivePlayers = fetchActiveData().finally(() => {
-      initialActivePlayers = null;
-    });
-  }
-  await initialActivePlayers;
+}
+export async function refreshActivePlayers() {
+  updateActiveUsers();
+  return fetchActiveData();
 }
 export function useGame() {
   const [snapshot, setSnapshot] = useState({ ...store });
@@ -238,6 +270,9 @@ const handleWinToday= useCallback(async () => {
     //   // throw new Error("Insufficient balance");
     // }
     const response: betPlace = await betPlace(amount, );
+    void refreshActivePlayers().catch((error) => {
+      console.error("Failed to refresh active players after bet", error);
+    });
     return response;
   }, []);
 
