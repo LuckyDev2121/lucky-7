@@ -2,7 +2,11 @@ import { motion, } from "framer-motion";
 import { Fragment, useState, useEffect } from "react";
 import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 import { getAssetUrl, GAME_ASSETS } from "../config/gameconfig";
-
+export const Triangle: React.FC = () => {
+    return (
+        <div className="w-0 h-0 z-[60] border-l-8 border-r-8 border-b-16 border-l-transparent color dome border-black"></div>
+    );
+};
 export function RectangleIcon() {
     return (
         <svg

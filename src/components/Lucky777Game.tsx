@@ -10,7 +10,7 @@ import { type ActivePlayers } from "../api/api"
 import MenuCoin from "./MenuCoin";
 import MenuTop from "./MenuTop";
 import light from "../assets/Body/BodyPlayboard/Light.svg"
-import { ResultPending, LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni, RepeatAni, PendingStar, RollingStar, ResultStar, TopBottomAni, BottomTopAni, TopAni, MiddleAni, BottomAni } from "./Assets";
+import { ResultPending, Triangle, LightsAni, WinAni, RiseAni, RainMoney, StartAni, StopAni, RepeatAni, PendingStar, RollingStar, ResultStar, TopBottomAni, BottomTopAni, TopAni, MiddleAni, BottomAni } from "./Assets";
 import { useGame, resolveAssetUrl } from "../hooks/useGameHook";
 const GAME_WIDTH = 393;
 const GAME_HEIGHT = 589;
@@ -172,27 +172,27 @@ export default function Lucky777Game({
             if (second === 2900) {
                 setStatusArray((prev) => {
                     const newStatus = [...prev];
-                    if (endValue[0] === endValue[4] && endValue[0] === endValue[8]) {
+                    if ((endValue[0] === endValue[4] && endValue[0] === endValue[8]) || (endValue[0] === 17 && endValue[4] === 17)) {
                         newStatus[0] = 1;
                         newStatus[4] = 1;
                         newStatus[8] = 1;
                     }
-                    if (endValue[6] === endValue[4] && endValue[6] === endValue[2]) {
+                    if ((endValue[6] === endValue[4] && endValue[6] === endValue[2]) || (endValue[6] === 17 && endValue[4] === 17)) {
                         newStatus[4] = 1;
                         newStatus[6] = 1;
                         newStatus[2] = 1;
                     }
-                    if (endValue[0] === endValue[1] && endValue[0] === endValue[2]) {
+                    if ((endValue[0] === endValue[1] && endValue[0] === endValue[2]) || (endValue[0] === 17 && endValue[1] === 17)) {
                         newStatus[0] = 1;
                         newStatus[1] = 1;
                         newStatus[2] = 1;
                     }
-                    if (endValue[3] === endValue[4] && endValue[3] === endValue[5]) {
+                    if ((endValue[3] === endValue[4] && endValue[3] === endValue[5]) || (endValue[3] === 17 && endValue[4] === 17)) {
                         newStatus[3] = 1;
                         newStatus[4] = 1;
                         newStatus[5] = 1;
                     }
-                    if (endValue[6] === endValue[7] && endValue[6] === endValue[8]) {
+                    if ((endValue[6] === endValue[7] && endValue[6] === endValue[8]) || (endValue[6] === 17 && endValue[7] === 17)) {
                         newStatus[6] = 1;
                         newStatus[7] = 1;
                         newStatus[8] = 1;
@@ -335,7 +335,7 @@ export default function Lucky777Game({
                             <div className="absolute h-[66px] w-[266px] top-[30px] left-[91px] bg-gradient-to-t from-[#0E0038] to-[#140433] rounded-[4px]">
                                 <div className="relative grid grid-cols-4 justify-center h-[60px] w-[260px] pt-[2px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-[#1A0D38] to-[#160A38] border-2 border-[#A75991] rounded-[4px]">
                                     <div className="relative items-center justify-center">
-                                        {ActivePlayers?.data?.[0] && <> <img src={resolveAssetUrl(ActivePlayers?.data?.[0]?.user?.avater)} alt="player" className="absolute left-1/2 -translate-x-1/2 w-[50px] h-[50px] rounded-full" />
+                                        {ActivePlayers?.data?.[0] && <> <img src={resolveAssetUrl(ActivePlayers?.data?.[0]?.user?.avater)} alt="player" className="absolute left-1/2 -translate-x-1/2 border-[1px] border-[#b88425] w-[40px] h-[40px] rounded-full" />
                                             <span className="absolute inset-x-0 text-center top-[35px] font-blod font-sans text-[12px]">{ActivePlayers?.data?.[0]?.user?.username}</span>
                                             {isActivePlayer0 && <><RiseAni left={25} top={-50} />
                                                 <motion.span className="absolute left-[10px] top-[10px]  z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
@@ -349,7 +349,7 @@ export default function Lucky777Game({
                                                 >{ActivePlayers?.data?.[0]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[0]?.win_amount ?? 0)}` : ActivePlayers?.data?.[0]?.win_type}</motion.span> </>}
                                         </>}</div>
                                     <div className="relative">
-                                        {ActivePlayers?.data?.[1] && <><img src={resolveAssetUrl(ActivePlayers?.data?.[1]?.user?.avater)} alt="player" className="absolute left-1/2 -translate-x-1/2  w-[50px] h-[50px]  rounded-full" />
+                                        {ActivePlayers?.data?.[1] && <><img src={resolveAssetUrl(ActivePlayers?.data?.[1]?.user?.avater)} alt="player" className="absolute border-[1px] border-[#b88425] left-1/2 -translate-x-1/2  w-[40px] h-[40px]  rounded-full" />
                                             <span className="absolute inset-x-0 text-center top-[35px] font-blod font-sans text-[12px] align-middle ">{ActivePlayers?.data?.[1]?.user?.username}</span>
                                             {isActivePlayer1 && <><RiseAni left={25} top={-50} />
                                                 <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
@@ -363,7 +363,7 @@ export default function Lucky777Game({
                                                 >{ActivePlayers?.data?.[1]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[1]?.win_amount ?? 0)}` : ActivePlayers?.data?.[1]?.win_type}</motion.span> </>}
                                         </>}</div>
                                     <div className="relative">
-                                        {ActivePlayers?.data?.[2] && <> <img src={resolveAssetUrl(ActivePlayers?.data?.[2]?.user?.avater)} alt="player" className="absolute left-1/2 -translate-x-1/2  w-[50px] h-[50px]  rounded-full" />
+                                        {ActivePlayers?.data?.[2] && <> <img src={resolveAssetUrl(ActivePlayers?.data?.[2]?.user?.avater)} alt="player" className="absolute left-1/2 border-[1px] border-[#b88425] -translate-x-1/2  w-[40px] h-[40px]  rounded-full" />
                                             <span className="absolute inset-x-0 text-center top-[35px] font-blod font-sans text-[12px] algin-middle ">{ActivePlayers?.data?.[2]?.user?.username}</span>
                                             {isActivePlayer2 && <><RiseAni left={25} top={-50} />
                                                 <motion.span className="absolute left-[10px] top-[10px] z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
@@ -377,8 +377,8 @@ export default function Lucky777Game({
                                                 >{ActivePlayers?.data?.[2]?.win_type === null ? `+${formatNumber(ActivePlayers.data?.[2]?.win_amount ?? 0)}` : ActivePlayers?.data?.[2]?.win_type}</motion.span></>}
                                         </>}</div>
                                     <div className="relative ">
-                                        {ActivePlayers?.data?.[3] && <img src={resolveAssetUrl(ActivePlayers?.data?.[3]?.user?.avater)} alt="player" className="absolute top-[10px] left-[10px] h-[20px]  w-[20px]  z-30 rounded-full" />}
-                                        {ActivePlayers?.data?.[4] && <img src={resolveAssetUrl(ActivePlayers?.data?.[4]?.user?.avater)} alt="player" className="absolute top-[10px] left-[20px] h-[20px]  w-[20px]  z-20 rounded-full" />}
+                                        {ActivePlayers?.data?.[3] && <img src={resolveAssetUrl(ActivePlayers?.data?.[3]?.user?.avater)} alt="player" className="absolute border-[1px] border-[#b88425] top-[10px] left-[10px] h-[20px]  w-[20px]  z-30 rounded-full" />}
+                                        {ActivePlayers?.data?.[4] && <img src={resolveAssetUrl(ActivePlayers?.data?.[4]?.user?.avater)} alt="player" className="absolute border-[1px] border-[#b88425] top-[10px] left-[20px] h-[20px]  w-[20px]  z-20 rounded-full" />}
                                         {ActivePlayers?.data?.[3] && <div className="absolute top-[30px] inset-x-0 text-center">
                                             <span className="text-[8px]">Online : </span>
                                             <span className="text-[10px]">{ActivePlayers?.total_user}</span>
@@ -538,17 +538,18 @@ export default function Lucky777Game({
                                         )}
                                     </div>
                                 </div>
+                                <Triangle />
                             </div>
                             <div className="absolute h-[226px] w-[310px] left-1/2 top-[97px] -translate-x-1/2  inset-[2px] rounded-[7px]" >
-                                {isResulting && !resultPending && winAmount > 0 && endValue[0] === endValue[4] && endValue[0] === endValue[8] && (
+                                {isResulting && !resultPending && winAmount > 0 && ((endValue[0] === endValue[4] && endValue[0] === endValue[8]) || (endValue[0] === 17 && endValue[4] === 17)) && (
                                     <TopBottomAni />)}
-                                {isResulting && !resultPending && winAmount > 0 && endValue[6] === endValue[4] && endValue[6] === endValue[2] && (
+                                {isResulting && !resultPending && winAmount > 0 && ((endValue[6] === endValue[4] && endValue[6] === endValue[2]) || (endValue[6] === 17 && endValue[4] === 17)) && (
                                     <BottomTopAni />)}
-                                {isResulting && !resultPending && winAmount > 0 && endValue[0] === endValue[1] && endValue[0] === endValue[2] && (
+                                {isResulting && !resultPending && winAmount > 0 && ((endValue[0] === endValue[1] && endValue[0] === endValue[2]) || (endValue[0] === 17 && endValue[1] === 17)) && (
                                     <TopAni />)}
-                                {isResulting && !resultPending && winAmount > 0 && endValue[3] === endValue[4] && endValue[3] === endValue[5] && (
+                                {isResulting && !resultPending && winAmount > 0 && ((endValue[3] === endValue[4] && endValue[3] === endValue[5]) || (endValue[3] === 17 && endValue[4] === 17)) && (
                                     <MiddleAni />)}
-                                {isResulting && !resultPending && winAmount > 0 && endValue[6] === endValue[7] && endValue[6] === endValue[8] && (
+                                {isResulting && !resultPending && winAmount > 0 && ((endValue[6] === endValue[7] && endValue[6] === endValue[8]) || (endValue[6] === 17 && endValue[7] === 17)) && (
                                     <BottomAni />)}
                                 {resultPending &&
                                     <ResultPending status={statusArray} />
@@ -583,7 +584,7 @@ export default function Lucky777Game({
                                     </div>
                                 </div>
                             </div>
-                            <div className="absolute top-[390px] h-[60px] pl-[18px] pr-[5px] w-full ">
+                            <div className="absolute top-[382px] h-[60px] pl-[18px] pr-[5px] w-full ">
                                 <button
                                     className={getClass("minus")}
                                     onPointerDown={() => setPressedBtn("minus")}
