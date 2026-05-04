@@ -321,7 +321,7 @@ export default function Lucky777Game({
                                             }} />}
                                     <span className="absolute top-[55px] left-1/2 -translate-x-1/2 z-[20] font-bold font-sans text-[#ffffff] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]">+99</span>
                                     {isResulting && winAmount > 0 && <RiseAni left={30} top={-35} />}
-                                    {isResulting && winAmount > 0 && <motion.span className="absolute z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
+                                    {isResulting && !resultPending && winAmount > 0 && <motion.span className="absolute z-[20] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                         initial={{ y: -5, }}
                                         animate={{ y: 5, }}
                                         transition={{
@@ -379,10 +379,10 @@ export default function Lucky777Game({
                                     <div className="relative ">
                                         {ActivePlayers?.data?.[3] && <img src={resolveAssetUrl(ActivePlayers?.data?.[3]?.user?.avater)} alt="player" className="absolute top-[10px] left-[10px] h-[20px]  w-[20px]  z-30 rounded-full" />}
                                         {ActivePlayers?.data?.[4] && <img src={resolveAssetUrl(ActivePlayers?.data?.[4]?.user?.avater)} alt="player" className="absolute top-[10px] left-[20px] h-[20px]  w-[20px]  z-20 rounded-full" />}
-                                        <div className="absolute top-[30px] inset-x-0 text-center">
+                                        {ActivePlayers?.data?.[3] && <div className="absolute top-[30px] inset-x-0 text-center">
                                             <span className="text-[8px]">Online : </span>
                                             <span className="text-[10px]">{ActivePlayers?.total_user}</span>
-                                        </div>
+                                        </div>}
                                         {isActivePlayer3 && < motion.span className="absolute left-[10px] top-[10px] z-[30] font-bold font-sans text-[#fac594] [text-shadow:1px_0_0_brown,-1px_0_0_brown,0_1px_0_brown,0_-1px_0_brown]"
                                             initial={{ y: -5, }}
                                             animate={{ y: 5, }}
@@ -778,8 +778,6 @@ export default function Lucky777Game({
                         {isResulting && winAmount > 0 && !isWinAniShowed && isOpenWinAni && (
                             <WinAni />
                         )}
-
-                        {/* <RainMoney /> */}
                     </div>
                 </div>
             </div >

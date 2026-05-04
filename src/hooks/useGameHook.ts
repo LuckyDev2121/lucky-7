@@ -27,6 +27,7 @@ import {
 import {
   ACTIVE_CHANNEL,
   ACTIVE_EVENT,
+  FALLBACK_REFRESH_MS,
   REALTIME_CHANNEL,
   REALTIME_EVENT,
   getAssetUrl,
@@ -71,8 +72,9 @@ let hasInitialized = false;
 let hasActive = false;
 let initialLoadPromise: Promise<void> | null = null;
 let activePlayersPromise: Promise<ActivePlayers> | null = null;
-let activePlayersClearTimer: ReturnType<typeof setTimeout> | null = null;
+let activePlayersRefreshTimer: ReturnType<typeof setInterval> | null = null;
 type ActivePlayersEvent = {
+  data?: ACtivePlayersData[];
   players?: ACtivePlayersData[];
   total_amount?: number;
   total_user?: number;
@@ -132,30 +134,10 @@ async function fetchActiveData(){
   }
   const activePlayers = await activePlayersPromise;
   updateStore({ActivePlayers:activePlayers})
-  scheduleActivePlayersClear();
   return activePlayers;
 }
-function clearActivePlayers() {
-  updateStore({
-    ActivePlayers: {
-      status: true,
-      total_amount: 0,
-      total_user: 0,
-      data: [],
-    },
-  });
-}
-function scheduleActivePlayersClear() {
-  if (activePlayersClearTimer) {
-    clearTimeout(activePlayersClearTimer);
-  }
-  activePlayersClearTimer = setTimeout(() => {
-    clearActivePlayers();
-    activePlayersClearTimer = null;
-  }, 10_000);
-}
 function updateActiveDataFromSocket(event: ActivePlayersEvent) {
-  const players = event.players ?? [];
+  const players = event.players ?? event.data ?? [];
   updateStore({
     ActivePlayers: {
       status: true,
@@ -166,7 +148,14 @@ function updateActiveDataFromSocket(event: ActivePlayersEvent) {
       data: players,
     },
   });
-  scheduleActivePlayersClear();
+}
+function startActivePlayersFallbackRefresh() {
+  if (activePlayersRefreshTimer) return;
+  activePlayersRefreshTimer = setInterval(() => {
+    void fetchActiveData().catch((error) => {
+      console.error("Failed to refresh active players", error);
+    });
+  }, FALLBACK_REFRESH_MS);
 }
 function initializeStore() {
   if (hasInitialized) return;
@@ -184,7 +173,7 @@ if (hasActive) return;
  const channel = echo.channel(ACTIVE_CHANNEL);
  const eventName = `.${ACTIVE_EVENT}`;
   channel.listen(eventName, (event: ActivePlayersEvent) => {
-    if (event.players) {
+    if (event.players || event.data) {
       updateActiveDataFromSocket(event);
       return;
     }
@@ -192,6 +181,7 @@ if (hasActive) return;
       console.error("Failed to refresh active players from socket", error);
     });
   });
+  startActivePlayersFallbackRefresh();
 }
 export async function bootstrapGameStore() {
   initializeStore();
@@ -204,6 +194,7 @@ export async function bootstrapGameStore() {
 }
 export async function bootstrapActivePlayers() {
   updateActiveUsers();
+  await fetchActiveData();
 }
 export async function refreshActivePlayers() {
   updateActiveUsers();
