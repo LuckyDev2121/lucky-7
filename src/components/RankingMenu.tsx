@@ -82,7 +82,7 @@ export default function Ranking({ onCloseRanking, onOpenPrizeDistribution }: Ran
                 />
             </div>
             <img src={getAssetUrl(GAME_ASSETS.jackpot)} alt="rank" className="absolute top-[13px] left-1/2 -translate-x-1/2" />
-            <span className="absolute right-[5px] top-[86px]  text-[#fffc59] text-[24px] font-sans tracking-[12px]">{jackpot}</span>
+            <span className="absolute right-[5px] top-[86px]  text-[#fffc59] text-[24px] font-sans tracking-[12px]">{Number(jackpot)}</span>
             <div className="absolute  top-[135px] left-1/2 w-[170px] h-[20px] rounded-full -translate-x-1/2 bg-[#28105C] item-center justify-center flex">
                 {isTodayRanking && (<span className="relative mt-[2px]"><HistoryIcon /></span>)}
                 <span className="text-[#12F49E] text-[12px] font-sans">{isTodayRanking ? time : "Yesterday Ranking"}</span>
